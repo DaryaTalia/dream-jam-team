@@ -371,6 +371,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cargo-Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 9058649117025205408, guid: 1339061fdf36aad4ea62dea950a301c0,
+        type: 3}
+      propertyPath: _resourceInventory.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058649117025205408, guid: 1339061fdf36aad4ea62dea950a301c0,
+        type: 3}
+      propertyPath: _resourceInventory.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

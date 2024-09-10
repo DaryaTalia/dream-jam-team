@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9058649117025205408}
   m_Layer: 0
   m_Name: Cargo-Controller
-  m_TagString: Untagged
+  m_TagString: CargoController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59fadb69d6045a44a7e134cccc9c4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cargoVehiclePrefab: {fileID: 0}
+  _health: 100
+  _defense: 0
+  _availableItemSlots: 6
+  _itemInventory: []
+  _availableResourceSlots: 3
+  _resourceInventory: []
+  _speed: 20
+  _speedModifier: 1
+  _heightUpperLimit: 0
+  _heightLowerLimit: 0
+  _heightTarget: 0
+  _distanceTraveled: 0
