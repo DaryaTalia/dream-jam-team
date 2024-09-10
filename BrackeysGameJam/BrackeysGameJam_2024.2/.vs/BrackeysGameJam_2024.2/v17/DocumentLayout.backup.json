@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{95C5280C-C786-C659-E86C-AA2170247C5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playerattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{95C5280C-C786-C659-E86C-AA2170247C5D}|Assembly-CSharp.csproj|C:\\Users\\Gimli\\Desktop\\Everything\\03_Prog\\Unity Proj\\14 - BJam2\\dream-jam-team\\BrackeysGameJam\\BrackeysGameJam_2024.2\\assets\\scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{95C5280C-C786-C659-E86C-AA2170247C5D}|Assembly-CSharp.csproj|c:\\users\\gimli\\desktop\\everything\\03_prog\\unity proj\\14 - bjam2\\dream-jam-team\\brackeysgamejam\\brackeysgamejam_2024.2\\assets\\scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{95C5280C-C786-C659-E86C-AA2170247C5D}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\camerafollow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerAttack.cs",
               "ToolTip": "C:\\Users\\Gimli\\Desktop\\Everything\\03_Prog\\Unity Proj\\14 - BJam2\\dream-jam-team\\BrackeysGameJam\\BrackeysGameJam_2024.2\\Assets\\Scripts\\Player\\PlayerAttack.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerAttack.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-10T03:11:45.709Z",
               "EditorCaption": ""
@@ -59,7 +59,8 @@
               "RelativeToolTip": "Assets\\Scripts\\Player\\CameraFollow.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-10T02:31:53.382Z"
+              "WhenOpened": "2024-09-10T02:31:53.382Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
