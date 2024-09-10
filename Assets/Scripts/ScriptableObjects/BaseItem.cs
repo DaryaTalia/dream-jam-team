@@ -12,6 +12,7 @@ public class BaseItem : ScriptableObject
     public GameObject prefab;
     public int size = 1;
     public int cost;
+    public int deliveryReward = 10;
 }
 
 public enum ItemType
