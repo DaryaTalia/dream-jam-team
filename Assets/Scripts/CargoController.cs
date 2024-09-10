@@ -8,6 +8,7 @@ public class CargoController : MonoBehaviour
     [Header("Cargo")]
     [SerializeField]
     GameObject _cargoVehiclePrefab;
+    Transform _cargoTransform;
 
     // Cargo Wellness Attributes
     [Header("Cargo Wellness")]
@@ -150,10 +151,13 @@ public class CargoController : MonoBehaviour
     [Header("Speed and Travel")]
     // How fast can the cargo vehicle move and is that speed being modified
     [SerializeField]
-    float _speed = _maxSpeed;
-    const float _maxSpeed = 20f;
+    [Range(0, _maxSpeed)]
+    float _speed = _maxSpeed / 2;
+    const float _maxSpeed = 4f;
     [SerializeField]
+    [Range(1, _maxSpeed)]
     float _speedModifier = 1f;
+    int _speedDelta = 40;      // To slow the speed in relation to Unity's frames
 
     public float Speed
     {
@@ -195,10 +199,14 @@ public class CargoController : MonoBehaviour
     float _heightUpperLimit;
     [SerializeField]
     float _heightLowerLimit;
+    [SerializeField]
+    [Range(1, _maxSpeed)]
+    float _heightSpeed = 2f;
 
     // What height is the cargo vehicle moving towards currently
     [SerializeField]
     float _heightTarget;
+    Vector3 _targetPosition;
 
     [SerializeField]
     float _distanceTraveled = 0;
@@ -214,19 +222,29 @@ public class CargoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _cargoTransform = _cargoVehiclePrefab.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-        
+        if(Health > 0)
+        {
+            Move();
+        }
     }
 
     // Game options
 
+    void Move()
+    {
+        _targetPosition = new Vector3(_cargoTransform.position.x + (Speed / _speedDelta), Mathf.Lerp(_cargoTransform.position.y, _heightTarget, (_heightSpeed / 100)), 0);
+        _cargoTransform.position = _targetPosition;
+        _distanceTraveled += (Speed / _speedDelta);
+        Debug.Log("Distance Traveled: " + _distanceTraveled);
+    }
+
     // UpdateDistanceTraveled()
-    // Move()
     // UseResource(BaseItem item)
     // DeliverItem()
 
