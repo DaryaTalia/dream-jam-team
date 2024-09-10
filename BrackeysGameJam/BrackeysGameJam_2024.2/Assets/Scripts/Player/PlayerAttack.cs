@@ -55,6 +55,9 @@ public class PlayerAttack : MonoBehaviour
     void BasicAttack()
     {
         Debug.Log("Basic Attack");
+        Vector3 pos = target.position;
+        Vector3 dir = (this.transform.position - pos).normalized;
+        Debug.DrawLine(pos, pos + dir * 10, Color.red, Mathf.Infinity);
 
         // Create Checksphere located in Direction of the MouseCursor (target)
         // CheckSphere(Vector3 position, float radius, int layerMask = DefaultRaycastLayers, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal);
