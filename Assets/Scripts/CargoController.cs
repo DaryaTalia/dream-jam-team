@@ -254,8 +254,33 @@ public class CargoController : MonoBehaviour
         Debug.Log("Distance Traveled: " + _distanceTraveled);
     }
 
-    // UpdateDistanceTraveled()
-    // UseResource(BaseItem item)
-    // DeliverItem()
+    public void UseResource(BaseItem item)
+    {
+        if(item.quantity == 1)
+        {
+            RemoveResourceFromInventory(item);
+        }
+
+        // item.Activate();
+
+        item.quantity--;
+    }
+
+    public void DeliverItem()
+    {
+        if(_itemInventory.Count > 0) {
+            RemoveItemFromInventory(_itemInventory[0]);
+        }
+    }
+
+    public void DamageCargo(float value)
+    {
+        Health -= value;
+    }
+
+    public void HealCargo(float value)
+    {
+        Health += value;
+    }
 
 }
