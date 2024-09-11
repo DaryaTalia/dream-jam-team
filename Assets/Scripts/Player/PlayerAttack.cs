@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -8,7 +9,10 @@ public class PlayerAttack : MonoBehaviour
     #region Variables
     [SerializeField] Transform target; // Aim to Mouse Cursor, should this be the GameObject cursor or point to script for moving the cursor
     public Animator animator;
-
+    
+    public PlayerClass playerClass;
+    public GameObject magicianAbilityPrefab;
+    
     public float chargeTime;
     public float chargeTimeMax;
     public bool chargingAttack = false;
@@ -98,5 +102,16 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log("Class Ability");
 
         // Create Checksphere located in Direction of the MouseCursor (target) depending on Class
+        switch (playerClass)
+        {
+            case PlayerClass.Magician:
+                Instantiate(magicianAbilityPrefab, transform.position, Quaternion.identity);
+                break;
+        }
     }
+}
+
+public enum PlayerClass
+{
+    Magician,
 }

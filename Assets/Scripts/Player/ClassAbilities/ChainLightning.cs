@@ -10,6 +10,7 @@ public class ChainLightning : MonoBehaviour
     [SerializeField] private int stepsToChain = 2;
     [SerializeField] private float radius = 1.0f;
     [SerializeField] LayerMask enemyMask;
+    
     private void Start()
     {
         List<Collider> enemies = new List<Collider>();
@@ -17,6 +18,10 @@ public class ChainLightning : MonoBehaviour
         for (int i = 0; i < stepsToChain; i++)
         {
             (origin, enemies) = StepChain(origin);
+            if (enemies == null || enemies.Count == 0)
+            {
+                break;
+            }
         }   
     }
 
@@ -24,9 +29,14 @@ public class ChainLightning : MonoBehaviour
     {
         List<Collider> enemiesInRange = Physics.OverlapSphere(origin, radius, enemyMask, QueryTriggerInteraction.Ignore).ToList();
         var closestEnemy = FindClosestEnemy(enemiesInRange);
+        if (closestEnemy == null)
+        {
+            return (Vector3.zero, null);
+        }
         var enemyPosition = closestEnemy.transform.position;
         
         // Apply dmg to enemy
+        Debug.DrawLine(origin, enemyPosition, Color.blue, 1f);
 
 
         if (!canRepeatHit)

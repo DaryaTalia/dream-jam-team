@@ -885,6 +885,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1698143030}
   animator: {fileID: 1698143028}
+  playerClass: 0
+  magicianAbilityPrefab: {fileID: 4136859440576519525, guid: 1680c618f6fc02244822f2b27730bd1c,
+    type: 3}
   chargeTime: 0
   chargeTimeMax: 1.5
   chargingAttack: 0
