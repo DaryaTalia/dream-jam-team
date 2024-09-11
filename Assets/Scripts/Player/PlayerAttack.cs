@@ -80,7 +80,8 @@ public class PlayerAttack : MonoBehaviour
                 // Below is my old code to get the Enemy script for taking damage
                 //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
 
-                Debug.Log(EnemiesInRange[i]);
+                //Debug.Log(EnemiesInRange[i]);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1);
             }
         }
     }
