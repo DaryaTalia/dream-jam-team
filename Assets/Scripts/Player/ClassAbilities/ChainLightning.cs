@@ -35,7 +35,8 @@ public class ChainLightning : MonoBehaviour
         }
         var enemyPosition = closestEnemy.transform.position;
         
-        // Apply dmg to enemy
+        //TODO: Apply dmg to enemy
+        //TODO: Do real vfx
         Debug.DrawLine(origin, enemyPosition, Color.blue, 1f);
 
 
