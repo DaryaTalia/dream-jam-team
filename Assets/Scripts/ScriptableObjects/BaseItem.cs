@@ -13,6 +13,7 @@ public class BaseItem : ScriptableObject
     public int size = 1;
     public int cost;
     public int deliveryReward = 10;
+    public int quantity;
 }
 
 public enum ItemType
