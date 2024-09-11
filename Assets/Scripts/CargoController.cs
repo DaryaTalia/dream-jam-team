@@ -297,22 +297,16 @@ public class CargoController : MonoBehaviour
         Debug.Log("Distance Traveled: " + _distanceTraveled);
     }
 
-    public void UseResource(BaseItem item)
+    public void UseResource(ItemStack item)
     {
-        if(item.quantity == 1)
-        {
-            RemoveResourceFromInventory(item);
-        }
-
         // item.Activate();
-
-        item.quantity--;
+        RemoveResourceFromInventory(item.baseItem, 1);
     }
 
     public void DeliverItem()
     {
         if(_itemInventory.Count > 0) {
-            RemoveItemFromInventory(_itemInventory[0]);
+            RemoveItemFromInventory(_itemInventory[0].baseItem, 1);
         }
     }
 
