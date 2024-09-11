@@ -299,7 +299,7 @@ public class CargoController : MonoBehaviour
 
     public void UseResource(ItemStack item)
     {
-        // item.Activate();
+        Instantiate(item.baseItem.prefab, _cargoTransform);
         RemoveResourceFromInventory(item.baseItem, 1);
     }
 
