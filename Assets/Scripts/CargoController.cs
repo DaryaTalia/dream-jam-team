@@ -195,7 +195,7 @@ public class CargoController : MonoBehaviour
     // How fast can the cargo vehicle move and is that speed being modified
     [SerializeField]
     [Range(0, _maxSpeed)]
-    float _speed = _maxSpeed / 2;
+    float _speed = 1;
     const float _maxSpeed = 4f;
     [SerializeField]
     [Range(1, _maxSpeed)]
@@ -239,17 +239,18 @@ public class CargoController : MonoBehaviour
 
     // How high or low on the screen can the cargo vehicle travel
     [SerializeField]
-    float _heightUpperLimit;
+    float _heightUpperLimit = 5;
     [SerializeField]
-    float _heightLowerLimit;
+    float _heightLowerLimit = -5;
     [SerializeField]
-    [Range(1, _maxSpeed)]
-    float _heightSpeed = 2f;
+    [Range(0, 2f)]
+    float _heightSpeed = 1f;
 
     // What height is the cargo vehicle moving towards currently
     [SerializeField]
     float _heightTarget;
     Vector3 _targetPosition;
+    float _heightPadding = 1;
 
     [SerializeField]
     float _distanceTraveled = 0;
@@ -266,8 +267,8 @@ public class CargoController : MonoBehaviour
     void Start()
     {
         _cargoTransform = _cargoVehiclePrefab.transform;
+        _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
     }
-
 
     void FixedUpdate()
     {
@@ -281,15 +282,49 @@ public class CargoController : MonoBehaviour
 
     void Move()
     {
-        _targetPosition = new Vector3(_cargoTransform.position.x + (Speed / _speedDelta), Mathf.Lerp(_cargoTransform.position.y, _heightTarget, (_heightSpeed / 100)), 0);
+        if(Mathf.Abs(_heightTarget) - Mathf.Abs(_cargoTransform.position.y) < _heightPadding)
+        {
+            _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
+        }
+
+        _targetPosition = new Vector3(
+            _cargoTransform.position.x + (Speed / _speedDelta), 
+            Mathf.SmoothStep(_cargoTransform.position.y, _heightTarget, _heightSpeed * Time.deltaTime), 
+            0);
         _cargoTransform.position = _targetPosition;
+
         _distanceTraveled += (Speed / _speedDelta);
         Debug.Log("Distance Traveled: " + _distanceTraveled);
     }
 
-    // UpdateDistanceTraveled()
-    // UseResource(BaseItem item)
-    // DeliverItem()
+    public void UseResource(BaseItem item)
+    {
+        if(item.quantity == 1)
+        {
+            RemoveResourceFromInventory(item);
+        }
+
+        // item.Activate();
+
+        item.quantity--;
+    }
+
+    public void DeliverItem()
+    {
+        if(_itemInventory.Count > 0) {
+            RemoveItemFromInventory(_itemInventory[0]);
+        }
+    }
+
+    public void DamageCargo(float value)
+    {
+        Health -= value;
+    }
+
+    public void HealCargo(float value)
+    {
+        Health += value;
+    }
 
 }
 

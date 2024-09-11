@@ -52,11 +52,11 @@ MonoBehaviour:
   _itemInventory: []
   _availableResourceSlots: 3
   _resourceInventory: []
-  _speed: 1
+  _speed: 2
   _speedModifier: 1
-  _heightUpperLimit: 0
-  _heightLowerLimit: 0
-  _heightSpeed: 1
+  _heightUpperLimit: 5
+  _heightLowerLimit: -5
+  _heightSpeed: 0.5
   _heightTarget: 0
   _distanceTraveled: 0
 --- !u!1001 &3259472729361625501
