@@ -389,11 +389,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayUICanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5066444574502335620, guid: 0ee7a9f1f37d34e4692e8ea12817348f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7706939909211985132, guid: 0ee7a9f1f37d34e4692e8ea12817348f,
         type: 3}
       propertyPath: m_Pivot.x

@@ -12,13 +12,15 @@ public class TestCheckpointJourneyScript : MonoBehaviour
     public float journeyLength;
 
     public GameObject gameplayUI;
-    public Slider journeySlider;
+    public Image journeySlider;
 
     public Vector3 checkpointStartingRange;
     public Vector3 checkpointEndingRange;
 
     public GameObject checkpointSprite;
     public List<GameObject> checkPointInstances;
+
+    public List<GameObject> items;
 
     // Start is called before the first frame update
     void Start()
@@ -31,16 +33,13 @@ public class TestCheckpointJourneyScript : MonoBehaviour
 
         journeyLength = Checkpoints[Checkpoints.Count - 1];
 
-        journeySlider.minValue = 0;
-        journeySlider.maxValue = journeyLength;
-
         foreach(float point in Checkpoints)
         {
             float xPosition = journeySlider.transform.position.x + point;
             checkPointInstances.Add(Instantiate(checkpointSprite, gameplayUI.transform, false));
         }
 
-        float sliderLength = journeySlider.gameObject.GetComponent<RectTransform>().rect.width;
+        float sliderLength = journeySlider.gameObject.GetComponent<RectTransform>().rect.width - 10;
 
         int i = 0;
         foreach(GameObject sprite in checkPointInstances)
@@ -61,17 +60,21 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);
             Checkpoints.RemoveAt(0);
+            Destroy(items[0]);
+            items.RemoveAt(0);
         } else if (Checkpoints.Count == 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
         {
             nextCheckpoint = -1;
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);
             Checkpoints.Clear();
+            Destroy(items[0]);
+            items.RemoveAt(0);
         }
 
         if(nextCheckpoint != -1)
         {
-            journeySlider.value = GameManager.Instance.cargoController.DistanceTraveled;
+            journeySlider.fillAmount = GameManager.Instance.cargoController.DistanceTraveled / journeyLength;
         }
     }
 }
