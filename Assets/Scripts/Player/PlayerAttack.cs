@@ -65,13 +65,13 @@ public class PlayerAttack : MonoBehaviour
     {
         Vector3 pos = target.position;
         Vector3 dir = (pos - this.transform.position).normalized;
-        Debug.DrawLine(this.transform.position, this.transform.position + dir * playerRange, Color.red, Mathf.Infinity); // Draws line from Cursor to Player at range 10
+        //Debug.DrawLine(this.transform.position, this.transform.position + dir * playerRange, Color.red, Mathf.Infinity); // Draws line from Cursor to Player at range 10
 
-        Vector3 playerBox = new Vector3(2, 4, 2);
+        Vector3 playerBox = new Vector3(2, 4, 3);
 
         if (Physics.CheckBox(this.transform.position + (dir * playerRange/2), playerBox, Quaternion.identity, enemyMask))
         {
-            Debug.Log("Enemy in Range");
+            //Debug.Log("Enemy in Range");
 
             Collider[] EnemiesInRange = Physics.OverlapBox(this.transform.position + (dir * playerRange / 2), playerBox, Quaternion.identity, enemyMask);
 
@@ -81,7 +81,7 @@ public class PlayerAttack : MonoBehaviour
                 //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
 
                 //Debug.Log(EnemiesInRange[i]);
-                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1, 0, Vector3.zero);
             }
         }
     }
@@ -92,6 +92,27 @@ public class PlayerAttack : MonoBehaviour
 
         // Create Checksphere located in Direction of the MouseCursor (target)
         // can be a bigger or something or a completely different attack
+
+        Vector3 pos = target.position;
+        Vector3 dir = (pos - this.transform.position).normalized;
+
+        Vector3 playerBox = new Vector3(4, 4, 2);
+
+        if (Physics.CheckBox(this.transform.position + (dir * playerRange / 2), playerBox, Quaternion.identity, enemyMask))
+        {
+            //Debug.Log("Enemy in Range");
+
+            Collider[] EnemiesInRange = Physics.OverlapBox(this.transform.position + (dir * playerRange / 2), playerBox, Quaternion.identity, enemyMask);
+
+            for (int i = 0; i < EnemiesInRange.Length; i++)
+            {
+                // Below is my old code to get the Enemy script for taking damage
+                //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
+
+                //Debug.Log(EnemiesInRange[i]);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(2, 3, dir);
+            }
+        }
     }
 
     void ClassAbility()

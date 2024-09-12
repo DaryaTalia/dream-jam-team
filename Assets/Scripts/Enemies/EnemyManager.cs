@@ -77,9 +77,15 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(int dmg, float knockback, Vector3 dir)
     {
         health -= dmg;
+
+        if(knockback > 0)
+        {
+            //transform.position += dir * 3;
+            transform.position = Vector3.Lerp(transform.position, transform.position + dir * 100, 5 * Time.deltaTime);
+        }
 
         if(health <= 0)
         {
@@ -89,6 +95,8 @@ public class EnemyManager : MonoBehaviour
 
             transform.position = new Vector3(0, -10f, 0); // Hides enemy under the map so it can be reused later
         }
+
+
     }
 
     void AttackPlayer()
