@@ -1,4 +1,4 @@
-
+[System.Serializable]
 public class ItemStack
 {
     public BaseItem baseItem;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TestCheckpointJourneyScript : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class TestCheckpointJourneyScript : MonoBehaviour
     public List<GameObject> checkPointInstances;
 
     public List<GameObject> items;
+    public List<GameObject> resources;
+    public List<ItemStack> resourceStacks;
 
     // Start is called before the first frame update
     void Start()
@@ -45,11 +48,21 @@ public class TestCheckpointJourneyScript : MonoBehaviour
         foreach(GameObject sprite in checkPointInstances)
         {
             sprite.GetComponent<Image>().color = Color.red;
-            sprite.transform.position = new Vector3(((Checkpoints[i] * sliderLength) / journeyLength) + 50, journeySlider.transform.position.y, 0);
+            sprite.transform.position = new Vector3(((Checkpoints[i] * sliderLength) / journeyLength) + 60, journeySlider.transform.position.y + 35, 0);
             Debug.Log("Checkpoint " + i + " position: " + sprite.transform.position.x);
             ++i;
         }
-}
+
+        i = 0;
+        foreach (GameObject resource in resources)
+        {
+            int index = i;
+            resource.gameObject.name = resourceStacks[index].baseItem.itemName;
+            resource.GetComponentInChildren<TextMeshProUGUI>().text = resourceStacks[index].quantity.ToString();
+            resource.GetComponentInChildren<Button>().onClick.AddListener(() => UseResource(resourceStacks[index].baseItem.itemName));
+            ++i;
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -75,6 +88,29 @@ public class TestCheckpointJourneyScript : MonoBehaviour
         if(nextCheckpoint != -1)
         {
             journeySlider.fillAmount = GameManager.Instance.cargoController.DistanceTraveled / journeyLength;
+        }
+    }
+
+
+    public void UseResource(string _name)
+    {
+        foreach(ItemStack itemStack in resourceStacks)
+        {
+            if(itemStack.baseItem.itemName == _name && itemStack.quantity > 0)
+            {
+                --itemStack.quantity;
+                GameObject myResource = resources.Find(r => r.gameObject.name == _name);        // Find the correct resource game object by text mesh name
+
+                if (myResource != null)
+                {
+                    myResource.GetComponentInChildren<TextMeshProUGUI>().text = itemStack.quantity.ToString();                 // Update the text of the game object
+                } else
+                {
+                    Debug.Log(myResource);
+                }     
+                    
+                break;
+            }
         }
     }
 }

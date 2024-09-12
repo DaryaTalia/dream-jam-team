@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Health Potion
   m_EditorClassIdentifier: 
   itemName: Health Potion
-  itemType: 0
+  itemType: 1
   icon: {fileID: 0}
   prefab: {fileID: 0}
   size: 1
   cost: 0
+  deliveryReward: 0
