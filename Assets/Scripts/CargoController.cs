@@ -9,7 +9,13 @@ public class CargoController : MonoBehaviour
     [Header("Cargo")]
     [SerializeField]
     GameObject _cargoVehiclePrefab;
+    GameObject _cargoVehicleInstance;
     Transform _cargoTransform;
+
+    public GameObject CargoVehicle
+    {
+        get => _cargoVehiclePrefab;
+    }
 
     // Cargo Wellness Attributes
     [Header("Cargo Wellness")]
@@ -150,7 +156,15 @@ public class CargoController : MonoBehaviour
             return false;
         }
 
-        ResourceInventory.Add(new ItemStack(_item, quantity));
+        if(ResourceInventory.Find(i => i.baseItem == _item) != null)
+        {
+            ++ResourceInventory.Find(i => i.baseItem == _item).quantity;
+        } 
+        else
+        {
+            ResourceInventory.Add(new ItemStack(_item, quantity));
+        }
+        
         _availableResourceSlots -= _item.size;
         return true;
     }
@@ -266,8 +280,9 @@ public class CargoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _cargoTransform = _cargoVehiclePrefab.transform;
         _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
+        _cargoVehicleInstance = Instantiate(CargoVehicle);
+        _cargoTransform = _cargoVehicleInstance.transform;
     }
 
     void FixedUpdate()

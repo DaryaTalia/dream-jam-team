@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8699380653671729159}
   - component: {fileID: -1696464559278485000}
   - component: {fileID: -8175577071554684421}
+  - component: {fileID: 100629500531229215}
   m_Layer: 0
   m_Name: Game-Manager
   m_TagString: Untagged
@@ -46,10 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9fb17b13f64e3bbb4b3cbac1c8e715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnManager: {fileID: 0}
-  hubManager: {fileID: 0}
-  cargoControllerPrefab: {fileID: 1645926126742937507, guid: 1339061fdf36aad4ea62dea950a301c0,
-    type: 3}
+  spawnManager: {fileID: -8175577071554684421}
+  hubManager: {fileID: -1696464559278485000}
+  cargoController: {fileID: 100629500531229215}
   _gold: 0
 --- !u!114 &-1696464559278485000
 MonoBehaviour:
@@ -75,3 +75,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3eaebfd5c3430ba1ba30c24c6eb20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &100629500531229215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5078395330431609759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59fadb69d6045a44a7e134cccc9c4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cargoVehiclePrefab: {fileID: 3830439674036797736, guid: 0650c246b5a66d84b8d68e9c666e49ad,
+    type: 3}
+  _health: 100
+  _defense: 0
+  _availableItemSlots: 6
+  _availableResourceSlots: 3
+  _speed: 2
+  _speedModifier: 1
+  _heightUpperLimit: 5
+  _heightLowerLimit: -5
+  _heightSpeed: 0.5
+  _heightTarget: 0
+  _distanceTraveled: 0
