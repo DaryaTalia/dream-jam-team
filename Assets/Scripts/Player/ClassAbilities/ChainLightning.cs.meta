@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Player/ClassAbilities/ChainLightning.cs.meta
+guid: 0ba8fde2f39cc6a4d9621e3c0230dbe2
+========
+guid: a0fca01947308b040a600d47038579aa
+>>>>>>>> main:Assets/Scripts/Enemies/EnemyManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

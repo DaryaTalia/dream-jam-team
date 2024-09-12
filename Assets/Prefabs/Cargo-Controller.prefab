@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1367249028068793999}
   - component: {fileID: 9058649117025205408}
+  - component: {fileID: 5185061702773881101}
+  - component: {fileID: 7090526332064121065}
   m_Layer: 0
   m_Name: Cargo-Controller
   m_TagString: CargoController
@@ -48,8 +50,9 @@ MonoBehaviour:
   _cargoVehiclePrefab: {fileID: 1734886116909838517}
   _health: 100
   _defense: 0
-  _availableItemSlots: 6
+  itemInventory: {fileID: 7090526332064121065}
   _availableResourceSlots: 3
+  resourceInventory: {fileID: 5185061702773881101}
   _speed: 2
   _speedModifier: 1
   _heightUpperLimit: 5
@@ -57,6 +60,34 @@ MonoBehaviour:
   _heightSpeed: 0.5
   _heightTarget: 0
   _distanceTraveled: 0
+--- !u!114 &5185061702773881101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645926126742937507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5479202960f4dbc9c2753b8cca89694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedItemTypes: 1
+  maxItemSlots: 6
+--- !u!114 &7090526332064121065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645926126742937507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5479202960f4dbc9c2753b8cca89694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedItemTypes: 6
+  maxItemSlots: 6
 --- !u!1001 &3259472729361625501
 PrefabInstance:
   m_ObjectHideFlags: 0
