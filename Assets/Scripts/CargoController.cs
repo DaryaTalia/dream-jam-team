@@ -327,9 +327,9 @@ public class CargoController : MonoBehaviour
         _defense = 0;
         _itemInventory.Clear();
         _availableItemSlots = _maxItemSlots;
-        foreach (BaseItem _baseItem in _resourceInventory)
+        foreach (ItemStack _baseItem in _resourceInventory)
         {
-            _gm.hubManager.IncrementResourceItem(_baseItem.itemName, 1);
+            _gm.hubManager.IncrementResourceItem(_baseItem.baseItem.itemName, 1);
         }
         _resourceInventory.Clear();
         _availableResourceSlots = _maxResourceSlots;
