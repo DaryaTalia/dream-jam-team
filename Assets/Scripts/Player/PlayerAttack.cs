@@ -12,6 +12,10 @@ public class PlayerAttack : MonoBehaviour
     public float chargeTime;
     public float chargeTimeMax;
     public bool chargingAttack = false;
+
+    public float attackTime;
+    public float attackTimeMax;
+
     public float playerRange;
 
     [SerializeField] LayerMask enemyMask;
@@ -23,34 +27,45 @@ public class PlayerAttack : MonoBehaviour
     {
 
         #region Basic and Charge Attack
-        if (Input.GetMouseButtonDown(0)) // This should count as being held down unless you have MouseButtonUp
+        if(attackTime <= 0)
         {
-            //Debug.Log("Basic Attack");
-            chargingAttack = true;
-            animator.SetBool("isAttacking", true);
-        }
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            chargingAttack = false;
-            animator.SetBool("isAttacking", false);
-
-            if (chargeTime >= chargeTimeMax)
+            if (Input.GetMouseButtonDown(0)) // This should count as being held down unless you have MouseButtonUp
             {
-                ChargeAttack();
-            }
-            else
-            {
-                BasicAttack();
+                //Debug.Log("Basic Attack");
+                chargingAttack = true;
+                animator.SetBool("isAttacking", true);
             }
 
-            chargeTime = 0;
+            if (Input.GetMouseButtonUp(0))
+            {
+                chargingAttack = false;
+                animator.SetBool("isAttacking", false);
+
+                if (chargeTime >= chargeTimeMax)
+                {
+                    ChargeAttack();
+                    attackTime = attackTimeMax;
+                }
+                else
+                {
+                    BasicAttack();
+                    attackTime = attackTimeMax;
+                }
+
+                chargeTime = 0;
+            }
+
+            if (chargingAttack)
+            {
+                chargeTime += Time.deltaTime;
+            }
         }
 
-        if (chargingAttack)
+        if(attackTime > 0)
         {
-            chargeTime += Time.deltaTime;
+            attackTime -= Time.deltaTime;
         }
+        
         #endregion
 
         #region Class Ability

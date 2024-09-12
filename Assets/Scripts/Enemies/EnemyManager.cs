@@ -26,6 +26,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
 
+    [SerializeField] private GameObject currentTarget;
+    [SerializeField] private GameObject cargoTarget;
     [SerializeField] private GameObject playerTarget;
     [SerializeField] private LayerMask playerMask;
 
@@ -39,6 +41,10 @@ public class EnemyManager : MonoBehaviour
     void Init() // This should be called when the enemy gets reused
     {
         playerTarget = GameObject.FindGameObjectWithTag("Player");
+        //cargoTarget = GameObject.FindGameObjectWithTag("Cargo");
+
+        currentTarget = playerTarget;
+
         isDead = false;
         pauseMovement = false;
         canAttack = true;
@@ -66,7 +72,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (!pauseMovement)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerTarget.transform.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, currentTarget.transform.position, moveSpeed * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, 1.9f, transform.position.z); // This just sets the height right but should be fixed later
         }
 
@@ -134,6 +140,18 @@ public class EnemyManager : MonoBehaviour
         if (atkCooldown > 0)
         {
             atkCooldown -= Time.deltaTime;
+        }
+    }
+
+    public void SwitchAggro()
+    {
+        if (immuneAggro)
+        {
+            return;
+        }
+        else
+        {
+            currentTarget = playerTarget; // This technically does nothing now since the enemies only target the player, needs to be switched after the Cargo is added
         }
     }
 }
