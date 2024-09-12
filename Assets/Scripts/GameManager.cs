@@ -87,9 +87,3 @@ public class GameManager : MonoBehaviour
     }
 
 }
-
-public class ResourceItem
-{
-    public BaseItem baseItem;
-    public int quantity;
-}

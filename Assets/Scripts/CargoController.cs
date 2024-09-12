@@ -327,10 +327,6 @@ public class CargoController : MonoBehaviour
         _defense = 0;
         _itemInventory.Clear();
         _availableItemSlots = _maxItemSlots;
-        foreach (BaseItem _baseItem in _resourceInventory)
-        {
-            _gm.hubManager.IncrementResourceItem(_baseItem.itemName, 1);
-        }
         _resourceInventory.Clear();
         _availableResourceSlots = _maxResourceSlots;
         _speed = 1;
@@ -340,16 +336,4 @@ public class CargoController : MonoBehaviour
         _distanceTraveled = 0;
     }
 
-}
-
-public class ItemStack
-{
-    public BaseItem baseItem;
-    public int quantity;
-
-    public ItemStack(BaseItem baseItem, int quantity)
-    {
-        this.baseItem = baseItem;
-        this.quantity = quantity;
-    }
 }
