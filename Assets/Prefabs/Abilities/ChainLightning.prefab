@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRepeatHit: 0
-  stepsToChain: 2
+  stepsToChain: 4
   radius: 15
   enemyMask:
     serializedVersion: 2

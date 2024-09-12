@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ChainLightning : MonoBehaviour
 {
@@ -13,21 +14,29 @@ public class ChainLightning : MonoBehaviour
     
     private void Start()
     {
-        List<Collider> enemies = new List<Collider>();
         Vector3 origin = transform.position;
+        List<Collider> enemiesInRange = Physics.OverlapSphere(origin, radius, enemyMask, QueryTriggerInteraction.Ignore).ToList();
         for (int i = 0; i < stepsToChain; i++)
         {
-            (origin, enemies) = StepChain(origin);
-            if (enemies == null || enemies.Count == 0)
+            (origin, enemiesInRange) = StepChain(origin, enemiesInRange);
+            if (enemiesInRange == null || enemiesInRange.Count == 0)
             {
                 break;
             }
-        }   
+        }
+
+        //TODO: This is to allow debug line to show up. Will need to change to accomodate vfx
+        StartCoroutine(DelayDestroy()); 
     }
 
-    private (Vector3, List<Collider>) StepChain(Vector3 origin)
+    private IEnumerator DelayDestroy()
     {
-        List<Collider> enemiesInRange = Physics.OverlapSphere(origin, radius, enemyMask, QueryTriggerInteraction.Ignore).ToList();
+        yield return new WaitForSeconds(Random.Range(1f, 2f));
+        Destroy(gameObject);
+    }
+
+    private (Vector3, List<Collider>) StepChain(Vector3 origin, List<Collider> enemiesInRange)
+    {
         var closestEnemy = FindClosestEnemy(enemiesInRange);
         if (closestEnemy == null)
         {
