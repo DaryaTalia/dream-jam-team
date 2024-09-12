@@ -15,6 +15,8 @@ public class TestCheckpointJourneyScript : MonoBehaviour
     public GameObject gameplayUI;
     public Image journeySlider;
 
+    public Image cargoHealthSlider;
+
     public Vector3 checkpointStartingRange;
     public Vector3 checkpointEndingRange;
 
@@ -22,6 +24,7 @@ public class TestCheckpointJourneyScript : MonoBehaviour
     public List<GameObject> checkPointInstances;
 
     public List<GameObject> items;
+    public GameObject _resources;       // holds the instantiated resource graphics
     public List<GameObject> resources;
     public List<ItemStack> resourceStacks;
 
@@ -53,6 +56,11 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             ++i;
         }
 
+        foreach (ItemStack itemStack in resourceStacks)
+        {
+            resources.Add(Instantiate(itemStack.baseItem.prefab, _resources.transform));
+        }
+
         i = 0;
         foreach (GameObject resource in resources)
         {
@@ -62,6 +70,17 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             resource.GetComponentInChildren<Button>().onClick.AddListener(() => UseResource(resourceStacks[index].baseItem.itemName));
             ++i;
         }
+
+        Image[] cargoImages = GameManager.Instance.cargoController.CargoVehicle.GetComponentsInChildren<Image>();
+        foreach(Image myHealth in cargoImages)
+        {
+            if(myHealth.gameObject.name == "HealthMask")
+            {
+                cargoHealthSlider = myHealth;
+                cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -69,6 +88,9 @@ public class TestCheckpointJourneyScript : MonoBehaviour
     {
         if(Checkpoints.Count > 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
         {
+            //Testing
+            GameManager.Instance.cargoController.Health -= 20;
+            cargoHealthSlider.fillAmount = (GameManager.Instance.cargoController.Health) / GameManager.Instance.cargoController.MaxHealth;
             nextCheckpoint = Checkpoints[1];
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);
@@ -77,6 +99,9 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             items.RemoveAt(0);
         } else if (Checkpoints.Count == 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
         {
+            //Testing
+            GameManager.Instance.cargoController.Health -= 20;
+            cargoHealthSlider.fillAmount = (GameManager.Instance.cargoController.Health) / GameManager.Instance.cargoController.MaxHealth;
             nextCheckpoint = -1;
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);

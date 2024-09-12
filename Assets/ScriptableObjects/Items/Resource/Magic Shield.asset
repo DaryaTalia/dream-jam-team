@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Magic Shield
   itemType: 1
   icon: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 6885979530915775948, guid: ef1b9a99796548043ab98f82f60ff9d7, type: 3}
   size: 1
   cost: 0
   deliveryReward: 0
