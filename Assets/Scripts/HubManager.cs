@@ -6,19 +6,19 @@ public class HubManager : MonoBehaviour
 {
     [Header("Cargo Resources")]
     [SerializeField]
-    List<ResourceItem> _primaryResourceInventory;
-    public List<ResourceItem> PrimaryResourceInventory
+    List<ItemStack> _primaryResourceInventory;
+    public List<ItemStack> PrimaryResourceInventory
     {
         get => _primaryResourceInventory;
     }
 
-    private BaseItem GetResourceItem(string _name)
+    private ItemStack GetResourceItem(string _name)
     {
-        foreach(ResourceItem _resourceItem in PrimaryResourceInventory)
+        foreach(ItemStack _resourceItem in PrimaryResourceInventory)
         {
             if(_resourceItem.baseItem.itemName == _name)
             {
-                return _resourceItem.baseItem;
+                return _resourceItem;
             }
         }
         return null;
@@ -26,7 +26,7 @@ public class HubManager : MonoBehaviour
 
     public void IncrementResourceItem(string _name, int _value)
     {
-        foreach (ResourceItem _resourceItem in PrimaryResourceInventory)
+        foreach (ItemStack _resourceItem in PrimaryResourceInventory)
         {
             if (_resourceItem.baseItem.itemName == _name)
             {
@@ -38,7 +38,7 @@ public class HubManager : MonoBehaviour
 
     public void DecrementResourceItem(string _name, int _value)
     {
-        foreach (ResourceItem _resourceItem in PrimaryResourceInventory)
+        foreach (ItemStack _resourceItem in PrimaryResourceInventory)
         {
             if (_resourceItem.baseItem.itemName == _name)
             {
@@ -50,13 +50,13 @@ public class HubManager : MonoBehaviour
 
     public bool BuyResource(string _name)
     {
-        if (GameManager.Instance.Gold < GetResourceItem(_name).cost)
+        if (GameManager.Instance.Gold < GetResourceItem(_name).baseItem.cost)
         {
             Debug.Log("Not enough gold.");
             return false;
         }
 
-        GameManager.Instance.Gold -= GetResourceItem(_name).cost;
+        GameManager.Instance.Gold -= GetResourceItem(_name).baseItem.cost;
         IncrementResourceItem(_name, 1);
         return true;
     }
@@ -69,7 +69,7 @@ public class HubManager : MonoBehaviour
             return false;
         }
 
-        bool result = GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().AddResourceToInventory(GetResourceItem(_name));
+        bool result = GameManager.Instance.cargoController.AddResourceToInventory(GetResourceItem(_name).baseItem, 1);
 
         if(result)
         {
@@ -79,35 +79,17 @@ public class HubManager : MonoBehaviour
     }
 
     public bool UnquipResource(string _name)
-    {
-        int _quantity = 0;
+    {     
 
-        foreach(BaseItem _item in GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory)
-        {
-            if (_item.itemName == _name)
-            {
-                ++_quantity;
-            }
-        }
-
-        if (_quantity < 1)
+        if (GameManager.Instance.cargoController.ResourceInventory.Find(i => i.baseItem.itemName == _name).quantity < 1)
         {
             Debug.Log("Not enough resources equipped.");
             return false;
         }
 
-        BaseItem _toRemove = null;
+        ItemStack _toRemove = GameManager.Instance.cargoController.ResourceInventory.Find(i => i.baseItem.itemName == _name);
 
-        foreach (BaseItem _item in GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory)
-        {
-            if (_item.itemName == _name)
-            {
-                _toRemove = _item;
-                break;
-            }
-        }
-
-        GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory.Remove(_toRemove);
+        GameManager.Instance.cargoController.ResourceInventory.Remove(_toRemove);
 
         return true;
     }
