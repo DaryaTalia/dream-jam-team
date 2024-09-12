@@ -320,6 +320,26 @@ public class CargoController : MonoBehaviour
         Health += value;
     }
 
+    public void Reset(GameManager _gm)
+    {
+        _cargoTransform.position = new Vector3(0,0,0);
+        _health = _maxHealth;
+        _defense = 0;
+        _itemInventory.Clear();
+        _availableItemSlots = _maxItemSlots;
+        foreach (BaseItem _baseItem in _resourceInventory)
+        {
+            _gm.hubManager.IncrementResourceItem(_baseItem.itemName, 1);
+        }
+        _resourceInventory.Clear();
+        _availableResourceSlots = _maxResourceSlots;
+        _speed = 1;
+        _speedModifier = 1f;
+        _heightTarget = 0;
+        _targetPosition = new Vector3(0, 0, 0);
+        _distanceTraveled = 0;
+    }
+
 }
 
 public class ItemStack
