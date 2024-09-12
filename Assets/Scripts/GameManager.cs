@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum GameState { MainMenu, NewGame, LoadGame, StoryMenu, SettingsMenu, PauseMenu, CalmMode, StormMode };
+    GameState _gameStatus;
+    public GameState GameStatus
+    {
+        get => _gameStatus;
+    }
+
     public SpawnManager spawnManager;
     public HubManager hubManager;
+    public GameObject cargoControllerPrefab;
 
     #region Singleton
     private static GameManager _instance;
@@ -22,6 +30,66 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
     }
-    #endregion
 
+    private void Start()
+    {
+        _gameStatus = GameState.MainMenu;
+    }
+
+    #endregion
+    [Header("Currency")]
+    [SerializeField]
+    int _gold; // common
+    int _silver; // uncommon
+    int _platinum; // rare
+
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            if(value < 1)
+            {
+                _gold = 0;
+            } else
+            {
+                _gold = value;
+            }
+        }
+    }
+
+    private void CalmMode()
+    {
+        _gameStatus = GameState.CalmMode;
+        cargoControllerPrefab.GetComponent<CargoController>().Reset(this);
+    }
+
+    private void StormMode()
+    {
+        _gameStatus = GameState.StormMode;
+
+    }
+    
+    public void StartCalmMode()
+    {
+        if(GameStatus == GameState.StormMode || GameStatus == GameState.NewGame || GameStatus == GameState.LoadGame)
+        {
+            CalmMode();
+        }
+    }
+
+    public void StartStormMode()
+    {
+        if (GameStatus == GameState.CalmMode)
+        {
+            StormMode();
+        }
+    }
+
+}
+
+public class ResourceItem
+{
+    public BaseItem baseItem;
+    public int quantity;
 }
