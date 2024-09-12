@@ -15,9 +15,10 @@ public class BaseItem : ScriptableObject
     public int deliveryReward = 10;
 }
 
+[Flags]
 public enum ItemType
 {
-    Resource,
-    Deliverable,
-    Buff
+    Resource = 1,
+    Deliverable = 2,
+    Buff = 4,
 }

@@ -14,7 +14,7 @@ public class CargoController : MonoBehaviour
 
     public GameObject CargoVehicle
     {
-        get => _cargoVehiclePrefab;
+        get => _cargoVehicleInstance;
     }
 
     // Cargo Wellness Attributes
@@ -39,6 +39,11 @@ public class CargoController : MonoBehaviour
         }
     }
 
+    public float MaxHealth
+    {
+        get => _maxHealth;
+    }
+
     [SerializeField]
     float _defense = 0;
     const float _maxDefense = 100;
@@ -61,146 +66,52 @@ public class CargoController : MonoBehaviour
         }
     }
 
+    public float MaxDefense
+    {
+        get => _maxDefense;
+    }
+
     // Items for Delivery
 
     [Header("Cargo Items and Buffs")]
-    [SerializeField]
-    int _availableItemSlots = _maxItemSlots;
-    const int _maxItemSlots = 6;
-    [SerializeField]
-    List<ItemStack> _itemInventory;
-    public List<ItemStack> ItemInventory
+    [SerializeField] private Inventory itemInventory;
+    public bool AddItemToInventory(BaseItem item, int quantity)
     {
-        get => _itemInventory;
+        return itemInventory.AddItemToInventory(item, quantity);
     }
 
-    public bool AddItemToInventory(BaseItem _item, int quantity)
+    public void RemoveItemFromInventory(BaseItem item, int quantity)
     {
-        // Item Checks
-        if(_item.itemType != ItemType.Deliverable || _item.itemType != ItemType.Buff)
-        {
-            Debug.Log("Invalid Item Type");
-            return false;
-        }
-
-        if(_availableItemSlots < _item.size)
-        {
-            Debug.Log("No space for item");
-            return false;
-        }
-
-        ItemInventory.Add(new ItemStack(_item, quantity));
-        _availableItemSlots -= _item.size;
-        return true;
-    }
-
-    public void RemoveItemFromInventory(BaseItem _item, int quantity)
-    {
-        // Item Checks
-        if (_item.itemType != ItemType.Deliverable || _item.itemType != ItemType.Buff)
-        {
-            Debug.Log("Invalid Item Type");
-            return;
-        }
-        
-        List<ItemStack> relevantStacks = ItemInventory.FindAll(i => i.baseItem == _item);
-        int removedCount = 0;
-        foreach (ItemStack relevantStack in relevantStacks)
-        {
-            if (removedCount == quantity)
-            {
-                break;
-            }
-
-            var needToRemove = quantity - removedCount;
-            if (relevantStack.quantity <= needToRemove)
-            {
-                removedCount += relevantStack.quantity;
-                ItemInventory.Remove(relevantStack);
-            }
-            else
-            {
-                removedCount += needToRemove;
-                relevantStack.quantity -= needToRemove;
-            }
-        }
-        ItemInventory.Remove(ItemInventory.First(i => i.baseItem == _item));
-        _availableItemSlots += _item.size;
+        itemInventory.RemoveItemFromInventory(item, quantity);
     }
 
     [Header("Cargo Resources")]
-    [SerializeField]
-    int _availableResourceSlots = _maxResourceSlots;
-    const int _maxResourceSlots = 3;
-    [SerializeField]
-    List<ItemStack> _resourceInventory;
-    public List<ItemStack> ResourceInventory
-    {
-        get => _resourceInventory;
-    }
+    [SerializeField] Inventory resourceInventory;
 
     // Consumable Resources
 
-    public bool AddResourceToInventory(BaseItem _item, int quantity)
+    public bool AddResourceToInventory(BaseItem item, int quantity)
     {
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return false;
         }
 
-        if (_availableResourceSlots < _item.size)
-        {
-            Debug.Log("No space for resource");
-            return false;
-        }
-
-        if(ResourceInventory.Find(i => i.baseItem == _item) != null)
-        {
-            ++ResourceInventory.Find(i => i.baseItem == _item).quantity;
-        } 
-        else
-        {
-            ResourceInventory.Add(new ItemStack(_item, quantity));
-        }
-        
-        _availableResourceSlots -= _item.size;
-        return true;
+        return resourceInventory.AddItemToInventory(item, quantity);
     }
 
-    public void RemoveResourceFromInventory(BaseItem _item, int quantity)
+    public void RemoveResourceFromInventory(BaseItem item, int quantity)
     {
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return;
         }
 
-        List<ItemStack> relevantStacks = ResourceInventory.FindAll(i => i.baseItem == _item);
-        int removedCount = 0;
-        foreach (ItemStack relevantStack in relevantStacks)
-        {
-            if (removedCount == quantity)
-            {
-                break;
-            }
-
-            var needToRemove = quantity - removedCount;
-            if (relevantStack.quantity <= needToRemove)
-            {
-                removedCount += relevantStack.quantity;
-                ItemInventory.Remove(relevantStack);
-            }
-            else
-            {
-                removedCount += needToRemove;
-                relevantStack.quantity -= needToRemove;
-            }
-        }
-        ResourceInventory.Remove(ResourceInventory.First(i => i.baseItem == _item));
-        _availableResourceSlots += _item.size;
+        resourceInventory.RemoveItemFromInventory(item, quantity);
     }
 
     // Speed and Travel
@@ -278,10 +189,10 @@ public class CargoController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
-        _cargoVehicleInstance = Instantiate(CargoVehicle);
+        _cargoVehicleInstance = Instantiate(_cargoVehiclePrefab);
         _cargoTransform = _cargoVehicleInstance.transform;
     }
 
@@ -320,9 +231,7 @@ public class CargoController : MonoBehaviour
 
     public void DeliverItem()
     {
-        if(_itemInventory.Count > 0) {
-            RemoveItemFromInventory(_itemInventory[0].baseItem, 1);
-        }
+        RemoveItemFromInventory(itemInventory.itemInventory[0].baseItem, 1);
     }
 
     public void DamageCargo(float value)
@@ -340,14 +249,9 @@ public class CargoController : MonoBehaviour
         _cargoTransform.position = new Vector3(0,0,0);
         _health = _maxHealth;
         _defense = 0;
-        _itemInventory.Clear();
-        _availableItemSlots = _maxItemSlots;
-        foreach (ItemStack _baseItem in _resourceInventory)
-        {
-            _gm.hubManager.IncrementResourceItem(_baseItem.baseItem.itemName, 1);
-        }
-        _resourceInventory.Clear();
-        _availableResourceSlots = _maxResourceSlots;
+        itemInventory.ClearInventory();
+        _gm.hubManager.ResetStoreInventory();
+        resourceInventory.ClearInventory();
         _speed = 1;
         _speedModifier = 1f;
         _heightTarget = 0;
@@ -355,16 +259,4 @@ public class CargoController : MonoBehaviour
         _distanceTraveled = 0;
     }
 
-}
-
-public class ItemStack
-{
-    public BaseItem baseItem;
-    public int quantity;
-
-    public ItemStack(BaseItem baseItem, int quantity)
-    {
-        this.baseItem = baseItem;
-        this.quantity = quantity;
-    }
 }
