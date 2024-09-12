@@ -69,7 +69,7 @@ public class HubManager : MonoBehaviour
             return false;
         }
 
-        bool result = GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().AddResourceToInventory(GetResourceItem(_name).baseItem, 1);
+        bool result = GameManager.Instance.cargoController.AddResourceToInventory(GetResourceItem(_name).baseItem, 1);
 
         if(result)
         {
@@ -81,15 +81,15 @@ public class HubManager : MonoBehaviour
     public bool UnquipResource(string _name)
     {     
 
-        if (GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory.Find(i => i.baseItem.itemName == _name).quantity < 1)
+        if (GameManager.Instance.cargoController.ResourceInventory.Find(i => i.baseItem.itemName == _name).quantity < 1)
         {
             Debug.Log("Not enough resources equipped.");
             return false;
         }
 
-        ItemStack _toRemove = GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory.Find(i => i.baseItem.itemName == _name);
+        ItemStack _toRemove = GameManager.Instance.cargoController.ResourceInventory.Find(i => i.baseItem.itemName == _name);
 
-        GameManager.Instance.cargoControllerPrefab.GetComponent<CargoController>().ResourceInventory.Remove(_toRemove);
+        GameManager.Instance.cargoController.ResourceInventory.Remove(_toRemove);
 
         return true;
     }
