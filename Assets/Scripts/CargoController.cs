@@ -14,7 +14,7 @@ public class CargoController : MonoBehaviour
 
     public GameObject CargoVehicle
     {
-        get => _cargoVehiclePrefab;
+        get => _cargoVehicleInstance;
     }
 
     // Cargo Wellness Attributes
@@ -39,6 +39,11 @@ public class CargoController : MonoBehaviour
         }
     }
 
+    public float MaxHealth
+    {
+        get => _maxHealth;
+    }
+
     [SerializeField]
     float _defense = 0;
     const float _maxDefense = 100;
@@ -59,6 +64,11 @@ public class CargoController : MonoBehaviour
                 _defense = value;
             }
         }
+    }
+
+    public float MaxDefense
+    {
+        get => _maxDefense;
     }
 
     // Items for Delivery
@@ -179,10 +189,10 @@ public class CargoController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
-        _cargoVehicleInstance = Instantiate(CargoVehicle);
+        _cargoVehicleInstance = Instantiate(_cargoVehiclePrefab);
         _cargoTransform = _cargoVehicleInstance.transform;
     }
 
