@@ -12,6 +12,9 @@ public class PlayerAttack : MonoBehaviour
     
     public PlayerClass playerClass;
     public GameObject magicianAbilityPrefab;
+    public float magicianAbilityCooldown = 0.5f;
+    private float abilityCooldown = 0f;
+    private float cooldownTimer = 0f;
     
     public float chargeTime;
     public float chargeTimeMax;
@@ -25,6 +28,16 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Tick the cooldown timer
+        cooldownTimer += Time.deltaTime;
+        
+        // We do this every frame to allow live tweaking the value, but still have this switch in one place
+        switch (playerClass)
+        {
+            case PlayerClass.Magician:
+                abilityCooldown = magicianAbilityCooldown;
+                break;
+        }
 
         #region Basic and Charge Attack
         if (Input.GetMouseButtonDown(0)) // This should count as being held down unless you have MouseButtonUp
@@ -121,6 +134,12 @@ public class PlayerAttack : MonoBehaviour
 
     void ClassAbility()
     {
+        if (cooldownTimer < abilityCooldown)
+        {
+            return;
+        }
+        
+        cooldownTimer = 0f;
         Debug.Log("Class Ability");
 
         // Create Checksphere located in Direction of the MouseCursor (target) depending on Class
