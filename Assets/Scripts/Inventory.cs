@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] ItemType allowedItemTypes;
     public int maxItemSlots = 6;
-    public int availableItemSlots;
-    [SerializeField] List<ItemStack> itemInventory;
+    private int availableItemSlots;
+    public List<ItemStack> itemInventory;
 
     private void Awake()
     {
@@ -20,36 +21,42 @@ public class Inventory : MonoBehaviour
         return itemInventory.Select(i => i.baseItem).ToList();
     }
 
-    public bool AddItemToInventory(BaseItem _item, int quantity)
+    public bool AddItemToInventory(BaseItem item, int quantity)
     {
+        // Test if allowed item type
+        if (!allowedItemTypes.HasFlag(item.itemType))
+        {
+            return false;
+        }
+        
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return false;
         }
 
-        if (availableItemSlots < _item.size)
+        if (availableItemSlots < item.size)
         {
             Debug.Log("No space for resource");
             return false;
         }
 
-        itemInventory.Add(new ItemStack(_item, quantity));
-        availableItemSlots -= _item.size;
+        itemInventory.Add(new ItemStack(item, quantity));
+        availableItemSlots -= item.size;
         return true;
     }
 
-    public void RemoveItemFromInventory(BaseItem _item, int quantity)
+    public void RemoveItemFromInventory(BaseItem item, int quantity)
     {
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return;
         }
 
-        List<ItemStack> relevantStacks = itemInventory.FindAll(i => i.baseItem == _item);
+        List<ItemStack> relevantStacks = itemInventory.FindAll(i => i.baseItem == item);
         int removedCount = 0;
         foreach (ItemStack relevantStack in relevantStacks)
         {
@@ -70,12 +77,13 @@ public class Inventory : MonoBehaviour
                 relevantStack.quantity -= needToRemove;
             }
         }
-        itemInventory.Remove(itemInventory.First(i => i.baseItem == _item));
-        availableItemSlots += _item.size;
+        itemInventory.Remove(itemInventory.First(i => i.baseItem == item));
+        availableItemSlots += item.size;
     }
 
     public void ClearInventory()
     {
+        availableItemSlots = maxItemSlots;
         itemInventory.Clear();
     }
 }
