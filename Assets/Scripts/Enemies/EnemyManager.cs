@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
@@ -5,11 +6,12 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private int enemyType;
+    #region
+    [SerializeField] private int enemyType; // 0 speed / 1 drone / 2 Imob / 3 DmgDlr
 
     public int health; // made public to see for testing
     [SerializeField] private int healthSpeed;
-    [SerializeField] private int healthAOE;
+    [SerializeField] private int healthDrone;
     [SerializeField] private int healthImob;
     [SerializeField] private int healthDmgDlr;
     public bool isDead;
@@ -30,6 +32,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject cargoTarget;
     [SerializeField] private GameObject playerTarget;
     [SerializeField] private LayerMask playerMask;
+    #endregion
 
     private void Start()
     {
@@ -55,7 +58,7 @@ public class EnemyManager : MonoBehaviour
                 health = healthSpeed;
                 break;
             case 1: // Enemy AOE
-                health = healthAOE;
+                health = healthDrone;
                 break;
             case 2: // Enemy Imot
                 health = healthImob;
@@ -73,7 +76,11 @@ public class EnemyManager : MonoBehaviour
         if (!pauseMovement)
         {
             transform.position = Vector3.MoveTowards(transform.position, currentTarget.transform.position, moveSpeed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, 1.9f, transform.position.z); // This just sets the height right but should be fixed later
+
+            if(enemyType == 1)
+            {
+                transform.position = new Vector3(transform.position.x, 2f, transform.position.z); // This just sets the height right but should be fixed later
+            }
         }
 
         if (!isDead)
@@ -90,7 +97,7 @@ public class EnemyManager : MonoBehaviour
         if(knockback > 0)
         {
             //transform.position += dir * 3;
-            transform.position = Vector3.Lerp(transform.position, transform.position + dir * 100, 5 * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, transform.position + dir * knockback, 5 * Time.deltaTime);
         }
 
         if(health <= 0)
@@ -99,6 +106,7 @@ public class EnemyManager : MonoBehaviour
             isDead = true;
             pauseMovement = true;
 
+            //StopAllCoroutines(); // doesn't stop coroutines started from another script
             transform.position = new Vector3(0, -10f, 0); // Hides enemy under the map so it can be reused later
         }
 
@@ -143,8 +151,32 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void SwitchAggro()
+    public IEnumerator AggroCoroutine(float length)
     {
+        GameObject origTarget = currentTarget;
+
+        if (immuneAggro)
+        {
+            yield break;
+        }
+        else
+        {
+            currentTarget = playerTarget; // This technically does nothing now since the enemies only target the player, needs to be switched after the Cargo is added
+        }
+
+        yield return new WaitForSeconds(length);
+
+        if (!isDead)
+        {
+            //Debug.Log("Undo Aggro");
+            currentTarget = origTarget;
+        }
+    }
+
+    /*public void SwitchAggro(float length)
+    {
+        GameObject origTarget = currentTarget;
+
         if (immuneAggro)
         {
             return;
@@ -153,5 +185,18 @@ public class EnemyManager : MonoBehaviour
         {
             currentTarget = playerTarget; // This technically does nothing now since the enemies only target the player, needs to be switched after the Cargo is added
         }
-    }
+
+        //new WaitForSeconds(length);
+
+        //Debug.Log("After " + length + " seconds, this switched aggro");
+
+        if(length > 0)
+        {
+            length -= Time.deltaTime;
+        }
+        else if (length <= 0)
+        {
+            currentTarget = origTarget;
+        }
+    }*/
 }

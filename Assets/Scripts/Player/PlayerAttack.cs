@@ -7,14 +7,19 @@ public class PlayerAttack : MonoBehaviour
 
     #region Variables
     [SerializeField] Transform target; // Aim to Mouse Cursor, should this be the GameObject cursor or point to script for moving the cursor
-    public Animator animator;
+    public Animator animatorMouse;
 
-    public float chargeTime;
-    public float chargeTimeMax;
+    [SerializeField] Animator animatorChad;
+
+    private float chargeTime;
+    [SerializeField] private float chargeTimeMax;
     public bool chargingAttack = false;
 
-    public float attackTime;
-    public float attackTimeMax;
+    private float attackTime;
+    [SerializeField] private float attackTimeMax;
+
+    private float abilityTime;
+    [SerializeField] private float abilityTimeMax;
 
     public float playerRange;
 
@@ -25,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        turnLeftRight();
 
         #region Basic and Charge Attack
         if(attackTime <= 0)
@@ -33,25 +39,29 @@ public class PlayerAttack : MonoBehaviour
             {
                 //Debug.Log("Basic Attack");
                 chargingAttack = true;
-                animator.SetBool("isAttacking", true);
+                animatorChad.SetBool("AtkCharging", true);
+                animatorMouse.SetBool("isAttacking", true);
             }
 
             if (Input.GetMouseButtonUp(0))
             {
                 chargingAttack = false;
-                animator.SetBool("isAttacking", false);
+                animatorChad.SetBool("AtkCharging", false);
+                animatorMouse.SetBool("isAttacking", false);
 
                 if (chargeTime >= chargeTimeMax)
                 {
-                    ChargeAttack();
+                    // ChargeAttack(); // controlled in anim event now
+                    animatorChad.SetBool("AtkCharge", true);
                     attackTime = attackTimeMax;
                 }
                 else
                 {
-                    BasicAttack();
+                    //BasicAttack(); // To see if this will let anim event do it
+                    animatorChad.SetBool("AtkCharging", false);
+                    animatorChad.SetBool("AtkBasic", true);
                     attackTime = attackTimeMax;
                 }
-
                 chargeTime = 0;
             }
 
@@ -69,11 +79,37 @@ public class PlayerAttack : MonoBehaviour
         #endregion
 
         #region Class Ability
-        if (Input.GetMouseButtonDown(1))
+        if(abilityTime <= 0)
         {
-            ClassAbility();
+            if (Input.GetMouseButtonDown(1))
+            {
+                ClassAbility();
+                abilityTime = abilityTimeMax;
+            }
         }
+        if(abilityTime > 0)
+        {
+            abilityTime -= Time.deltaTime;
+        }
+
+
         #endregion
+
+    }
+
+    void turnLeftRight()
+    {
+        Vector3 pos = target.position;
+        Vector3 dir = (pos - this.transform.position).normalized;
+
+        if(dir.x > 0) // should be right
+        {
+            transform.localScale = new Vector3(18, 18, 1);
+        }
+        if(dir.x < 0)
+        {
+            transform.localScale = new Vector3(-18, 18, 1);
+        }
     }
 
     void BasicAttack()
@@ -96,9 +132,16 @@ public class PlayerAttack : MonoBehaviour
                 //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
 
                 //Debug.Log(EnemiesInRange[i]);
-                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1, 0, Vector3.zero);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1, 10, dir);
             }
         }
+
+        
+    }
+
+    void atkBasicFalse()
+    {
+        animatorChad.SetBool("AtkBasic", false);
     }
 
     void ChargeAttack()
@@ -125,16 +168,32 @@ public class PlayerAttack : MonoBehaviour
                 //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
 
                 //Debug.Log(EnemiesInRange[i]);
-                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(2, 3, dir);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(2, 50, dir);
             }
         }
     }
 
+    void atkChargeFalse()
+    {
+        animatorChad.SetBool("AtkCharge", false);
+    }
+
     void ClassAbility()
     {
-        Debug.Log("Class Ability");
+        //Debug.Log("Class Ability");
 
         // Create Checksphere located in Direction of the MouseCursor (target) depending on Class
+        if (Physics.CheckSphere(this.transform.position, 6, enemyMask))
+        {
+            Collider[] EnemiesInRange = Physics.OverlapSphere(this.transform.position, 6, enemyMask);
+
+            for (int i = 0; i < EnemiesInRange.Length; i++)
+            {
+                //EnemiesInRange[i].GetComponent<EnemyManager>().SwitchAggro(5);
+                //EnemiesInRange[i].GetComponent<EnemyManager>().StartCoroutine(AggroCoroutine(5));
+                StartCoroutine(EnemiesInRange[i].GetComponent<EnemyManager>().AggroCoroutine(5));
+            }
+        }
     }
 
 }
