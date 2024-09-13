@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public enum GameState { MainMenu, NewGame, LoadGame, StoryMenu, SettingsMenu, PauseMenu, CalmMode, StormMode };
+    [SerializeField]
     GameState _gameStatus;
     public GameState GameStatus
     {
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public SpawnManager spawnManager;
     public HubManager hubManager;
-    public GameObject cargoControllerPrefab;
+    public CargoController cargoController;
 
     #region Singleton
     private static GameManager _instance;
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _gameStatus = GameState.MainMenu;
+        hubManager.menuState = HubManager.HubMenuState.GameMode;
+        hubManager.LoadCustomDeliveryOptions();
     }
 
     #endregion
@@ -61,13 +64,12 @@ public class GameManager : MonoBehaviour
     private void CalmMode()
     {
         _gameStatus = GameState.CalmMode;
-        cargoControllerPrefab.GetComponent<CargoController>().Reset(this);
+        cargoController.Reset(this);
     }
 
     private void StormMode()
     {
         _gameStatus = GameState.StormMode;
-
     }
     
     public void StartCalmMode()
@@ -86,10 +88,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-}
-
-public class ResourceItem
-{
-    public BaseItem baseItem;
-    public int quantity;
 }

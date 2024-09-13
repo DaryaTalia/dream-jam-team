@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CargoController : MonoBehaviour
@@ -8,7 +9,13 @@ public class CargoController : MonoBehaviour
     [Header("Cargo")]
     [SerializeField]
     GameObject _cargoVehiclePrefab;
+    GameObject _cargoVehicleInstance;
     Transform _cargoTransform;
+
+    public GameObject CargoVehicle
+    {
+        get => _cargoVehicleInstance;
+    }
 
     // Cargo Wellness Attributes
     [Header("Cargo Wellness")]
@@ -30,6 +37,11 @@ public class CargoController : MonoBehaviour
                 _health = value;
             }
         }
+    }
+
+    public float MaxHealth
+    {
+        get => _maxHealth;
     }
 
     [SerializeField]
@@ -54,96 +66,62 @@ public class CargoController : MonoBehaviour
         }
     }
 
+    public float MaxDefense
+    {
+        get => _maxDefense;
+    }
+
     // Items for Delivery
 
     [Header("Cargo Items and Buffs")]
-    [SerializeField]
-    int _availableItemSlots = _maxItemSlots;
-    const int _maxItemSlots = 6;
-    [SerializeField]
-    List<BaseItem> _itemInventory;
-    public List<BaseItem> ItemInventory
+    [SerializeField] private Inventory itemInventory;
+    public bool AddItemToInventory(BaseItem item, int quantity)
     {
-        get => _itemInventory;
+        return itemInventory.AddItemToInventory(item, quantity);
     }
 
-    public bool AddItemToInventory(BaseItem _item)
+    public void RemoveItemFromInventory(BaseItem item, int quantity)
     {
-        // Item Checks
-        if(_item.itemType != ItemType.Deliverable || _item.itemType != ItemType.Buff)
-        {
-            Debug.Log("Invalid Item Type");
-            return false;
-        }
-
-        if(_availableItemSlots < _item.size)
-        {
-            Debug.Log("No space for item");
-            return false;
-        }
-
-        ItemInventory.Add(_item);
-        _availableItemSlots -= _item.size;
-        return true;
+        itemInventory.RemoveItemFromInventory(item, quantity);
     }
 
-    public void RemoveItemFromInventory(BaseItem _item)
+    public int GetItemInventoryCount()
     {
-        // Item Checks
-        if (_item.itemType != ItemType.Deliverable || _item.itemType != ItemType.Buff)
-        {
-            Debug.Log("Invalid Item Type");
-            return;
-        }
+        return itemInventory.maxItemSlots - itemInventory.GetAvailableItemSlots();
+    }
 
-        ItemInventory.Remove(_item);
-        _availableItemSlots += _item.size;
+    public Inventory GetItemInventory()
+    {
+        return itemInventory;
     }
 
     [Header("Cargo Resources")]
-    [SerializeField]
-    int _availableResourceSlots = _maxResourceSlots;
-    const int _maxResourceSlots = 3;
-    [SerializeField]
-    List<BaseItem> _resourceInventory;
-    public List<BaseItem> ResourceInventory
-    {
-        get => _resourceInventory;
-    }
+    [SerializeField] Inventory resourceInventory;
 
     // Consumable Resources
 
-    public bool AddResourceToInventory(BaseItem _item)
+    public bool AddResourceToInventory(BaseItem item, int quantity)
     {
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return false;
         }
 
-        if (_availableResourceSlots < _item.size)
-        {
-            Debug.Log("No space for resource");
-            return false;
-        }
-
-        ResourceInventory.Add(_item);
-        _availableResourceSlots -= _item.size;
-        return true;
+        return resourceInventory.AddItemToInventory(item, quantity);
     }
 
-    public void RemoveResourceFromInventory(BaseItem _item)
+    public void RemoveResourceFromInventory(BaseItem item, int quantity)
     {
         // Resource Checks
-        if (_item.itemType != ItemType.Resource)
+        if (item.itemType != ItemType.Resource)
         {
             Debug.Log("Invalid Item Type");
             return;
         }
 
-        ResourceInventory.Remove(_item);
-        _availableResourceSlots += _item.size;
+        resourceInventory.RemoveItemFromInventory(item, quantity);
     }
 
     // Speed and Travel
@@ -221,10 +199,11 @@ public class CargoController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        _cargoTransform = _cargoVehiclePrefab.transform;
         _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
+        _cargoVehicleInstance = Instantiate(_cargoVehiclePrefab);
+        _cargoTransform = _cargoVehicleInstance.transform;
     }
 
     void FixedUpdate()
@@ -254,23 +233,15 @@ public class CargoController : MonoBehaviour
         Debug.Log("Distance Traveled: " + _distanceTraveled);
     }
 
-    public void UseResource(BaseItem item)
+    public void UseResource(ItemStack item)
     {
-        if(item.quantity == 1)
-        {
-            RemoveResourceFromInventory(item);
-        }
-
-        // item.Activate();
-
-        item.quantity--;
+        Instantiate(item.baseItem.prefab);
+        RemoveResourceFromInventory(item.baseItem, 1);
     }
 
     public void DeliverItem()
     {
-        if(_itemInventory.Count > 0) {
-            RemoveItemFromInventory(_itemInventory[0]);
-        }
+        RemoveItemFromInventory(itemInventory.itemInventory[0].baseItem, 1);
     }
 
     public void DamageCargo(float value)
@@ -288,14 +259,9 @@ public class CargoController : MonoBehaviour
         _cargoTransform.position = new Vector3(0,0,0);
         _health = _maxHealth;
         _defense = 0;
-        _itemInventory.Clear();
-        _availableItemSlots = _maxItemSlots;
-        foreach (BaseItem _baseItem in _resourceInventory)
-        {
-            _gm.hubManager.IncrementResourceItem(_baseItem.itemName, 1);
-        }
-        _resourceInventory.Clear();
-        _availableResourceSlots = _maxResourceSlots;
+        itemInventory.ClearInventory();
+        _gm.hubManager.ResetStoreInventory();
+        resourceInventory.ClearInventory();
         _speed = 1;
         _speedModifier = 1f;
         _heightTarget = 0;

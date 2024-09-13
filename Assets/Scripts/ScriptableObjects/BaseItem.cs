@@ -8,17 +8,18 @@ public class BaseItem : ScriptableObject
 {
     public String itemName = "New Item";
     public ItemType itemType;
-    public Texture2D icon;
+    public Texture2D iconTexture;
+    public Sprite iconSprite;
     public GameObject prefab;
     public int size = 1;
     public int cost;
     public int deliveryReward = 10;
-    public int quantity;
 }
 
+[Flags]
 public enum ItemType
 {
-    Resource,
-    Deliverable,
-    Buff
+    Resource = 1,
+    Deliverable = 2,
+    Buff = 4,
 }

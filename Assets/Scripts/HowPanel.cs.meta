@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9c4f01148d38acd4ba3ab3925cfd7c2f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 263777
+  packageName: Menu System
+  packageVersion: 1.0
+  assetPath: Assets/Scripts/HowPanel.cs
+  uploadId: 608913
