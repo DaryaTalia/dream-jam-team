@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerManager : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
     #region Variable
     [SerializeField] GameObject[] enemyArray;
@@ -41,10 +41,16 @@ public class SpawnerManager : MonoBehaviour
     {
 
         Vector3 loc = getRange();
-        Instantiate(enemyArray[0], loc, Quaternion.identity /*Quaternion.Euler(0, 180, 0)*/);
+        Instantiate(enemyArray[enemySpawnID()], loc, Quaternion.identity /*Quaternion.Euler(0, 180, 0)*/);
 
     }
 
+    private int enemySpawnID()
+    {
+        int enemyID = Random.Range(0, 2);
+
+        return enemyID;
+    }
 
     private Vector3 getRange()
     {

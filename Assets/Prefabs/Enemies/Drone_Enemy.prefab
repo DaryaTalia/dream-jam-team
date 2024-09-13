@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8765026079126147879}
-  - component: {fileID: 6533162600490434877}
+  - component: {fileID: 5312686704963750010}
   - component: {fileID: 4019765708918799912}
   - component: {fileID: 4630439358854183303}
   m_Layer: 6
-  m_Name: Speed_Enemy
+  m_Name: Drone_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6533162600490434877
+--- !u!65 &5312686704963750010
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.29, y: 0.61, z: 0.75}
-  m_Center: {x: 0, y: 0.22999999, z: 0}
+  m_Size: {x: 0.39, y: 0.81, z: 0.75}
+  m_Center: {x: 0, y: 0.14499998, z: 0}
 --- !u!114 &4019765708918799912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,20 +67,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fca01947308b040a600d47038579aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 1
   health: 0
-  healthSpeed: 4
+  healthSpeed: 3
   healthDrone: 0
   healthImob: 0
   healthDmgDlr: 0
   isDead: 0
   pauseMovement: 0
-  enemyRange: 6
+  enemyRange: 4
   atkCooldownMax: 3
   atkCooldown: -1
   canAttack: 0
   damage: 0
-  moveSpeed: 4
+  moveSpeed: 3
   currentTarget: {fileID: 0}
   cargoTarget: {fileID: 0}
   playerTarget: {fileID: 0}
@@ -128,7 +128,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: aec6aae9877c85c4c98dffcc9d5172d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d1c53a963bd2ff246958ebf0360fcd01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
