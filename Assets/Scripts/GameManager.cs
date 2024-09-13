@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public enum GameState { MainMenu, NewGame, LoadGame, StoryMenu, SettingsMenu, PauseMenu, CalmMode, StormMode };
     [SerializeField]
     GameState _gameStatus;
+
     public GameState GameStatus
     {
         get => _gameStatus;
@@ -37,7 +38,110 @@ public class GameManager : MonoBehaviour
         _gameStatus = GameState.MainMenu;
         hubManager.menuState = HubManager.HubMenuState.GameMode;
         hubManager.LoadCustomDeliveryOptions();
+        // hubManager.LoadRandomDeliveries();
     }
+
+    [Header("Resources")]
+    [SerializeField]
+    List<ItemStack> resources;
+
+    public List<ItemStack> Resources
+    {
+        get => resources;
+        set
+        {
+            resources = value;
+        }
+    }
+
+    public ItemStack GetResource(string _name)
+    {
+        foreach (ItemStack resource in resources)
+        {
+            if(resource.baseItem.itemName == _name)
+            {
+                return resource;
+            }
+        }
+
+        return null;
+    }
+
+
+    [Header("Deliveries")]
+    [SerializeField]
+    List<Delivery> storyDeliveries;
+    [SerializeField]
+    List<Delivery> randomDeliveries;
+    [SerializeField]
+    List<Destination> deliveryDestinations;
+
+    public List<Delivery> StoryDeliveries
+    {
+        get => storyDeliveries;
+        set
+        {
+            storyDeliveries = value;
+        }
+    }
+
+    public Delivery GetStoryDelivery(string _name)
+    {
+        foreach(Delivery delivery in storyDeliveries)
+        {
+            if(delivery.Name == _name)
+            {
+                return delivery;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Delivery> RandomDeliveries
+    {
+        get => randomDeliveries;
+        set
+        {
+            randomDeliveries = value;
+        }
+    }
+
+    public Delivery GetRandomDelivery(string _name)
+    {
+        foreach (Delivery delivery in randomDeliveries)
+        {
+            if (delivery.Name == _name)
+            {
+                return delivery;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Destination> DeliveryDestinations
+    {
+        get => deliveryDestinations;
+        set
+        {
+            deliveryDestinations = value;
+        }
+    }
+
+    public Destination GetDeliveryDestination(string _name)
+    {
+        foreach (Destination destination in deliveryDestinations)
+        {
+            if (destination.Name == _name)
+            {
+                return destination;
+            }
+        }
+
+        return null;
+    }
+
 
     #endregion
     [Header("Currency")]
@@ -89,3 +193,4 @@ public class GameManager : MonoBehaviour
     }
 
 }
+

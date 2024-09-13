@@ -13,6 +13,7 @@ public class BaseItem : ScriptableObject
     public GameObject prefab;
     public int size = 1;
     public int cost;
+    public CurrencyType currency;
     public int deliveryReward = 10;
 }
 
@@ -22,4 +23,9 @@ public enum ItemType
     Resource = 1,
     Deliverable = 2,
     Buff = 4,
+}
+
+public enum CurrencyType
+{
+    Gold, Silver, Platinum
 }
