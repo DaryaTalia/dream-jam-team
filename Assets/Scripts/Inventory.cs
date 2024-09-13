@@ -21,6 +21,11 @@ public class Inventory : MonoBehaviour
         return itemInventory.Select(i => i.baseItem).ToList();
     }
 
+    public int GetAvailableItemSlots()
+    {
+        return availableItemSlots;
+    }
+
     public bool AddItemToInventory(BaseItem item, int quantity)
     {
         // Test if allowed item type

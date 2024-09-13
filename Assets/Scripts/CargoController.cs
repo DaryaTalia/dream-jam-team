@@ -85,6 +85,16 @@ public class CargoController : MonoBehaviour
         itemInventory.RemoveItemFromInventory(item, quantity);
     }
 
+    public int GetItemInventoryCount()
+    {
+        return itemInventory.maxItemSlots - itemInventory.GetAvailableItemSlots();
+    }
+
+    public Inventory GetItemInventory()
+    {
+        return itemInventory;
+    }
+
     [Header("Cargo Resources")]
     [SerializeField] Inventory resourceInventory;
 

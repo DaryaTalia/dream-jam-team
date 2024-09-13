@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _gameStatus = GameState.MainMenu;
+        hubManager.menuState = HubManager.HubMenuState.GameMode;
+        hubManager.LoadCustomDeliveryOptions();
     }
 
     #endregion
