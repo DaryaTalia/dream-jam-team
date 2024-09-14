@@ -67,15 +67,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fca01947308b040a600d47038579aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 1
+  enemyClass: 1
+  AOEField: {fileID: 8355156748659813376, guid: cae1b08cf01f43a4ab65e01fd80fbcba,
+    type: 3}
   health: 0
-  healthSpeed: 3
-  healthDrone: 0
-  healthImob: 0
-  healthDmgDlr: 0
+  healthSpeed: 0
+  healthDrone: 2
+  healthGravy: 0
+  healthElite: 0
   isDead: 0
   pauseMovement: 0
-  enemyRange: 4
+  enemyRange: 12
   atkCooldownMax: 3
   atkCooldown: -1
   canAttack: 0
