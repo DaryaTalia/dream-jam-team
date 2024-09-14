@@ -978,7 +978,7 @@ MonoBehaviour:
   animatorChad: {fileID: 1946652104}
   chargeTimeMax: 1.5
   chargingAttack: 0
-  attackTimeMax: 0.2
+  attackTimeMax: 0.5
   abilityTimeMax: 5
   playerRange: 10
   enemyMask:
