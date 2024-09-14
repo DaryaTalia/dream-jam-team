@@ -40,6 +40,12 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If we're not supposed to be controlling the character, do nothing.
+        if (GameManager.Instance.GameStatus != GameManager.GameState.StormMode)
+        {
+            return;
+        }
+        
         /*// Tick the cooldown timer
         cooldownTimer += Time.deltaTime;*/  // Not needed, already have abilityTime to track ability cooldown
         

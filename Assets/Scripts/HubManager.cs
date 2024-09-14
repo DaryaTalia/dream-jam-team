@@ -32,10 +32,7 @@ public class HubManager : MonoBehaviour
         List<RaycastResult> raycastResultList = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
 
-        if (raycastResultList.Count == 0)
-        {
-            resourceTooltip.Hide();
-        }
+        resourceTooltip.Hide();
 
         foreach (RaycastResult result in raycastResultList)
         {
