@@ -155,9 +155,6 @@ public class HubManager : MonoBehaviour
 
     [Header("Custom Delivery Properties")]
 
-    // Custom Delivery Properties
-    [SerializeField]
-    List<Destination> destinations;
     [SerializeField]
     GameObject destinationsPanel;
     [SerializeField]
@@ -194,7 +191,7 @@ public class HubManager : MonoBehaviour
         GameObject tempDeliveryOption;
         TextMeshProUGUI[] tempDeliveryText;
 
-        foreach (Destination dest in destinations)
+        foreach (Destination dest in GameManager.Instance.DeliveryDestinations)
         {
             // Instantiate and edit visbile UI properties
             tempDeliveryOption = Instantiate(newDestinationPrefab, destinationsPanel.transform);
@@ -219,7 +216,7 @@ public class HubManager : MonoBehaviour
 
     public void ChooseCustomDelivery(string _name)
     {
-        selectedDestination = destinations.Find(d => d.Name == _name);
+        selectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
     }
 
     public void LoadDeliveryItems()

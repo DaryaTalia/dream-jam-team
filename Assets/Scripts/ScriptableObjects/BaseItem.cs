@@ -7,6 +7,8 @@ using UnityEngine;
 public class BaseItem : ScriptableObject
 {
     public String itemName = "New Item";
+    [TextArea(4,6)]
+    public String itemDescription = "{Item Description Here}";
     public ItemType itemType;
     public Texture2D iconTexture;
     public Sprite iconSprite;
