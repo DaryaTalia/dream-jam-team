@@ -42,31 +42,7 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Resources")]
-    [SerializeField]
-    List<ItemStack> resources;
-
-    public List<ItemStack> Resources
-    {
-        get => resources;
-        set
-        {
-            resources = value;
-        }
-    }
-
-    public ItemStack GetResource(string _name)
-    {
-        foreach (ItemStack resource in resources)
-        {
-            if(resource.baseItem.itemName == _name)
-            {
-                return resource;
-            }
-        }
-
-        return null;
-    }
-
+    public Inventory playerResources;
 
     [Header("Deliveries")]
     [SerializeField]

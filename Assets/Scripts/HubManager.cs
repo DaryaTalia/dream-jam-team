@@ -16,7 +16,7 @@ public class HubManager : MonoBehaviour
         randomDeliveryMenu.SetActive(false);
         customDeliveryMenu.SetActive(false);
 
-        resourceTooltipGO.SetActive(false);
+        resourceTooltip.Hide();
 
         LoadResources();
     }
@@ -31,27 +31,15 @@ public class HubManager : MonoBehaviour
 
         if (raycastResultList.Count == 0)
         {
-            resourceTooltipGO.SetActive(false);
+            resourceTooltip.Hide();
         }
 
         foreach (RaycastResult result in raycastResultList)
         {
-            // Check for resource gameobject
-            if(result.gameObject.GetComponent<MyResource>())
+            if (result.gameObject.TryGetComponent(out ResourceButton btn))
             {
-                TextMeshProUGUI[] _text = resourceTooltipGO.GetComponentsInChildren<TextMeshProUGUI>();
-                foreach (TextMeshProUGUI text in _text)
-                {
-                    if (text.gameObject.name == "ResourceName")
-                    {
-                        text.text = result.gameObject.GetComponent<MyResource>().MyItem.baseItem.itemName;
-                    }
-                    else if (text.gameObject.name == "ResourceDescription")
-                    {
-                        text.text = "Delivery Reward: " + result.gameObject.GetComponent<MyResource>().MyItem.baseItem.deliveryReward.ToString();
-                    }
-                }
-                resourceTooltipGO.SetActive(true);
+                resourceTooltip.SetText(btn.item.itemName, btn.item.deliveryReward.ToString());
+                resourceTooltip.Show(result.screenPosition);
             }
         }
     }
@@ -61,8 +49,7 @@ public class HubManager : MonoBehaviour
     [SerializeField] private List<BaseItem> possibleResources;
     [SerializeField] private Inventory storeInventory;
 
-    [SerializeField]
-    GameObject resourceTooltipGO;
+    [SerializeField] ResourceTooltip resourceTooltip;
 
     public bool BuyResource(BaseItem item)
     {
@@ -73,9 +60,9 @@ public class HubManager : MonoBehaviour
         }
 
         GameManager.Instance.Gold -= item.cost;
-        //IncrementResourceItem(_name, 1);
-        //TODO: Increment inventory in cargoController
-        storeInventory.RemoveItemFromInventory(item, 1);
+        GameManager.Instance.playerResources.AddItemToInventory(item, 1);
+        UpdateEquipment();
+        //storeInventory.RemoveItemFromInventory(item, 1);
         return true;
     }
 
@@ -103,6 +90,7 @@ public class HubManager : MonoBehaviour
     GameObject resourceListContainer;
     [SerializeField]
     GameObject equipmentListContainer;
+    private List<GameObject> equipmentSlots = new List<GameObject>();
 
     public enum HubMenuState { GameMode, StoryDeliveryMode, RandomDeliveryMode, CustomDeliveryMode };
     [SerializeField]
@@ -131,47 +119,36 @@ public class HubManager : MonoBehaviour
     public void LoadResources()
     {
         GameObject resourceContent;
-        GameObject equipmentResource;
-        foreach(ItemStack resource in GameManager.Instance.Resources)
+        foreach(BaseItem resource in possibleResources)
         {
             resourceContent = Instantiate(resourceItemPrefab, resourceListContainer.transform);
-            resourceContent.GetComponentInChildren<Image>().sprite = resource.baseItem.iconSprite;
+            ResourceButton resourceButton = resourceContent.GetComponent<ResourceButton>();
+            resourceButton.SetItem(resource);
+        }
 
-            TextMeshProUGUI[] texts = resourceContent.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI text in texts)
-            {
-                if(text.gameObject.name == "ResourceNameText")
-                {
-                    text.gameObject.name = resource.baseItem.itemName;
-                    text.text = resource.baseItem.itemName;
-                }
-                else if (text.gameObject.name == "ResourceCostText")
-                {
-                    text.text = resource.baseItem.cost.ToString() + " " + resource.baseItem.currency.ToString();
-                }
-                else if (text.gameObject.name == "ResourceQuantityText")
-                {
-                    text.text = resource.quantity.ToString();
-                }
-            }
+        UpdateEquipment();
+    }
 
-            resourceContent.GetComponent<MyResource>().MyItem = resource;
-
-            resourceContent.GetComponent<Button>().onClick.AddListener(() => BuyResource(resource.baseItem));
-
+    private void UpdateEquipment()
+    {
+        foreach (GameObject slot in equipmentSlots)
+        {
+            Destroy(slot);
+        }
+        foreach (ItemStack stack in GameManager.Instance.playerResources.itemInventory)
+        {
             // Load Equipment List
-            equipmentResource = Instantiate(equipmentItemPrefab, equipmentListContainer.transform);
+            GameObject equipmentResource = Instantiate(equipmentItemPrefab, equipmentListContainer.transform);
+            equipmentSlots.Add(equipmentResource);
             Image[] images = equipmentResource.GetComponentsInChildren<Image>();
             foreach(Image img in images)
             {
                 if (img.gameObject.name == "EquipmentIcon")
                 {
-                    img.sprite = resource.baseItem.iconSprite;
+                    img.sprite = stack.baseItem.iconSprite;
                     break;
                 }
             }
-
-            equipmentResource.GetComponentInChildren<TextMeshProUGUI>().text = resource.quantity.ToString();
         }
     }
 
