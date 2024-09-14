@@ -75,7 +75,7 @@ public class PlayerStats : MonoBehaviour
 
             while (maxTicks > 0)
             {
-                playerHealthCurrent--;
+                TakeDamage(1);
                 //Debug.Log("Tick 1 Dmg");
                 maxTicks--;
                 
