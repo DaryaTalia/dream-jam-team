@@ -385,6 +385,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100168892817306941, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759394950199195279, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2690661652000865884, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -435,6 +445,78 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_text
+      value: 'WASD: Movement
+
+        Left Shift: Dash
+
+        Aim towards enemies
+        with mouse
+
+        Basic Attack: Left Click
+
+        Charge Attack: Hold
+        Left Click til charged up, then release
+
+        Class Ability: Right Click'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 44.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_lineSpacing
+      value: 92.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 44.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187264198141412187, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200377080091161833, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1161.804
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200377080091161833, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 484.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200377080091161833, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -264.098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200377080091161833, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 67.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212434866324903313, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7688592698549023265, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}
