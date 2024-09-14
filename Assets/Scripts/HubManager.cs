@@ -21,6 +21,7 @@ public class HubManager : MonoBehaviour
         LoadResources();
 
         goldText.text = GameManager.Instance.Gold.ToString();
+        startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = deliveryUndecided;
     }
 
     private void Update()
@@ -31,10 +32,7 @@ public class HubManager : MonoBehaviour
         List<RaycastResult> raycastResultList = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
 
-        if (raycastResultList.Count == 0)
-        {
-            resourceTooltip.Hide();
-        }
+        resourceTooltip.Hide();
 
         foreach (RaycastResult result in raycastResultList)
         {
@@ -90,6 +88,8 @@ public class HubManager : MonoBehaviour
 
     [Header("Hub UI")]
 
+    public string deliveryUndecided = "Delivery Undecided";
+
     [SerializeField]
     TextMeshProUGUI goldText;
 
@@ -102,7 +102,6 @@ public class HubManager : MonoBehaviour
     public enum HubMenuState { GameMode, StoryDeliveryMode, RandomDeliveryMode, CustomDeliveryMode };
     [SerializeField]
     public HubMenuState menuState;
-    HubMenuState selectedMenuState;
     [SerializeField]
     GameObject gameModeMenu;
     [SerializeField]
@@ -147,15 +146,8 @@ public class HubManager : MonoBehaviour
             // Load Equipment List
             GameObject equipmentResource = Instantiate(equipmentItemPrefab, equipmentListContainer.transform);
             equipmentSlots.Add(equipmentResource);
-            Image[] images = equipmentResource.GetComponentsInChildren<Image>();
-            foreach(Image img in images)
-            {
-                if (img.gameObject.name == "EquipmentIcon")
-                {
-                    img.sprite = stack.baseItem.iconSprite;
-                    break;
-                }
-            }
+            var slot = equipmentResource.GetComponent<EquipmentSlot>();
+            slot.SetEquipment(stack);
         }
     }
 
@@ -176,7 +168,7 @@ public class HubManager : MonoBehaviour
     [SerializeField]
     GameObject goldRewardGO; // enable or disable as needed
     [SerializeField]
-    TextMeshProUGUI goldRewardText;
+    TextMeshProUGUI customGoldRewardText;
     float destinationGoldMultipler = .4f; // destination.distance * destinationGoldMultipler + baseGoldReward
     int baseGoldReward; // 20
     int customGoldReward;
@@ -193,37 +185,70 @@ public class HubManager : MonoBehaviour
     // int basePlatinumReward; // 20
     // int customPlatinumReward;
 
+    // When the Select button is clicked on for custom deliveries.
+    public void SelectCustomDelivery()
+    {
+        if(selectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)
+        {
+            GameManager.Instance.SelectedDelivery = new Delivery
+            {
+                Name = "Custom Delivery",
+                MyDestination = selectedDestination
+            };
+            // TODO: Update distance based on selected destination in CC
+            startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
+        }
+    }
+
     public void LoadCustomDeliveryOptions()
     {
         GameObject tempDeliveryOption;
-        TextMeshProUGUI[] tempDeliveryText;
+        TextMeshProUGUI tempDeliveryText;
 
+        // Load Delivery Destinations
         foreach (Destination dest in GameManager.Instance.DeliveryDestinations)
         {
             // Instantiate and edit visbile UI properties
             tempDeliveryOption = Instantiate(newDestinationPrefab, destinationsPanel.transform);
-            tempDeliveryText = tempDeliveryOption.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI text in tempDeliveryText)
-            {
-                if(text.gameObject.name == "DestinationName")
-                {
-                    text.text = dest.Name;
-                } 
-                else if (text.gameObject.name == "BaseDistance")
-                {
-                    text.text = dest.Distance.ToString() + "w";
-                }
-            }
+            tempDeliveryText = tempDeliveryOption.GetComponentInChildren<TextMeshProUGUI>();
+            tempDeliveryText.text = dest.Name + "\t(" + dest.Distance + ")";
 
             // Access Button's onClick event
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(() => ChooseCustomDelivery(dest.Name));
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
+
+
+        GameObject tempItem;
+
+        // Load Items
+        foreach(BaseItem item in deliveryItems)
+        {
+            tempItem = Instantiate(deliveryItemChoicePrefab, deliveryItemsPanel.transform);
+            tempItem.GetComponent<Image>().sprite = item.iconSprite;
+            tempItem.GetComponentInChildren<TextMeshProUGUI>().text = "Size: " + item.size.ToString();
+
+            tempItem.GetComponent<Button>().onClick.AddListener(() => ChooseDeliveryItem(item));
+            tempItem.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
+        }
+
+
     }
 
     public void ChooseCustomDelivery(string _name)
     {
         selectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
+    }
+
+    public void ChooseDeliveryItem(BaseItem _item)
+    {
+        if(GameManager.Instance.cargoController.AddItemToInventory(_item, 1))
+        {
+            Debug.Log("New Item Added: " + _item.itemName);
+        } else
+        {
+            Debug.Log("Item not Added: " + _item.itemName);
+        }
     }
 
     public void LoadDeliveryItems()
@@ -242,11 +267,13 @@ public class HubManager : MonoBehaviour
             tempDeliveryItem.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
 
+        goldRewardGO.SetActive(false);
+
     }
 
     void CalculateCustomReward()
     {
-        if(selectedMenuState == HubMenuState.CustomDeliveryMode && selectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() > 1)
+        if(menuState == HubMenuState.CustomDeliveryMode && selectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() >= 1)
         {
             customGoldReward = baseGoldReward + (int) (selectedDestination.Distance * destinationGoldMultipler);
 
@@ -255,9 +282,9 @@ public class HubManager : MonoBehaviour
                 customGoldReward += item.baseItem.deliveryReward;
             }
 
-            goldRewardText.text = customGoldReward.ToString();
+            customGoldRewardText.text = customGoldReward.ToString();
             goldRewardGO.SetActive(true);
-        }
+        } 
     }
 
     public void ChangeMenus(string _state)
@@ -318,40 +345,6 @@ public class HubManager : MonoBehaviour
                     storyDeliveryMenu.SetActive(false);
                     randomDeliveryMenu.SetActive(false);
                     customDeliveryMenu.SetActive(false);
-                    break;
-                }
-        }
-    }
-
-    public void SelectState(string _state)
-    {
-        switch (_state)
-        {
-            case "Hub":
-                {
-                    selectedMenuState = HubMenuState.GameMode;
-                    break;
-                }
-            case "Story":
-                {
-                    selectedMenuState = HubMenuState.StoryDeliveryMode;
-                    break;
-                }
-            case "Random":
-                {
-                    selectedMenuState = HubMenuState.RandomDeliveryMode;
-                    break;
-                }
-            case "Custom":
-                {
-                    selectedMenuState = HubMenuState.CustomDeliveryMode;
-                    CalculateCustomReward();
-                    break;
-                }
-            default:
-                {
-                    Debug.Log("Invalid State");
-                    selectedMenuState = HubMenuState.GameMode;
                     break;
                 }
         }

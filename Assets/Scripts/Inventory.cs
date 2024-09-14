@@ -7,6 +7,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] ItemType allowedItemTypes;
+    [SerializeField] public string inventoryName;
     public int maxItemSlots = 6;
     private int availableItemSlots;
     public List<ItemStack> itemInventory;
@@ -35,19 +36,31 @@ public class Inventory : MonoBehaviour
         }
         
         // Resource Checks
-        if (item.itemType != ItemType.Resource)
-        {
-            Debug.Log("Invalid Item Type");
-            return false;
-        }
+
+        // Inventory is not just for Resources now
+
+        //if (item.itemType != ItemType.Resource)
+        //{
+        //    Debug.Log("Invalid Item Type");
+        //    return false;
+        //}
 
         if (availableItemSlots < item.size)
         {
             Debug.Log("No space for resource");
             return false;
         }
+        
+        ItemStack existingStack = itemInventory.Find(s => s.baseItem == item);
+        if (existingStack != null)
+        {
+            existingStack.quantity += 1;
+        }
+        else
+        {
+            itemInventory.Add(new ItemStack(item, quantity));
+        }
 
-        itemInventory.Add(new ItemStack(item, quantity));
         availableItemSlots -= item.size;
         return true;
     }
