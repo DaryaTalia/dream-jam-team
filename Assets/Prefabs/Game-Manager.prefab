@@ -164,11 +164,16 @@ MonoBehaviour:
   destinationsPanel: {fileID: 6204377358113801403}
   newDestinationPrefab: {fileID: 1872260886879908331, guid: ae9ecf13178baee4684e43a60cd75cd7,
     type: 3}
+  SelectedDestination:
+    name: 
+    distance: 0
   deliveryItemsPanel: {fileID: 3646307647728580030}
   deliveryItemChoicePrefab: {fileID: 5601883334605302398, guid: c296df46df76df3419f2e09bdecc7da5,
     type: 3}
   goldRewardGO: {fileID: 5433559161567653246}
   customGoldRewardText: {fileID: 4843326280139819415}
+  DestinationGoldMultipler: 0.4
+  BaseGoldReward: 0
 --- !u!114 &100629500531229215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,17 +813,17 @@ PrefabInstance:
     - target: {fileID: 85604424690256515, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 27.54
+      value: 35.8
       objectReference: {fileID: 0}
     - target: {fileID: 85604424690256515, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 22.99
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 85604424690256515, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 45.18
+      value: 54.230003
       objectReference: {fileID: 0}
     - target: {fileID: 85604424690256515, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
@@ -6798,7 +6803,7 @@ PrefabInstance:
     - target: {fileID: 7060865714651574339, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 68.95
+      value: 82.130005
       objectReference: {fileID: 0}
     - target: {fileID: 7060865714651574339, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
@@ -6878,17 +6883,17 @@ PrefabInstance:
     - target: {fileID: 7153314274764437968, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 16.41
+      value: 21.33
       objectReference: {fileID: 0}
     - target: {fileID: 7153314274764437968, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 22.99
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7153314274764437968, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 18.205
+      value: 20.665
       objectReference: {fileID: 0}
     - target: {fileID: 7153314274764437968, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}

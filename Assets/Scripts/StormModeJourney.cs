@@ -117,6 +117,8 @@ public class StormModeJourney : MonoBehaviour
                 Checkpoints.RemoveAt(0);
                 Destroy(items[0]);
                 items.RemoveAt(0);
+
+                CheckpointEvent();
             }
             // Have we reached the last checkpoint?
             else if (Checkpoints.Count == 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
@@ -128,8 +130,7 @@ public class StormModeJourney : MonoBehaviour
                 Destroy(items[0]);
                 items.RemoveAt(0);
 
-                // End the Journey/Delivery
-                journeyActive = false;
+                CheckpointEvent();
             }
 
             if (nextCheckpoint != -1)
@@ -137,6 +138,22 @@ public class StormModeJourney : MonoBehaviour
                 // If the journey is still ongoing, continue updating the progress slider
                 journeySlider.fillAmount = GameManager.Instance.cargoController.DistanceTraveled / journeyLength;
             }
+        }
+    }
+
+    void CheckpointEvent()
+    {
+        GameManager.Instance.Gold += GameManager.Instance.cargoController.GetItemInventory().itemInventory[0].baseItem.deliveryReward;
+        GameManager.Instance.cargoController.GetItemInventory().itemInventory.RemoveAt(0);
+
+        if(Checkpoints.Count < 1)
+        {
+            GameManager.Instance.Gold += GameManager.Instance.hubManager.BaseGoldReward + (int)(GameManager.Instance.hubManager.SelectedDestination.Distance * GameManager.Instance.hubManager.DestinationGoldMultipler);
+
+            // End the Journey/Delivery
+            journeyActive = false;
+
+            GameManager.Instance.StartCalmMode();
         }
     }
 
@@ -158,6 +175,8 @@ public class StormModeJourney : MonoBehaviour
                         Destroy(myResource);
                         resources.Remove(myResource);
                     }
+
+                    GameManager.Instance.playerResources.RemoveItemFromInventory(itemStack.baseItem, 1);
                 }
                 else
                 {
