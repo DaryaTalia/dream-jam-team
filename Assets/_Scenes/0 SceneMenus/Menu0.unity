@@ -385,10 +385,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2690661652000865884, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_text
+      value: "team director\r\nDarya Talia\r\n\r\nprogramers\r\nSpoon\r\nNecron\r\n\r\nartists
+        \r\nRusty\r\nDanielux11\r\n\r\nmusic\r\nRatDrum\r\nJollyGoodFriend\r\n\r\nstory\r\nSirSunstone\r\n\r\nhelper\r\nGraphicEdit"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 40.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_overflowMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_horizontalMapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739727240572750314, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3739348354729875395, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7688592698549023265, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7754412319700144238, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}
