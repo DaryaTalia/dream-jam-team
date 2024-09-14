@@ -50,8 +50,17 @@ public class Inventory : MonoBehaviour
             Debug.Log("No space for resource");
             return false;
         }
+        
+        ItemStack existingStack = itemInventory.Find(s => s.baseItem == item);
+        if (existingStack != null)
+        {
+            existingStack.quantity += 1;
+        }
+        else
+        {
+            itemInventory.Add(new ItemStack(item, quantity));
+        }
 
-        itemInventory.Add(new ItemStack(item, quantity));
         availableItemSlots -= item.size;
         return true;
     }

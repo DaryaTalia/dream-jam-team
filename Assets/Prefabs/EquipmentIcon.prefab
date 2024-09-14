@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2474721149628297601}
   - component: {fileID: 1153438035502333263}
+  - component: {fileID: 4180656260160833060}
   - component: {fileID: 215756124816002784}
   m_Layer: 5
   m_Name: EquipmentIcon
@@ -46,6 +47,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843208010525018934}
   m_CullTransparentMesh: 1
+--- !u!114 &4180656260160833060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843208010525018934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dcba8b4b5e0b1a4d83dcd7e4f051cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentIcon: {fileID: 215756124816002784}
+  quantityText: {fileID: 3709656272390415613}
 --- !u!114 &215756124816002784
 MonoBehaviour:
   m_ObjectHideFlags: 0
