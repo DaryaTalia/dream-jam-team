@@ -119,6 +119,7 @@ MonoBehaviour:
   storeInventory: {fileID: 3438994551316478085}
   resourceTooltip: {fileID: 2811839279609745748}
   deliveryItems:
+  - {fileID: 11400000, guid: ab31ca741d543df4eaaef4e1517bc234, type: 2}
   - {fileID: 11400000, guid: 1f7d0c1adbecb4c48814182d140f6dc1, type: 2}
   - {fileID: 11400000, guid: 19ca8dbeb19570b409adce1e5a9c7409, type: 2}
   - {fileID: 11400000, guid: 38c8e1413b593934b8d338cc018e6137, type: 2}

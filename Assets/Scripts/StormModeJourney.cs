@@ -68,6 +68,7 @@ public class StormModeJourney : MonoBehaviour
         foreach (ItemStack item in GameManager.Instance.cargoController.GetItemInventory().itemInventory)
         {
             items.Add(Instantiate(item.baseItem.prefab, itemPanel.transform));
+            items[items.Count - 1].GetComponent<Image>().sprite = item.baseItem.iconSprite;
         }
 
 
