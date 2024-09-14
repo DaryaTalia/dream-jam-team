@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
+    public bool DBNO_move = false;
+
     [SerializeField] private float moveSpeed;
     private Vector3 moveDirection;
 
@@ -15,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashTimer;
     [SerializeField] private float dashCooldown = 0;
     [SerializeField] private float dashCooldownMax = 1f;
+
+    [SerializeField] private Animator animator;
     #endregion
 
     // Start is called before the first frame update
@@ -57,12 +61,32 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = Vector3.zero; // Sets movement to Zero so it'll stop after movekey is released
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) moveDirection.z = +1f * dashMultBase;
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) moveDirection.z = -1f * dashMultBase;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection.x = -1f * dashMultBase;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection.x = +1f * dashMultBase;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) 
+        { 
+            moveDirection.x = -1f * dashMultBase; 
+        }
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            moveDirection.x = +1f * dashMultBase;
+        }
+        
 
         Vector3 moveDir = transform.forward * moveDirection.z + transform.right * moveDirection.x;
 
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        if(moveDir != new Vector3(0,0,0))
+        {
+            //Debug.Log("Is Moving");
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+        if (!DBNO_move)
+        {
+            transform.position += moveDir * moveSpeed * Time.deltaTime;
+        }
     }
 
 }

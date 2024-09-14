@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d24f3d16c542557409a75cbe186b1417
+guid: d0c1588b6185c0b4da9d10a20374e74b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,337 +110,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cursor_0
+      name: Speed_Sheet_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 15
+        y: 11
+        width: 61
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07b9ea9f1a13a434b83bdb3048504776
-      internalID: 1862749786
+      spriteID: 1eedbd3e3c5ba2f4b82090dcb2564d54
+      internalID: -1598168174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_1
+      name: Speed_Sheet_10
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 379
+        y: 10
+        width: 61
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 786f025f4b70dd64286ad6b84683c23c
-      internalID: 603490121
+      spriteID: ed688f5bc747cf14bbd08518c0ec529f
+      internalID: -1826526919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_2
+      name: Speed_Sheet_11
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 449
+        y: 9
+        width: 23
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf9bd521bdca23445b47004b1b4bc8d5
-      internalID: 269272119
+      spriteID: e9899c521aa898642a7ccf40dbbab5ff
+      internalID: 1314805688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_3
+      name: Speed_Sheet_0
       rect:
         serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 39
+        y: 131
+        width: 19
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c60b61c0ef3c8b488c9431163f40719
-      internalID: 1784103446
+      spriteID: 24a7b935f38d6c54fa2d43a685cb2465
+      internalID: -1214220306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_4
+      name: Speed_Sheet_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 82
+        y: 131
+        width: 19
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d6f769198a41a74bad7ab2ded5f0239
-      internalID: -2147371260
+      spriteID: 5f5f699ac330efa4db51a37e0c5b5916
+      internalID: 864831108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_5
+      name: Speed_Sheet_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 121
+        y: 131
+        width: 19
+        height: 46
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e07d759bc398b8d4f99b88158219b1e3
-      internalID: -463393711
+      spriteID: b06e72ec0c7728e4f821939c425d6319
+      internalID: 700599608
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_6
+      name: Speed_Sheet_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 119
+        y: 75
+        width: 23
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06f8d297a04c8da428038e4db3fd5fc3
-      internalID: -2078544165
+      spriteID: 835baa9e1fb34f14cb4c30f9917e36f4
+      internalID: 1250354572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_7
+      name: Speed_Sheet_4
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 79
+        y: 75
+        width: 21
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e67170ab39cbf0429a3fac39cfdff86
-      internalID: 346475104
+      spriteID: 4b420544a21b69544b7d400cbbd2c856
+      internalID: -1703764319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_8
+      name: Speed_Sheet_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 35
+        y: 76
+        width: 23
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72d0574824c5cf148952a1ae2e1ab574
-      internalID: -1150033477
+      spriteID: 87ca867c76077a74896af7151e7d276a
+      internalID: -771351026
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_9
+      name: Speed_Sheet_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 100
+        y: 10
+        width: 61
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14cd247c72458da46ad24643fbb21e1b
-      internalID: -1857295413
+      spriteID: 826daca9c40f3604d96f5c9955a93123
+      internalID: -1384318464
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_10
+      name: Speed_Sheet_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 198
+        y: 10
+        width: 61
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1720639f0a103dc4e9b07c9ca720c0b1
-      internalID: -675007423
+      spriteID: 21346c3135ae59d4eac7d2860c4c7a84
+      internalID: -2081521009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor_11
+      name: Speed_Sheet_9
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 288
+        y: 11
+        width: 61
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d62810bba01381b478f80f775b39e280
-      internalID: -119182059
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cursor_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 164229eb8ce81de43ad181e2ea11b8c2
-      internalID: -1325232652
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cursor_13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb2e4633b5d52bb4391f8359ba8856f8
-      internalID: -2125102615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cursor_14
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d476f7d33e716e145bb35ebc5dec222c
-      internalID: -500467426
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cursor_15
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f9152ff8f2b42a43a2b70da71efdbc9
-      internalID: -1571296226
+      spriteID: d821163d35136ea4f8ac982ae6c44892
+      internalID: -885503753
       vertices: []
       indices: 
       edges: []
@@ -448,7 +364,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 05c99984a0951d440ad5a3fa17143903
+    spriteID: 5e7fe2f548e18e64a8e902c83737a83e
     internalID: 0
     vertices: []
     indices: 
@@ -456,22 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cursor_0: 1862749786
-      Cursor_1: 603490121
-      Cursor_10: -675007423
-      Cursor_11: -119182059
-      Cursor_12: -1325232652
-      Cursor_13: -2125102615
-      Cursor_14: -500467426
-      Cursor_15: -1571296226
-      Cursor_2: 269272119
-      Cursor_3: 1784103446
-      Cursor_4: -2147371260
-      Cursor_5: -463393711
-      Cursor_6: -2078544165
-      Cursor_7: 346475104
-      Cursor_8: -1150033477
-      Cursor_9: -1857295413
+      Speed_Sheet_0: -1214220306
+      Speed_Sheet_1: 864831108
+      Speed_Sheet_10: -1826526919
+      Speed_Sheet_11: 1314805688
+      Speed_Sheet_2: 700599608
+      Speed_Sheet_3: -771351026
+      Speed_Sheet_4: -1703764319
+      Speed_Sheet_5: 1250354572
+      Speed_Sheet_6: -1598168174
+      Speed_Sheet_7: -1384318464
+      Speed_Sheet_8: -2081521009
+      Speed_Sheet_9: -885503753
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

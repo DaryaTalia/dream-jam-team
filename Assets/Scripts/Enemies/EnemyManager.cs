@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
@@ -5,13 +6,18 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private int enemyType;
+    #region Variables
+    //[SerializeField] private int enemyType; // 0 speed / 1 drone / 2 Imob / 3 DmgDlr
+    [SerializeField] private EnemyClass enemyClass;
+    [SerializeField] private GameObject AOEField;
+
+    [SerializeField] private Animator animatorSpeed;
 
     public int health; // made public to see for testing
     [SerializeField] private int healthSpeed;
-    [SerializeField] private int healthAOE;
-    [SerializeField] private int healthImob;
-    [SerializeField] private int healthDmgDlr;
+    [SerializeField] private int healthDrone;
+    [SerializeField] private int healthGravy;
+    [SerializeField] private int healthElite;
     public bool isDead;
     public bool pauseMovement;
 
@@ -26,8 +32,11 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
 
+    [SerializeField] private GameObject currentTarget;
+    [SerializeField] private GameObject cargoTarget;
     [SerializeField] private GameObject playerTarget;
     [SerializeField] private LayerMask playerMask;
+    #endregion
 
     private void Start()
     {
@@ -39,26 +48,36 @@ public class EnemyManager : MonoBehaviour
     void Init() // This should be called when the enemy gets reused
     {
         playerTarget = GameObject.FindGameObjectWithTag("Player");
+        //cargoTarget = GameObject.FindGameObjectWithTag("Cargo");
+
+        currentTarget = playerTarget;
+
         isDead = false;
         pauseMovement = false;
         canAttack = true;
 
-        switch (enemyType)
+        switch (enemyClass)
         {
-            case 0: // Speed Enemy
+            case EnemyClass.Speed: // Speed Enemy
                 health = healthSpeed;
                 break;
-            case 1: // Enemy AOE
-                health = healthAOE;
+            case EnemyClass.Drone: // Enemy Drone
+                health = healthDrone;
                 break;
-            case 2: // Enemy Imot
-                health = healthImob;
+            case EnemyClass.Imob: // Enemy Gravy
+                health = healthGravy;
                 immuneAggro = true;
                 break;
-            case 3: // Enemy DmgDlr
-                health = healthDmgDlr;
+            case EnemyClass.Elite: // Enemy Elite
+                health = healthElite;
+                immuneAggro = true;
                 break;
         }
+    }
+
+    public enum EnemyClass
+    {
+        Speed, Drone, Imob, Elite
     }
 
     // Update is called once per frame
@@ -66,8 +85,12 @@ public class EnemyManager : MonoBehaviour
     {
         if (!pauseMovement)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerTarget.transform.position, moveSpeed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, 1.9f, transform.position.z); // This just sets the height right but should be fixed later
+            transform.position = Vector3.MoveTowards(transform.position, currentTarget.transform.position, moveSpeed * Time.deltaTime);
+
+            if(enemyClass == EnemyClass.Drone)
+            {
+                transform.position = new Vector3(transform.position.x, 2f, transform.position.z); // This just sets the height right but should be fixed later
+            }
         }
 
         if (!isDead)
@@ -84,7 +107,7 @@ public class EnemyManager : MonoBehaviour
         if(knockback > 0)
         {
             //transform.position += dir * 3;
-            transform.position = Vector3.Lerp(transform.position, transform.position + dir * 100, 5 * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, transform.position + dir * knockback, 5 * Time.deltaTime);
         }
 
         if(health <= 0)
@@ -93,6 +116,7 @@ public class EnemyManager : MonoBehaviour
             isDead = true;
             pauseMovement = true;
 
+            //StopAllCoroutines(); // doesn't stop coroutines started from another script
             transform.position = new Vector3(0, -10f, 0); // Hides enemy under the map so it can be reused later
         }
 
@@ -101,6 +125,8 @@ public class EnemyManager : MonoBehaviour
 
     void AttackPlayer()
     {
+        
+
         if (atkCooldown <= 0)
         {
             if (Vector3.Distance(transform.position, playerTarget.transform.position) <= enemyRange * .75f)
@@ -121,14 +147,43 @@ public class EnemyManager : MonoBehaviour
             Vector3 pos = playerTarget.transform.position;
             Vector3 dir = (pos - this.transform.position).normalized; // Directional Vector towards player
 
-            Collider[] PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
-            if(PlayerInRange.Length > 0)
+            switch (enemyClass)
             {
-                //Debug.Log(PlayerInRange[0] + " Hit by attack");
-                PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(1);
+                case EnemyClass.Speed: // Speed Enemy
+                    animatorSpeed.SetBool("isAttacking", true);
+
+                    Collider[] PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+                    if (PlayerInRange.Length > 0)
+                    {
+                        //Debug.Log(PlayerInRange[0] + " Hit by attack");
+                        PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(1);
+                    }
+
+                    canAttack = false;
+
+                    break;
+                case EnemyClass.Drone: // Enemy Drone
+                    
+                    Vector3 tempPos = this.transform.position;
+
+                    GameObject tempFieldRef = Instantiate(AOEField, tempPos, Quaternion.identity);
+
+                    tempPos.y = 0.1f;
+                    pos.y = 0.1f;
+                    tempFieldRef.GetComponent<PoisonAOE>().lerpToDestination(tempPos, pos);
+                    //tempFieldRef.transform.position = Vector3.Lerp(tempPos, pos, .3f);
+
+                    canAttack = false;
+
+                    break;
+                case EnemyClass.Imob: // Enemy Gravy
+                    break;
+                case EnemyClass.Elite: // Enemy Elite
+                    break;
             }
 
-            canAttack = false;
+
+            
         }
 
         if (atkCooldown > 0)
@@ -136,4 +191,33 @@ public class EnemyManager : MonoBehaviour
             atkCooldown -= Time.deltaTime;
         }
     }
+
+    void SpeedAtkFalse()
+    {
+        animatorSpeed.SetBool("isAttacking", false);
+    }
+
+    public IEnumerator AggroCoroutine(float length)
+    {
+        GameObject origTarget = currentTarget;
+
+        if (immuneAggro)
+        {
+            yield break;
+        }
+        else
+        {
+            currentTarget = playerTarget; // This technically does nothing now since the enemies only target the player, needs to be switched after the Cargo is added
+        }
+
+        yield return new WaitForSeconds(length);
+
+        if (!isDead)
+        {
+            //Debug.Log("Undo Aggro");
+            currentTarget = origTarget;
+        }
+    }
+
+    
 }
