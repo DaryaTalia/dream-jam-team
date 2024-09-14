@@ -32,10 +32,7 @@ public class HubManager : MonoBehaviour
         List<RaycastResult> raycastResultList = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
 
-        if (raycastResultList.Count == 0)
-        {
-            resourceTooltip.Hide();
-        }
+        resourceTooltip.Hide();
 
         foreach (RaycastResult result in raycastResultList)
         {
@@ -149,15 +146,8 @@ public class HubManager : MonoBehaviour
             // Load Equipment List
             GameObject equipmentResource = Instantiate(equipmentItemPrefab, equipmentListContainer.transform);
             equipmentSlots.Add(equipmentResource);
-            Image[] images = equipmentResource.GetComponentsInChildren<Image>();
-            foreach(Image img in images)
-            {
-                if (img.gameObject.name == "EquipmentIcon")
-                {
-                    img.sprite = stack.baseItem.iconSprite;
-                    break;
-                }
-            }
+            var slot = equipmentResource.GetComponent<EquipmentSlot>();
+            slot.SetEquipment(stack);
         }
     }
 
