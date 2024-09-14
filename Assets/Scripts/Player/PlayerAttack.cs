@@ -22,14 +22,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] Animator animatorChad;
 
     private float chargeTime;
-    [SerializeField] private float chargeTimeMax;
+    [SerializeField] private float chargeTimeMax = 1.5f;
     public bool chargingAttack = false;
 
     private float attackTime;
-    [SerializeField] private float attackTimeMax;
+    [SerializeField] private float attackTimeMax = 0.2f;
 
     private float abilityTime;
-    [SerializeField] private float abilityTimeMax;
+    [SerializeField] private float abilityTimeMax = 3f;
 
     public float playerRange;
 
@@ -40,6 +40,12 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If we're not supposed to be controlling the character, do nothing.
+        if (GameManager.Instance.GameStatus != GameManager.GameState.StormMode)
+        {
+            return;
+        }
+        
         /*// Tick the cooldown timer
         cooldownTimer += Time.deltaTime;*/  // Not needed, already have abilityTime to track ability cooldown
         

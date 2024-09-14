@@ -7,6 +7,7 @@ public class MouseIndicator : MonoBehaviour
 {
 
     [SerializeField] private GameObject mouseIndicator;
+    [SerializeField] private Camera camera;
     
     private Vector3 lastPosition;
 
@@ -35,7 +36,7 @@ public class MouseIndicator : MonoBehaviour
     {
         Vector3 mousePos = Input.mousePosition;
         //mousePos.y = Camera.main.nearClipPlane;
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Ray ray = camera.ScreenPointToRay(mousePos);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 3000 /* length of ray needs to reach back of map */ , layerCheckMask))
         {
