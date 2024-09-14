@@ -8,12 +8,14 @@ public class PlayerAttack : MonoBehaviour
 
     #region Variables
     [SerializeField] Transform target; // Aim to Mouse Cursor, should this be the GameObject cursor or point to script for moving the cursor
-    
+
+    public bool DBNO_atk = false;
+
     public PlayerClass playerClass;
     public GameObject magicianAbilityPrefab;
     public float magicianAbilityCooldown = 0.5f;
     private float abilityCooldown = 0f;
-    private float cooldownTimer = 0f;
+    //private float cooldownTimer = 0f;
     
     public Animator animatorMouse;
 
@@ -38,8 +40,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Tick the cooldown timer
-        cooldownTimer += Time.deltaTime;
+        /*// Tick the cooldown timer
+        cooldownTimer += Time.deltaTime;*/  // Not needed, already have abilityTime to track ability cooldown
         
         // We do this every frame to allow live tweaking the value, but still have this switch in one place
         switch (playerClass)
@@ -47,73 +49,78 @@ public class PlayerAttack : MonoBehaviour
             case PlayerClass.Magician:
                 abilityCooldown = magicianAbilityCooldown;
                 break;
+            case PlayerClass.Brawler:
+                break;
         }
-        
-        turnLeftRight();
 
-        #region Basic and Charge Attack
-        if(attackTime <= 0)
+
+        if (!DBNO_atk)
         {
-            if (Input.GetMouseButtonDown(0)) // This should count as being held down unless you have MouseButtonUp
-            {
-                //Debug.Log("Basic Attack");
-                chargingAttack = true;
-                animatorChad.SetBool("AtkCharging", true);
-                animatorMouse.SetBool("isAttacking", true);
-            }
+            turnLeftRight();
 
-            if (Input.GetMouseButtonUp(0))
+            #region Basic and Charge Attack
+            if (attackTime <= 0)
             {
-                chargingAttack = false;
-                animatorChad.SetBool("AtkCharging", false);
-                animatorMouse.SetBool("isAttacking", false);
-
-                if (chargeTime >= chargeTimeMax)
+                if (Input.GetMouseButtonDown(0)) // This should count as being held down unless you have MouseButtonUp
                 {
-                    // ChargeAttack(); // controlled in anim event now
-                    animatorChad.SetBool("AtkCharge", true);
-                    attackTime = attackTimeMax;
+                    //Debug.Log("Basic Attack");
+                    chargingAttack = true;
+                    animatorChad.SetBool("AtkCharging", true);
+                    animatorMouse.SetBool("isAttacking", true);
                 }
-                else
+
+                if (Input.GetMouseButtonUp(0))
                 {
-                    //BasicAttack(); // To see if this will let anim event do it
+                    chargingAttack = false;
                     animatorChad.SetBool("AtkCharging", false);
-                    animatorChad.SetBool("AtkBasic", true);
-                    attackTime = attackTimeMax;
+                    animatorMouse.SetBool("isAttacking", false);
+
+                    if (chargeTime >= chargeTimeMax)
+                    {
+                        // ChargeAttack(); // controlled in anim event now
+                        animatorChad.SetBool("AtkCharge", true);
+                        attackTime = attackTimeMax;
+                    }
+                    else
+                    {
+                        //BasicAttack(); // To see if this will let anim event do it
+                        animatorChad.SetBool("AtkCharging", false);
+                        animatorChad.SetBool("AtkBasic", true);
+                        attackTime = attackTimeMax;
+                    }
+                    chargeTime = 0;
                 }
-                chargeTime = 0;
+
+                if (chargingAttack)
+                {
+                    chargeTime += Time.deltaTime;
+                }
             }
 
-            if (chargingAttack)
+            if (attackTime > 0)
             {
-                chargeTime += Time.deltaTime;
+                attackTime -= Time.deltaTime;
             }
-        }
 
-        if(attackTime > 0)
-        {
-            attackTime -= Time.deltaTime;
-        }
-        
-        #endregion
+            #endregion
 
-        #region Class Ability
-        if(abilityTime <= 0)
-        {
-            if (Input.GetMouseButtonDown(1))
+            #region Class Ability
+            if (abilityTime <= 0)
             {
-                ClassAbility();
-                abilityTime = abilityTimeMax;
+                if (Input.GetMouseButtonDown(1))
+                {
+                    ClassAbility();
+                    abilityTime = abilityTimeMax;
+                }
             }
+            if (abilityTime > 0)
+            {
+                abilityTime -= Time.deltaTime;
+            }
+
+
+            #endregion
         }
-        if(abilityTime > 0)
-        {
-            abilityTime -= Time.deltaTime;
-        }
-
-
-        #endregion
-
     }
 
     void turnLeftRight()
@@ -165,7 +172,7 @@ public class PlayerAttack : MonoBehaviour
 
     void ChargeAttack()
     {
-        Debug.Log("Charge Attack");
+        //Debug.Log("Charge Attack");
 
         // Create Checksphere located in Direction of the MouseCursor (target)
         // can be a bigger or something or a completely different attack
@@ -199,38 +206,37 @@ public class PlayerAttack : MonoBehaviour
 
     void ClassAbility()
     {
-        if (cooldownTimer < abilityCooldown)
+        /*if (cooldownTimer < abilityCooldown)
         {
             return;
         }
         
-        cooldownTimer = 0f;
+        cooldownTimer = 0f;*/
 
         switch (playerClass)
         {
             case PlayerClass.Magician:
                 Instantiate(magicianAbilityPrefab, transform.position, Quaternion.identity);
                 break;
-        }
-        //Debug.Log("Class Ability");
 
-        // Create Checksphere located in Direction of the MouseCursor (target) depending on Class
-        if (Physics.CheckSphere(this.transform.position, 6, enemyMask))
-        {
-            Collider[] EnemiesInRange = Physics.OverlapSphere(this.transform.position, 6, enemyMask);
+            case PlayerClass.Brawler: // Brwaler Aggro Taunt
+                if (Physics.CheckSphere(this.transform.position, 6, enemyMask))
+                {
+                    Collider[] EnemiesInRange = Physics.OverlapSphere(this.transform.position, 6, enemyMask);
 
-            for (int i = 0; i < EnemiesInRange.Length; i++)
-            {
-                //EnemiesInRange[i].GetComponent<EnemyManager>().SwitchAggro(5);
-                //EnemiesInRange[i].GetComponent<EnemyManager>().StartCoroutine(AggroCoroutine(5));
-                StartCoroutine(EnemiesInRange[i].GetComponent<EnemyManager>().AggroCoroutine(5));
-            }
+                    for (int i = 0; i < EnemiesInRange.Length; i++)
+                    {
+                        //EnemiesInRange[i].GetComponent<EnemyManager>().SwitchAggro(5);
+                        //EnemiesInRange[i].GetComponent<EnemyManager>().StartCoroutine(AggroCoroutine(5));
+                        StartCoroutine(EnemiesInRange[i].GetComponent<EnemyManager>().AggroCoroutine(5));
+                    }
+                }
+                break;
         }
     }
-
 }
 
 public enum PlayerClass
 {
-    Magician
+    Magician, Brawler
 }

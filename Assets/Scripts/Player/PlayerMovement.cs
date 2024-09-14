@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
+    public bool DBNO_move = false;
+
     [SerializeField] private float moveSpeed;
     private Vector3 moveDirection;
 
@@ -81,9 +83,10 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
 
-        
-
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        if (!DBNO_move)
+        {
+            transform.position += moveDir * moveSpeed * Time.deltaTime;
+        }
     }
 
 }
