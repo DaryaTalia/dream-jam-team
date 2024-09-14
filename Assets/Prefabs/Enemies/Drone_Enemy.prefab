@@ -70,16 +70,22 @@ MonoBehaviour:
   enemyClass: 1
   AOEField: {fileID: 8355156748659813376, guid: cae1b08cf01f43a4ab65e01fd80fbcba,
     type: 3}
+  animatorSpeed: {fileID: 0}
+  animatorElite: {fileID: 0}
+  spriteRenderer: {fileID: 4630439358854183303}
   health: 0
   healthSpeed: 0
   healthDrone: 2
   healthGravy: 0
   healthElite: 0
+  knockbackRes: 1
   isDead: 0
   pauseMovement: 0
+  PlayerInRange: []
   enemyRange: 12
   atkCooldownMax: 3
   atkCooldown: -1
+  cooldownMovePause: 2
   canAttack: 0
   damage: 0
   moveSpeed: 3

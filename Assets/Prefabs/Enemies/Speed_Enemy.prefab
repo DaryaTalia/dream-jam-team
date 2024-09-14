@@ -71,18 +71,23 @@ MonoBehaviour:
   enemyClass: 0
   AOEField: {fileID: 0}
   animatorSpeed: {fileID: -2929796667109423055}
+  animatorElite: {fileID: 0}
+  spriteRenderer: {fileID: 4630439358854183303}
   health: 0
   healthSpeed: 4
   healthDrone: 0
   healthGravy: 0
   healthElite: 0
+  knockbackRes: 1
   isDead: 0
   pauseMovement: 0
-  enemyRange: 6
+  PlayerInRange: []
+  enemyRange: 4
   atkCooldownMax: 3
   atkCooldown: -1
+  cooldownMovePause: 2
   canAttack: 0
-  damage: 0
+  damage: 1
   moveSpeed: 6
   currentTarget: {fileID: 0}
   cargoTarget: {fileID: 0}
