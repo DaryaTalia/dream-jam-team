@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     public SpawnManager spawnManager;
     public HubManager hubManager;
     public CargoController cargoController;
+    public StormModeJourney stormMode;
+
+    public GameObject HubUICanvas;
+    public GameObject GameplayUICanvas;
 
     #region Singleton
     private static GameManager _instance;
@@ -44,13 +48,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _gameStatus = GameState.MainMenu;
-        hubManager.menuState = HubManager.HubMenuState.GameMode;
+        _gameStatus = GameState.NewGame;
+
+        StartCalmMode();
+
         hubManager.LoadCustomDeliveryOptions();
         // hubManager.LoadRandomDeliveries();
-
-        selectedDelivery = new Delivery();
-        selectedDelivery.Name = hubManager.deliveryUndecided;
     }
 
     [Header("Resources")]
@@ -168,14 +171,40 @@ public class GameManager : MonoBehaviour
     private void CalmMode()
     {
         _gameStatus = GameState.CalmMode;
+        hubManager.menuState = HubManager.HubMenuState.GameMode;
+
         cargoController.Reset(this);
+        selectedDelivery = new Delivery();
+        selectedDelivery.Name = hubManager.deliveryUndecided;
+
+        GameplayUICanvas.SetActive(false);
+        cargoController.CargoVehicle.SetActive(false);
+        HubUICanvas.SetActive(true);
     }
 
     private void StormMode()
     {
         _gameStatus = GameState.StormMode;
+
+        stormMode.journeyLength = selectedDelivery.MyDestination.Distance;
+        List<float> itemCheckpoints = new List<float>();
+
+        float averageDistance = stormMode.journeyLength / cargoController.GetItemInventory().itemInventory.Count;
+        for(int i = 1; i < cargoController.GetItemInventory().itemInventory.Count + 1; ++i)
+        {
+            itemCheckpoints.Add(averageDistance * i);
+        }
+
+        stormMode.AddCheckpoints(itemCheckpoints);
+
+        GameplayUICanvas.SetActive(true);
+        HubUICanvas.SetActive(false);
+
+        stormMode.InitJourney();
+
+        cargoController.CargoVehicle.SetActive(true);
     }
-    
+
     public void StartCalmMode()
     {
         if(GameStatus == GameState.StormMode || GameStatus == GameState.NewGame || GameStatus == GameState.LoadGame)

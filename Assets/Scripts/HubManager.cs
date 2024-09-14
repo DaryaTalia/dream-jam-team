@@ -105,7 +105,6 @@ public class HubManager : MonoBehaviour
     public enum HubMenuState { GameMode, StoryDeliveryMode, RandomDeliveryMode, CustomDeliveryMode };
     [SerializeField]
     public HubMenuState menuState;
-    HubMenuState selectedMenuState;
     [SerializeField]
     GameObject gameModeMenu;
     [SerializeField]
@@ -179,7 +178,7 @@ public class HubManager : MonoBehaviour
     [SerializeField]
     GameObject goldRewardGO; // enable or disable as needed
     [SerializeField]
-    TextMeshProUGUI goldRewardText;
+    TextMeshProUGUI customGoldRewardText;
     float destinationGoldMultipler = .4f; // destination.distance * destinationGoldMultipler + baseGoldReward
     int baseGoldReward; // 20
     int customGoldReward;
@@ -214,25 +213,15 @@ public class HubManager : MonoBehaviour
     public void LoadCustomDeliveryOptions()
     {
         GameObject tempDeliveryOption;
-        TextMeshProUGUI[] tempDeliveryText;
+        TextMeshProUGUI tempDeliveryText;
 
         // Load Delivery Destinations
         foreach (Destination dest in GameManager.Instance.DeliveryDestinations)
         {
             // Instantiate and edit visbile UI properties
             tempDeliveryOption = Instantiate(newDestinationPrefab, destinationsPanel.transform);
-            tempDeliveryText = tempDeliveryOption.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI text in tempDeliveryText)
-            {
-                if(text.gameObject.name == "DestinationName")
-                {
-                    text.text = dest.Name;
-                } 
-                else if (text.gameObject.name == "BaseDistance")
-                {
-                    text.text = dest.Distance.ToString() + "w";
-                }
-            }
+            tempDeliveryText = tempDeliveryOption.GetComponentInChildren<TextMeshProUGUI>();
+            tempDeliveryText.text = dest.Name + "\t(" + dest.Distance + ")";
 
             // Access Button's onClick event
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(() => ChooseCustomDelivery(dest.Name));
@@ -249,7 +238,8 @@ public class HubManager : MonoBehaviour
             tempItem.GetComponent<Image>().sprite = item.iconSprite;
             tempItem.GetComponentInChildren<TextMeshProUGUI>().text = "Size: " + item.size.ToString();
 
-            tempItem.GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.cargoController.AddItemToInventory(item, 1));
+            tempItem.GetComponent<Button>().onClick.AddListener(() => ChooseDeliveryItem(item));
+            tempItem.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
 
 
@@ -258,6 +248,17 @@ public class HubManager : MonoBehaviour
     public void ChooseCustomDelivery(string _name)
     {
         selectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
+    }
+
+    public void ChooseDeliveryItem(BaseItem _item)
+    {
+        if(GameManager.Instance.cargoController.AddItemToInventory(_item, 1))
+        {
+            Debug.Log("New Item Added: " + _item.itemName);
+        } else
+        {
+            Debug.Log("Item not Added: " + _item.itemName);
+        }
     }
 
     public void LoadDeliveryItems()
@@ -276,11 +277,13 @@ public class HubManager : MonoBehaviour
             tempDeliveryItem.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
 
+        goldRewardGO.SetActive(false);
+
     }
 
     void CalculateCustomReward()
     {
-        if(selectedMenuState == HubMenuState.CustomDeliveryMode && selectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() > 1)
+        if(menuState == HubMenuState.CustomDeliveryMode && selectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() >= 1)
         {
             customGoldReward = baseGoldReward + (int) (selectedDestination.Distance * destinationGoldMultipler);
 
@@ -289,9 +292,9 @@ public class HubManager : MonoBehaviour
                 customGoldReward += item.baseItem.deliveryReward;
             }
 
-            goldRewardText.text = customGoldReward.ToString();
+            customGoldRewardText.text = customGoldReward.ToString();
             goldRewardGO.SetActive(true);
-        }
+        } 
     }
 
     public void ChangeMenus(string _state)

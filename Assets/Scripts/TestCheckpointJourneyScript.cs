@@ -91,6 +91,7 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             //Testing
             GameManager.Instance.cargoController.Health -= 20;
             cargoHealthSlider.fillAmount = (GameManager.Instance.cargoController.Health) / GameManager.Instance.cargoController.MaxHealth;
+
             nextCheckpoint = Checkpoints[1];
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);
@@ -102,6 +103,7 @@ public class TestCheckpointJourneyScript : MonoBehaviour
             //Testing
             GameManager.Instance.cargoController.Health -= 20;
             cargoHealthSlider.fillAmount = (GameManager.Instance.cargoController.Health) / GameManager.Instance.cargoController.MaxHealth;
+
             nextCheckpoint = -1;
             checkPointInstances[0].GetComponent<Image>().color = Color.green;
             checkPointInstances.RemoveAt(0);
