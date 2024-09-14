@@ -13,6 +13,15 @@ public class GameManager : MonoBehaviour
         get => _gameStatus;
     }
 
+    public enum CompletionState { New, Story1, Story2, Story3, Story4 };
+    [SerializeField]
+    CompletionState _completionStatus;
+
+    public CompletionState CompletionStatus
+    {
+        get => _completionStatus;
+    }
+
     public SpawnManager spawnManager;
     public HubManager hubManager;
     public CargoController cargoController;
