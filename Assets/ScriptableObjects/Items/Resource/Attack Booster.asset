@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 912ce8e8f3a40b044b8f3240a0f2bd38, type: 3}
-  m_Name: Health Potion
+  m_Name: Attack Booster
   m_EditorClassIdentifier: 
-  itemName: Health Potion
+  itemName: Attack Booster
   itemType: 1
   iconTexture: {fileID: 0}
   iconSprite: {fileID: 0}
-  prefab: {fileID: 6885979530915775948, guid: ef1b9a99796548043ab98f82f60ff9d7, type: 3}
+  prefab: {fileID: 0}
   size: 1
-  cost: 30
+  cost: 25
   deliveryReward: 0
