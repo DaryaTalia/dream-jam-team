@@ -39,12 +39,27 @@ public class GameManager : MonoBehaviour
         hubManager.menuState = HubManager.HubMenuState.GameMode;
         hubManager.LoadCustomDeliveryOptions();
         // hubManager.LoadRandomDeliveries();
+
+        selectedDelivery = new Delivery();
+        selectedDelivery.Name = hubManager.deliveryUndecided;
     }
 
     [Header("Resources")]
     public Inventory playerResources;
 
     [Header("Deliveries")]
+    [SerializeField]
+    Delivery selectedDelivery;
+
+    public Delivery SelectedDelivery
+    {
+        get => selectedDelivery;
+        set
+        {
+            selectedDelivery = value;
+        }
+    }
+
     [SerializeField]
     List<Delivery> storyDeliveries;
     [SerializeField]
@@ -162,7 +177,7 @@ public class GameManager : MonoBehaviour
 
     public void StartStormMode()
     {
-        if (GameStatus == GameState.CalmMode)
+        if (GameStatus == GameState.CalmMode && selectedDelivery.Name != hubManager.deliveryUndecided)
         {
             StormMode();
         }

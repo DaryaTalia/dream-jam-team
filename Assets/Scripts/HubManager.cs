@@ -21,6 +21,7 @@ public class HubManager : MonoBehaviour
         LoadResources();
 
         goldText.text = GameManager.Instance.Gold.ToString();
+        startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = deliveryUndecided;
     }
 
     private void Update()
@@ -89,6 +90,8 @@ public class HubManager : MonoBehaviour
     #region UI
 
     [Header("Hub UI")]
+
+    public string deliveryUndecided = "Delivery Undecided";
 
     [SerializeField]
     TextMeshProUGUI goldText;
@@ -193,11 +196,27 @@ public class HubManager : MonoBehaviour
     // int basePlatinumReward; // 20
     // int customPlatinumReward;
 
+    // When the Select button is clicked on for custom deliveries.
+    public void SelectCustomDelivery()
+    {
+        if(selectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)
+        {
+            GameManager.Instance.SelectedDelivery = new Delivery
+            {
+                Name = "Custom Delivery",
+                MyDestination = selectedDestination
+            };
+            // TODO: Update distance based on selected destination in CC
+            startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
+        }
+    }
+
     public void LoadCustomDeliveryOptions()
     {
         GameObject tempDeliveryOption;
         TextMeshProUGUI[] tempDeliveryText;
 
+        // Load Delivery Destinations
         foreach (Destination dest in GameManager.Instance.DeliveryDestinations)
         {
             // Instantiate and edit visbile UI properties
@@ -219,6 +238,21 @@ public class HubManager : MonoBehaviour
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(() => ChooseCustomDelivery(dest.Name));
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
+
+
+        GameObject tempItem;
+
+        // Load Items
+        foreach(BaseItem item in deliveryItems)
+        {
+            tempItem = Instantiate(deliveryItemChoicePrefab, deliveryItemsPanel.transform);
+            tempItem.GetComponent<Image>().sprite = item.iconSprite;
+            tempItem.GetComponentInChildren<TextMeshProUGUI>().text = "Size: " + item.size.ToString();
+
+            tempItem.GetComponent<Button>().onClick.AddListener(() => GameManager.Instance.cargoController.AddItemToInventory(item, 1));
+        }
+
+
     }
 
     public void ChooseCustomDelivery(string _name)
@@ -318,40 +352,6 @@ public class HubManager : MonoBehaviour
                     storyDeliveryMenu.SetActive(false);
                     randomDeliveryMenu.SetActive(false);
                     customDeliveryMenu.SetActive(false);
-                    break;
-                }
-        }
-    }
-
-    public void SelectState(string _state)
-    {
-        switch (_state)
-        {
-            case "Hub":
-                {
-                    selectedMenuState = HubMenuState.GameMode;
-                    break;
-                }
-            case "Story":
-                {
-                    selectedMenuState = HubMenuState.StoryDeliveryMode;
-                    break;
-                }
-            case "Random":
-                {
-                    selectedMenuState = HubMenuState.RandomDeliveryMode;
-                    break;
-                }
-            case "Custom":
-                {
-                    selectedMenuState = HubMenuState.CustomDeliveryMode;
-                    CalculateCustomReward();
-                    break;
-                }
-            default:
-                {
-                    Debug.Log("Invalid State");
-                    selectedMenuState = HubMenuState.GameMode;
                     break;
                 }
         }

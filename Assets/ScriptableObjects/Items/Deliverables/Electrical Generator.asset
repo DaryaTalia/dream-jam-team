@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912ce8e8f3a40b044b8f3240a0f2bd38, type: 3}
   m_Name: Electrical Generator
   m_EditorClassIdentifier: 
-  itemName: Metal Scrap
-  itemType: 0
-  icon: {fileID: 0}
+  itemName: Electrical Generator
+  itemDescription: Got to keep your base running smoothly.
+  itemType: 2
+  iconTexture: {fileID: 0}
+  iconSprite: {fileID: 0}
   prefab: {fileID: 0}
   size: 3
   cost: 100
+  currency: 0
+  deliveryReward: 10

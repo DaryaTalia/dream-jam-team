@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Metal Scrap
   m_EditorClassIdentifier: 
   itemName: Metal Scrap
-  itemType: 0
-  icon: {fileID: 0}
+  itemDescription: Metal scraps for fixing up bots.
+  itemType: 2
+  iconTexture: {fileID: 0}
+  iconSprite: {fileID: 0}
   prefab: {fileID: 0}
   size: 2
   cost: 50
+  currency: 0
+  deliveryReward: 10
