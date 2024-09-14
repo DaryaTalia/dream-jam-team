@@ -87,7 +87,7 @@ public class CargoController : MonoBehaviour
 
     public int GetItemInventoryCount()
     {
-        return itemInventory.maxItemSlots - itemInventory.GetAvailableItemSlots();
+        return itemInventory.itemInventory.Count();
     }
 
     public Inventory GetItemInventory()
@@ -123,6 +123,12 @@ public class CargoController : MonoBehaviour
 
         resourceInventory.RemoveItemFromInventory(item, quantity);
     }
+
+    public Inventory GetResourceInventory()
+    {
+        return resourceInventory;
+    }
+
 
     // Speed and Travel
 
@@ -204,11 +210,12 @@ public class CargoController : MonoBehaviour
         _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
         _cargoVehicleInstance = Instantiate(_cargoVehiclePrefab);
         _cargoTransform = _cargoVehicleInstance.transform;
+        _cargoVehicleInstance.SetActive(false);
     }
 
     void FixedUpdate()
     {
-        if(Health > 0)
+        if(GameManager.Instance.stormMode.JourneyActive && Health > 0)
         {
             Move();
         }
