@@ -16,6 +16,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int playerDamage;
 
     public bool underEffect;
+
+    public float invicibilityTimer;
+    public float invicibilityTimerMax;
     #endregion
 
 
@@ -49,19 +52,29 @@ public class PlayerStats : MonoBehaviour
             playerHealthCurrent = playerHealthMax; // Need to change cause this refills hp every turn
             DBNOTimer = DBNOTimerMax;
         }
+
+        if(invicibilityTimer > 0)
+        {
+            invicibilityTimer -= Time.deltaTime;
+        }
     }
 
     public void TakeDamage(int dmg)
     {
-        playerHealthCurrent -= dmg;
-
-        if(playerHealthCurrent <= 0 && !DBNO)
+        if(invicibilityTimer <= 0)
         {
-            //Debug.Log("Player DBNO");
-            DBNO = true;
-            GetComponent<PlayerMovement>().DBNO_move = true;
-            GetComponent<PlayerAttack>().DBNO_atk = true;
-            DBNOTimer = DBNOTimerMax;
+            playerHealthCurrent -= dmg;
+
+            if (playerHealthCurrent <= 0 && !DBNO)
+            {
+                //Debug.Log("Player DBNO");
+                DBNO = true;
+                GetComponent<PlayerMovement>().DBNO_move = true;
+                GetComponent<PlayerAttack>().DBNO_atk = true;
+                DBNOTimer = DBNOTimerMax;
+            }
+
+            invicibilityTimer = invicibilityTimerMax;
         }
     }
 

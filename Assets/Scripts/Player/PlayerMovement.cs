@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
             dashMultBase = dashMultMax; // Strength of the Dash
             dashTimer = dashTimerMax; // Sets timer to start countdown (see above)
             dashCooldown = dashCooldownMax; // Sets timer to start countdown (see above)
+            GetComponentInParent<PlayerStats>().invicibilityTimer = GetComponentInParent<PlayerStats>().invicibilityTimerMax / 2;
         }
         if (dashTimer <= 0)
         {

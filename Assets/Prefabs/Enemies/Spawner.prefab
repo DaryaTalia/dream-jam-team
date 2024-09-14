@@ -121,4 +121,7 @@ MonoBehaviour:
   enemyArray:
   - {fileID: 3798214959239527259, guid: a4b38210aba42cb49a8d54fbabb0b42d, type: 3}
   - {fileID: 3798214959239527259, guid: e8e873a49708f8c47becadd9bf761d50, type: 3}
+  - {fileID: 3798214959239527259, guid: 628f9112ff9cc43478e462c6472afee5, type: 3}
   spawnATimer: 0
+  defaultEnemyPoolSize: 10
+  maxEnemyPoolSize: 30

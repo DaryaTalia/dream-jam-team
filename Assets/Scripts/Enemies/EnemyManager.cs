@@ -13,20 +13,28 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject AOEField;
 
     [SerializeField] private Animator animatorSpeed;
+    [SerializeField] private Animator animatorElite;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    private float tempXScale;
 
     public int health; // made public to see for testing
     [SerializeField] private int healthSpeed;
     [SerializeField] private int healthDrone;
     [SerializeField] private int healthGravy;
     [SerializeField] private int healthElite;
+
+    [SerializeField] private float knockbackRes;
+
     public bool isDead;
     public bool pauseMovement;
 
     private bool immuneAggro; // Set Immobilizer Immune to Aggro
 
+    [SerializeField] private Collider[] PlayerInRange;
     [SerializeField] private float enemyRange;
     public float atkCooldownMax;
     public float atkCooldown;
+    public float cooldownMovePause;
     public bool canAttack;
 
     [SerializeField] private int damage;
@@ -57,6 +65,9 @@ public class EnemyManager : MonoBehaviour
         isDead = false;
         pauseMovement = false;
         canAttack = true;
+        tempXScale = transform.localScale.x;
+
+        atkCooldown = -1;
 
         switch (enemyClass)
         {
@@ -98,13 +109,38 @@ public class EnemyManager : MonoBehaviour
         if (!isDead)
         {
             AttackPlayer();
+
+            turnLeftRight();
         }
         
+    }
+
+    void turnLeftRight()
+    {
+        Vector3 pos = playerTarget.transform.position;
+        Vector3 dir = (pos - this.transform.position).normalized;
+
+        //float dirflipper = -1;
+
+        //Debug.Log(dir.x);
+
+        if (dir.x > 0) // should be right
+        {
+            spriteRenderer.flipX = true;
+            //transform.localScale = new Vector3(-tempXScale, transform.localScale.y, 1);
+        }
+        if (dir.x < 0)
+        {
+            spriteRenderer.flipX = false;
+            //transform.localScale = new Vector3(tempXScale, transform.localScale.y, 1);
+        }
     }
 
     public void TakeDamage(int dmg, float knockback, Vector3 dir)
     {
         health -= dmg;
+
+        knockback = knockback * knockbackRes;
 
         if(knockback > 0)
         {
@@ -141,8 +177,8 @@ public class EnemyManager : MonoBehaviour
                 canAttack = true;
             }
         }
-
-        if (atkCooldown <= atkCooldownMax/2 && atkCooldown > 0 && canAttack) // This pauses movement the enemy for half the cooldown timer for Atk Anim
+        
+        if (atkCooldown <= atkCooldownMax/cooldownMovePause && atkCooldown > 0 && canAttack) // This pauses movement the enemy for half the cooldown timer for Atk Anim
         {
             pauseMovement = false;
             // This is where enemy will swing and try to dmg player
@@ -155,16 +191,17 @@ public class EnemyManager : MonoBehaviour
                 case EnemyClass.Speed: // Speed Enemy
                     animatorSpeed.SetBool("isAttacking", true);
 
-                    Collider[] PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+                    PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
                     if (PlayerInRange.Length > 0)
                     {
                         //Debug.Log(PlayerInRange[0] + " Hit by attack");
-                        PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(1);
+                        PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
                     }
 
                     canAttack = false;
 
                     break;
+
                 case EnemyClass.Drone: // Enemy Drone
                     
                     Vector3 tempPos = this.transform.position;
@@ -174,19 +211,45 @@ public class EnemyManager : MonoBehaviour
                     tempPos.y = 0.1f;
                     pos.y = 0.1f;
                     tempFieldRef.GetComponent<PoisonAOE>().lerpToDestination(tempPos, pos);
-                    //tempFieldRef.transform.position = Vector3.Lerp(tempPos, pos, .3f);
 
                     canAttack = false;
 
                     break;
                 case EnemyClass.Imob: // Enemy Gravy
                     break;
+
                 case EnemyClass.Elite: // Enemy Elite
+
+                    int atkswitch = UnityEngine.Random.Range(0, 2);
+
+                    if(atkswitch == 0)
+                    {
+                        animatorElite.SetBool("atk1", true);  // Will need to change this to Elite anim////////////////////////////////////////
+
+                        /*PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+                        if (PlayerInRange.Length > 0)
+                        {
+                            //Debug.Log(PlayerInRange[0] + " Hit by attack");
+                            PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
+                        }*/
+
+                        canAttack = false;
+                    }
+                    else if(atkswitch == 1)
+                    {
+                        animatorElite.SetBool("atk2", true);  // Will need to change this to Elite anim////////////////////////////////////////
+
+                        /*PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+                        if (PlayerInRange.Length > 0)
+                        {
+                            //Debug.Log(PlayerInRange[0] + " Hit by attack");
+                            PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
+                        }*/
+
+                        canAttack = false;
+                    }
                     break;
             }
-
-
-            
         }
 
         if (atkCooldown > 0)
@@ -195,9 +258,35 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    void EliteDealDmg()
+    {
+        Vector3 pos = playerTarget.transform.position;
+        Vector3 dir = (pos - this.transform.position).normalized; // Directional Vector towards player
+
+        PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+        if (PlayerInRange.Length > 0)
+        {
+            //Debug.Log(PlayerInRange[0] + " Hit by attack");
+            PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
+        }
+    }
+
     void SpeedAtkFalse()
     {
         animatorSpeed.SetBool("isAttacking", false);
+    }
+
+    void EliteatksFalse()
+    {
+        if(animatorElite.GetBool("atk1"))
+        {
+            animatorElite.SetBool("atk1", false);
+        }
+
+        if (animatorElite.GetBool("atk2"))
+        {
+            animatorElite.SetBool("atk2", false);
+        }
     }
 
     public IEnumerator AggroCoroutine(float length)

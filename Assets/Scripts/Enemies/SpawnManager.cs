@@ -47,7 +47,26 @@ public class SpawnManager : MonoBehaviour
 
     private int enemySpawnID()
     {
-        int enemyID = Random.Range(0, 2);
+        int enemyID = Random.Range(0, 100);
+
+        if (enemyID < 50)
+        {
+            // Set to spawn Speed -- 50% chance
+            enemyID = 0;
+        }
+        else if (enemyID < 80)
+        {
+            // Set to spawn Drone -- 30% chance
+            enemyID = 1;
+        }
+        else
+        {
+            // Set to spawn Elite -- 20% chance
+            enemyID = 2;
+        }
+        
+        
+        //int enemyID = Random.Range(0, enemyArray.Length);
 
         return enemyID;
     }
