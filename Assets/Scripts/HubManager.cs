@@ -19,6 +19,8 @@ public class HubManager : MonoBehaviour
         resourceTooltip.Hide();
 
         LoadResources();
+
+        goldText.text = GameManager.Instance.Gold.ToString();
     }
 
     private void Update()
@@ -63,6 +65,8 @@ public class HubManager : MonoBehaviour
         GameManager.Instance.playerResources.AddItemToInventory(item, 1);
         UpdateEquipment();
         //storeInventory.RemoveItemFromInventory(item, 1);
+
+        goldText.text = GameManager.Instance.Gold.ToString();
         return true;
     }
 
@@ -85,6 +89,9 @@ public class HubManager : MonoBehaviour
     #region UI
 
     [Header("Hub UI")]
+
+    [SerializeField]
+    TextMeshProUGUI goldText;
 
     [SerializeField]
     GameObject resourceListContainer;
