@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HubManager : MonoBehaviour
 {
 
     private void Start()
@@ -16,23 +16,42 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         randomDeliveryMenu.SetActive(false);
         customDeliveryMenu.SetActive(false);
 
-        resourceListContainer.GetComponentInChildren<Scrollbar>().value = 0;
-        equipmentListContainer.GetComponentInChildren<Scrollbar>().value = 0;
+        resourceTooltip.Hide();
 
-        storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-        randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
+        LoadResources();
 
-        resourceTooltipGO = Instantiate(resourceTooltipPrefab);
-        resourceTooltipGO.SetActive(false);
+        goldText.text = GameManager.Instance.Gold.ToString();
     }
+
+    private void Update()
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResultList = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
+
+        if (raycastResultList.Count == 0)
+        {
+            resourceTooltip.Hide();
+        }
+
+        foreach (RaycastResult result in raycastResultList)
+        {
+            if (result.gameObject.TryGetComponent(out ResourceButton btn))
+            {
+                resourceTooltip.SetText(btn.item.itemName, btn.item.deliveryReward.ToString());
+                resourceTooltip.Show(result.screenPosition);
+            }
+        }
+    }
+
 
     [Header("Cargo Resources")]
     [SerializeField] private List<BaseItem> possibleResources;
     [SerializeField] private Inventory storeInventory;
 
-    [SerializeField]
-    GameObject resourceTooltipPrefab;
-    GameObject resourceTooltipGO;
+    [SerializeField] ResourceTooltip resourceTooltip;
 
     public bool BuyResource(BaseItem item)
     {
@@ -43,36 +62,14 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
 
         GameManager.Instance.Gold -= item.cost;
-        //IncrementResourceItem(_name, 1);
-        //TODO: Increment inventory in cargoController
-        storeInventory.RemoveItemFromInventory(item, 1);
+        GameManager.Instance.playerResources.AddItemToInventory(item, 1);
+        UpdateEquipment();
+        //storeInventory.RemoveItemFromInventory(item, 1);
+
+        goldText.text = GameManager.Instance.Gold.ToString();
         return true;
     }
 
-    PointerEventData entryData, exitData;
-
-    public void ToggleTooltip(BaseItem resource)
-    {
-        // Using OnPointerEnter()
-        if(resourceTooltipGO.activeSelf)
-        {
-            resourceTooltipGO.SetActive(false);
-        } else
-        {
-            TextMeshProUGUI[] _text = resourceTooltipGO.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI text in _text)
-            {
-                if(text.gameObject.name == "ResourceName")
-                {
-                    text.text = resource.itemName;
-                } else if (text.gameObject.name == "ResourceDescription")
-                {
-                    text.text = "Delivery Reward: " + resource.deliveryReward.ToString();
-                }
-            }
-            resourceTooltipGO.SetActive(true);
-        }
-    }
 
     public void ResetStoreInventory()
     {
@@ -94,9 +91,13 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [Header("Hub UI")]
 
     [SerializeField]
+    TextMeshProUGUI goldText;
+
+    [SerializeField]
     GameObject resourceListContainer;
     [SerializeField]
     GameObject equipmentListContainer;
+    private List<GameObject> equipmentSlots = new List<GameObject>();
 
     public enum HubMenuState { GameMode, StoryDeliveryMode, RandomDeliveryMode, CustomDeliveryMode };
     [SerializeField]
@@ -116,51 +117,51 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField]
     Button startDeliveryBtn;
 
-    [Header("Resource List Properties")]
-    [SerializeField]
-    List<ItemStack> allResources;
+    [Header("Resource and Equipment List Properties")]
     [SerializeField]
     GameObject resourceItemPrefab;
+    [SerializeField]
+    GameObject equipmentItemPrefab;
 
     public void LoadResources()
     {
         GameObject resourceContent;
-        foreach(ItemStack resource in allResources)
+        foreach(BaseItem resource in possibleResources)
         {
             resourceContent = Instantiate(resourceItemPrefab, resourceListContainer.transform);
-            resourceContent.GetComponentInChildren<Image>().sprite = resource.baseItem.iconSprite;
+            ResourceButton resourceButton = resourceContent.GetComponent<ResourceButton>();
+            resourceButton.SetItem(resource);
+        }
 
-            TextMeshProUGUI[] texts = resourceContent.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI text in texts)
+        UpdateEquipment();
+    }
+
+    private void UpdateEquipment()
+    {
+        foreach (GameObject slot in equipmentSlots)
+        {
+            Destroy(slot);
+        }
+        foreach (ItemStack stack in GameManager.Instance.playerResources.itemInventory)
+        {
+            // Load Equipment List
+            GameObject equipmentResource = Instantiate(equipmentItemPrefab, equipmentListContainer.transform);
+            equipmentSlots.Add(equipmentResource);
+            Image[] images = equipmentResource.GetComponentsInChildren<Image>();
+            foreach(Image img in images)
             {
-                if(text.gameObject.name == "ResourceNameText")
+                if (img.gameObject.name == "EquipmentIcon")
                 {
-                    text.gameObject.name = resource.baseItem.itemName;
-                    text.text = resource.baseItem.itemName;
-                }
-                else if (text.gameObject.name == "ResourceCostText")
-                {
-                    text.text = resource.baseItem.cost.ToString();
-                }
-                else if (text.gameObject.name == "ResourceQuantityText")
-                {
-                    text.text = resource.quantity.ToString();
+                    img.sprite = stack.baseItem.iconSprite;
+                    break;
                 }
             }
-
-            // ?? Are these Listeners ???
-            resourceContent.GetComponent<Button>().OnPointerEnter(entryData);
-            resourceContent.GetComponent<Button>().OnPointerExit(exitData);
-
         }
     }
 
 
     [Header("Custom Delivery Properties")]
 
-    // Custom Delivery Properties
-    [SerializeField]
-    List<Destination> destinations;
     [SerializeField]
     GameObject destinationsPanel;
     [SerializeField]
@@ -197,7 +198,7 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         GameObject tempDeliveryOption;
         TextMeshProUGUI[] tempDeliveryText;
 
-        foreach (Destination dest in destinations)
+        foreach (Destination dest in GameManager.Instance.DeliveryDestinations)
         {
             // Instantiate and edit visbile UI properties
             tempDeliveryOption = Instantiate(newDestinationPrefab, destinationsPanel.transform);
@@ -222,7 +223,7 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void ChooseCustomDelivery(string _name)
     {
-        selectedDestination = destinations.Find(d => d.Name == _name);
+        selectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
     }
 
     public void LoadDeliveryItems()
@@ -356,19 +357,9 @@ public class HubManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        entryData = eventData;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        exitData = eventData;
-    }
-
-
 
     #endregion
+
 
 }
 

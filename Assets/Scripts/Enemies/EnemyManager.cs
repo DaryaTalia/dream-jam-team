@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject cargoTarget;
     [SerializeField] private GameObject playerTarget;
     [SerializeField] private LayerMask playerMask;
+    public ObjectPool<EnemyManager> pool;
     #endregion
 
     private void Start()
@@ -45,7 +47,7 @@ public class EnemyManager : MonoBehaviour
         //playerTarget = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void Init() // This should be called when the enemy gets reused
+    public void Init() // This should be called when the enemy gets reused
     {
         playerTarget = GameObject.FindGameObjectWithTag("Player");
         //cargoTarget = GameObject.FindGameObjectWithTag("Cargo");
@@ -118,6 +120,7 @@ public class EnemyManager : MonoBehaviour
 
             //StopAllCoroutines(); // doesn't stop coroutines started from another script
             transform.position = new Vector3(0, -10f, 0); // Hides enemy under the map so it can be reused later
+            pool.Release(this);
         }
 
 
