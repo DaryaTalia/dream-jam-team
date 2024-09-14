@@ -158,7 +158,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealthMax: 5
   playerHealthCurrent: 0
+  DBNOTimerMax: 0
   playerDamage: 0
+  underEffect: 0
 --- !u!114 &4861590016353849838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5cab33b0cf2a442bd391bacd246a8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DBNO_move: 0
   moveSpeed: 5
   dashMultBase: 0
   dashMultMax: 3
@@ -195,6 +198,7 @@ MonoBehaviour:
   dashTimer: 0
   dashCooldown: 0
   dashCooldownMax: 1
+  animator: {fileID: 0}
 --- !u!114 &219807915357380492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,14 +212,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  animator: {fileID: 0}
+  DBNO_atk: 0
   playerClass: 0
   magicianAbilityPrefab: {fileID: 4136859440576519525, guid: 1680c618f6fc02244822f2b27730bd1c,
     type: 3}
   magicianAbilityCooldown: 0.5
-  chargeTime: 0
+  animatorMouse: {fileID: 0}
+  animatorChad: {fileID: 0}
   chargeTimeMax: 1.5
   chargingAttack: 0
+  attackTimeMax: 0.2
+  abilityTimeMax: 3
   playerRange: 10
   enemyMask:
     serializedVersion: 2
