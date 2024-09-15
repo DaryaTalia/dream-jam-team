@@ -82,6 +82,7 @@ MonoBehaviour:
   isDead: 0
   pauseMovement: 0
   PlayerInRange: []
+  CargoInRange: []
   enemyRange: 10
   atkCooldownMax: 3
   atkCooldown: -1
@@ -94,7 +95,7 @@ MonoBehaviour:
   playerTarget: {fileID: 0}
   playerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
 --- !u!212 &4630439358854183303
 SpriteRenderer:
   m_ObjectHideFlags: 0

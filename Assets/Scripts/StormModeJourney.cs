@@ -112,6 +112,10 @@ public class StormModeJourney : MonoBehaviour
             // Have we reached the next checkpoint?
             if (Checkpoints.Count > 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
             {
+                // Faker
+                //GameManager.Instance.cargoController.DamageCargo(23);
+                //cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
+
                 nextCheckpoint = Checkpoints[1];
                 checkPointInstances[0].GetComponent<Image>().color = Color.green;
                 checkPointInstances.RemoveAt(0);

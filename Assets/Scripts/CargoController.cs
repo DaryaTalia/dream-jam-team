@@ -21,7 +21,7 @@ public class CargoController : MonoBehaviour
     [Header("Cargo Wellness")]
     [SerializeField]
     float _health = _maxHealth;
-    const float _maxHealth = 100;
+    const float _maxHealth = 50;
     public float Health {
         get => _health;
         set
@@ -258,11 +258,13 @@ public class CargoController : MonoBehaviour
     public void DamageCargo(float value)
     {
         Health -= value;
+        GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
     }
 
     public void HealCargo(float value)
     {
         Health += value;
+        GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
     }
 
     public void Reset(GameManager _gm)
