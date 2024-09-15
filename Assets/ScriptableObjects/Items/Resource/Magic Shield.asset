@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Magic Shield
   m_EditorClassIdentifier: 
   itemName: Magic Shield
+  itemDescription: '{Item Description Here}'
   itemType: 1
   iconTexture: {fileID: 0}
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: 1b655dcd4a6cd834585b878cc9e58097, type: 3}
   prefab: {fileID: 6885979530915775948, guid: ef1b9a99796548043ab98f82f60ff9d7, type: 3}
   size: 1
   cost: 100
+  currency: 0
   deliveryReward: 0

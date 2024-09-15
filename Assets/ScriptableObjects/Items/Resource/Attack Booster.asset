@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Attack Booster
   m_EditorClassIdentifier: 
   itemName: Attack Booster
+  itemDescription: '{Item Description Here}'
   itemType: 1
   iconTexture: {fileID: 0}
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: 3254ca0140651a345834d87cf494018b, type: 3}
   prefab: {fileID: 0}
   size: 1
   cost: 25
+  currency: 0
   deliveryReward: 0
