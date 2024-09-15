@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerStats : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private int playerHealthMax;
-    [SerializeField] private int playerHealthCurrent;
-    
+    [SerializeField] private float playerHealthMax;
+    [SerializeField] private float playerHealthCurrent;
+    [SerializeField] private GameObject healthMask;
+
     private bool DBNO = false;
     private float DBNOTimer = 0f;
     [SerializeField] private float DBNOTimerMax;
@@ -64,6 +67,8 @@ public class PlayerStats : MonoBehaviour
         if(invicibilityTimer <= 0)
         {
             playerHealthCurrent -= dmg;
+            healthMask.GetComponentInChildren<Image>().fillAmount = playerHealthCurrent / playerHealthMax;
+            //Debug.Log(healthMask.GetComponentInChildren<Image>().fillAmount + " currenthp: " + playerHealthCurrent + " maxhp: " + playerHealthMax);
 
             if (playerHealthCurrent <= 0 && !DBNO)
             {
@@ -81,6 +86,7 @@ public class PlayerStats : MonoBehaviour
     public void AddHealth(int amount)
     {
         playerHealthCurrent += amount;
+        healthMask.GetComponentInChildren<Image>().fillAmount = playerHealthCurrent / playerHealthMax;
     }
 
     
