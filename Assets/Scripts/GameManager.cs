@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public HubManager hubManager;
     public CargoController cargoController;
     public StormModeJourney stormMode;
+    public PlayerStats playerStats;
 
     public GameObject HubUICanvas;
     public GameObject GameplayUICanvas;
