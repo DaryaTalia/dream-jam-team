@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     #region Variables
     public bool DBNO_move = false;
 
+    [SerializeField] private float xBounding;
+    [SerializeField] private float zBounding;
     [SerializeField] private float moveSpeed;
     private Vector3 moveDirection;
 
@@ -60,17 +62,23 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         moveDirection = Vector3.zero; // Sets movement to Zero so it'll stop after movekey is released
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) moveDirection.z = +1f * dashMultBase;
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) moveDirection.z = -1f * dashMultBase;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) 
+        //Debug.Log(transform.position.z);
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
         { 
-            moveDirection.x = -1f * dashMultBase; 
+            if(transform.position.z < zBounding)
+            {
+                moveDirection.z = +1f * dashMultBase;
+            }
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            moveDirection.x = +1f * dashMultBase;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
+        { 
+            if(transform.position.z > -zBounding)
+            {
+                moveDirection.z = -1f * dashMultBase;
+            }
         }
-        
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) moveDirection.x = -1f * dashMultBase;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) moveDirection.x = +1f * dashMultBase;
 
         Vector3 moveDir = transform.forward * moveDirection.z + transform.right * moveDirection.x;
 
