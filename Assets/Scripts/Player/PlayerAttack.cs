@@ -146,6 +146,7 @@ public class PlayerAttack : MonoBehaviour
 
     void BasicAttack()
     {
+        AudioManager.instance.Play("Player Melee");
         Vector3 pos = target.position;
         Vector3 dir = (pos - this.transform.position).normalized;
         //Debug.DrawLine(this.transform.position, this.transform.position + dir * playerRange, Color.red, Mathf.Infinity); // Draws line from Cursor to Player at range 10
@@ -182,7 +183,8 @@ public class PlayerAttack : MonoBehaviour
 
         // Create Checksphere located in Direction of the MouseCursor (target)
         // can be a bigger or something or a completely different attack
-
+        
+        AudioManager.instance.Play("Player Charge Attack");
         Vector3 pos = target.position;
         Vector3 dir = (pos - this.transform.position).normalized;
 

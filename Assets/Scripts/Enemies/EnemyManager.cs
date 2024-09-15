@@ -150,6 +150,8 @@ public class EnemyManager : MonoBehaviour
 
         if(health <= 0)
         {
+            AudioManager.instance.Play("Enemy Die");
+
             //Debug.Log("Enemy Dead");
             isDead = true;
             pauseMovement = true;
@@ -159,12 +161,11 @@ public class EnemyManager : MonoBehaviour
             pool.Release(this);
         }
 
-
     }
 
     void AttackPlayer()
     {
-        
+        AudioManager.instance.Play("Enemy Melee");
 
         if (atkCooldown <= 0)
         {
