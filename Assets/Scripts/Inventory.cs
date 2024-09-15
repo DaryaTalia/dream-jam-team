@@ -87,6 +87,7 @@ public class Inventory : MonoBehaviour
             if (relevantStack.quantity <= needToRemove)
             {
                 removedCount += relevantStack.quantity;
+                relevantStack.quantity -= needToRemove;
                 itemInventory.Remove(relevantStack);
             }
             else
@@ -95,7 +96,7 @@ public class Inventory : MonoBehaviour
                 relevantStack.quantity -= needToRemove;
             }
         }
-        itemInventory.Remove(itemInventory.First(i => i.baseItem == item));
+        //itemInventory.Remove(itemInventory.First(i => i.baseItem == item));
         availableItemSlots += item.size;
     }
 
