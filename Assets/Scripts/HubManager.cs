@@ -156,6 +156,17 @@ public class HubManager : MonoBehaviour
         }
     }
 
+    [Header("Story Delivery Properties")]
+    [SerializeField]
+    GameObject storyDeliveryContent;
+    [SerializeField]
+    GameObject storyDeliveryPrefab;
+
+    public void LoadStoryDeliveries()
+    {
+        //TODO: load each story based on enum completion status
+    }
+
 
     [Header("Custom Delivery Properties")]
 

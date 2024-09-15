@@ -162,6 +162,9 @@ MonoBehaviour:
     type: 3}
   equipmentItemPrefab: {fileID: 843208010525018934, guid: 18f962b4da752ea4fa41da296fcef125,
     type: 3}
+  storyDeliveryContent: {fileID: 6438139642388921711}
+  storyDeliveryPrefab: {fileID: 1892832906565483004, guid: 60ca8ffe8c7c0584cb896ed5d849e1cb,
+    type: 3}
   destinationsPanel: {fileID: 6204377358113801403}
   newDestinationPrefab: {fileID: 1872260886879908331, guid: ae9ecf13178baee4684e43a60cd75cd7,
     type: 3}
@@ -6049,7 +6052,7 @@ PrefabInstance:
     - target: {fileID: 6330701861354404717, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6353257660460361337, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
@@ -8537,6 +8540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6438139642388921711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 799098012822849573, guid: bd91098dbb67bd942938eca6dd0a2730,
+    type: 3}
+  m_PrefabInstance: {fileID: 5930724542056330570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6563280999650339593 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 674237881095544387, guid: bd91098dbb67bd942938eca6dd0a2730,
