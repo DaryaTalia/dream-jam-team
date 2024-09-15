@@ -91,8 +91,6 @@ public class HubManager : MonoBehaviour
     [SerializeField]
     List<BaseItem> deliveryItems;
 
-
-
     #region UI
 
     [Header("Hub UI")]
@@ -161,14 +159,13 @@ public class HubManager : MonoBehaviour
     }
 
     [Header("Story Delivery Properties")]
+
     [SerializeField]
     GameObject storyDeliveryContent;
     [SerializeField]
     GameObject storyDeliveryPrefab;
     [SerializeField]
     List<GameObject> deliveryStories;
-    [SerializeField]
-    GameObject storyItemPanel;
     [SerializeField]
     GameObject storyItemPrefab;
 
@@ -183,52 +180,47 @@ public class HubManager : MonoBehaviour
             currentDelivery = Instantiate(storyDeliveryPrefab, storyDeliveryContent.transform);
             deliveryStories.Add(currentDelivery);
 
-            foreach(Transform transform in currentDelivery.GetComponentsInChildren<Transform>())
+            int goldAmount = 0;
+            GameObject storyObject;
+
+            foreach (BaseItem item in GameManager.Instance.StoryDeliveries[story].DeliverItems)
             {
-                if (transform.gameObject.name == "ItemsToDeliverPanel")
-                {
-                    storyItemPanel = transform.gameObject;
-                    break;
-                }
-            } 
+                goldAmount += item.deliveryReward;
 
-            TextMeshProUGUI[] storyText = currentDelivery.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI myText in storyText)
-            {
-                switch(myText.gameObject.name)
-                {
-                    case "StoryNameTxt":
-                        {
-                            myText.text = GameManager.Instance.StoryDeliveries[story].Name;
-                            break;
-                        }
-                    case "QuestDescriptionTxt":
-                        {
-                            myText.text = GameManager.Instance.StoryDeliveries[story].QuestDescription;
-                            break;
-                        }
-                    case "GoldCount":
-                        {
-                            int goldAmount = 0;
+                storyObject = Instantiate(storyItemPrefab, currentDelivery.GetComponent<StoryDeliveryUI>().GetItemsPanel().transform);
 
-                            GameObject storyObject;
-
-                            foreach(BaseItem item in GameManager.Instance.StoryDeliveries[story].DeliverItems)
-                            {
-                                goldAmount += item.deliveryReward;
-
-                                storyObject = Instantiate(storyItemPrefab, storyItemPanel.transform);
-                                storyObject.GetComponentInChildren<Image>().sprite = item.iconSprite;
-                            }
-                            myText.text = goldAmount.ToString();
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
+                storyObject.GetComponentInChildren<Image>().sprite = item.iconSprite;
             }
+
+            var storyDelivery = GameManager.Instance.StoryDeliveries[story];
+
+            currentDelivery.GetComponent<StoryDeliveryUI>().SetStoryDeliveryUI(
+                GameManager.Instance.StoryDeliveries[story].Name, 
+                GameManager.Instance.StoryDeliveries[story].QuestDescription, 
+                goldAmount.ToString(), 
+                () => SelectStoryDelivery(storyDelivery));
+
+            BaseGoldReward = goldAmount;
+        }
+    }
+
+    public void SelectStoryDelivery(Delivery storyDelivery)
+    {
+        SelectedDestination = storyDelivery.MyDestination;
+        foreach(BaseItem item in storyDelivery.DeliverItems)
+        {
+            GameManager.Instance.cargoController.AddItemToInventory(item, 1);
+        }
+
+        if (SelectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)
+        {
+            GameManager.Instance.SelectedDelivery = new Delivery
+            {
+                Name = storyDelivery.Name,
+                MyDestination = SelectedDestination
+            };
+
+            startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
         }
     }
 
@@ -254,6 +246,7 @@ public class HubManager : MonoBehaviour
     public int BaseGoldReward; // 20
     int customGoldReward;
 
+    #region Additional Currency
     // GameObject silverRewardGO;
     // TextMeshProUGUI silverRewardText;
     // loat destinationSilverMultipler; // destination.distance * destinationSilverMultipler + baseSilverReward
@@ -265,6 +258,7 @@ public class HubManager : MonoBehaviour
     // loat destinationPlatinumMultipler; // destination.distance * destinationPlatinumMultipler + basePlatinumReward
     // int basePlatinumReward; // 20
     // int customPlatinumReward;
+    #endregion
 
     // When the Select button is clicked on for custom deliveries.
     public void SelectCustomDelivery()

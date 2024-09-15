@@ -200,7 +200,6 @@ MonoBehaviour:
   storyDeliveryPrefab: {fileID: 1892832906565483004, guid: 60ca8ffe8c7c0584cb896ed5d849e1cb,
     type: 3}
   deliveryStories: []
-  storyItemPanel: {fileID: 0}
   storyItemPrefab: {fileID: 2278957975312802948, guid: 9aea1730769e8c741a4d1e89c6cced55,
     type: 3}
   destinationsPanel: {fileID: 6204377358113801403}
@@ -4070,7 +4069,7 @@ PrefabInstance:
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 187.33
       objectReference: {fileID: 0}
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}

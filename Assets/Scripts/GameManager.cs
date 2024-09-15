@@ -13,9 +13,10 @@ public class GameManager : MonoBehaviour
         get => _gameStatus;
     }
 
-    public enum CompletionState { New, Story1, Story2, Story3, Story4 };
+    public enum CompletionState { New, Story1, Story2, Story3, Story4, Story5 };
     [SerializeField]
     CompletionState _completionStatus;
+    bool storyInProgress;
 
     public CompletionState CompletionStatus
     {
@@ -171,9 +172,15 @@ public class GameManager : MonoBehaviour
 
     private void CalmMode()
     {
-        //AudioManager.instance.Stop("Ambient Storm");
+        AudioManager.instance.Stop("Ambient Storm");
         _gameStatus = GameState.CalmMode;
         hubManager.menuState = HubManager.HubMenuState.GameMode;
+
+        if(storyInProgress && _completionStatus != CompletionState.Story4)
+        {
+            _completionStatus++;
+            storyInProgress = false;
+        }
 
         cargoController.Reset(this);
         selectedDelivery = new Delivery();
