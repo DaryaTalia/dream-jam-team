@@ -216,6 +216,8 @@ public class HubManager : MonoBehaviour
         }
     }
 
+    List<GameObject> customDeliveryItems;
+
     public void LoadCustomDeliveryOptions()
     {
         GameObject tempDeliveryOption;
@@ -234,6 +236,7 @@ public class HubManager : MonoBehaviour
             tempDeliveryOption.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
 
+        customDeliveryItems = new List<GameObject>();
 
         GameObject tempItem;
 
@@ -241,10 +244,13 @@ public class HubManager : MonoBehaviour
         foreach(BaseItem item in deliveryItems)
         {
             tempItem = Instantiate(deliveryItemChoicePrefab, deliveryItemsPanel.transform);
+            tempItem.gameObject.name = item.itemName;
+            customDeliveryItems.Add(tempItem);
             tempItem.GetComponent<Image>().sprite = item.iconSprite;
+            tempItem.GetComponent<Image>().color = new Color(1, 1, 1, .4f);
             tempItem.GetComponentInChildren<TextMeshProUGUI>().text = "Size: " + item.size.ToString();
 
-            tempItem.GetComponent<Button>().onClick.AddListener(() => ChooseDeliveryItem(item));
+            tempItem.GetComponent<Button>().onClick.AddListener(() => ChooseDeliveryItem(item, item.itemName));
             tempItem.GetComponent<Button>().onClick.AddListener(CalculateCustomReward);
         }
 
@@ -256,11 +262,18 @@ public class HubManager : MonoBehaviour
         SelectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
     }
 
-    public void ChooseDeliveryItem(BaseItem _item)
+    public void ChooseDeliveryItem(BaseItem _item, string _name)
     {
         if(GameManager.Instance.cargoController.AddItemToInventory(_item, 1))
         {
             Debug.Log("New Item Added: " + _item.itemName);
+            foreach(GameObject item in customDeliveryItems)
+            {
+                if(item.name == _name)
+                {
+                    item.GetComponent<Image>().color = new Color(1, 1, 1, 1f);
+                }
+            }
         } else
         {
             Debug.Log("Item not Added: " + _item.itemName);
