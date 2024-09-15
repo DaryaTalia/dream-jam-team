@@ -221,6 +221,8 @@ public class HubManager : MonoBehaviour
             };
 
             startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
+
+            GameManager.Instance.StoryInProgress = true;
         }
     }
 
@@ -386,16 +388,12 @@ public class HubManager : MonoBehaviour
                     storyDeliveryMenu.SetActive(false);
                     randomDeliveryMenu.SetActive(false);
                     customDeliveryMenu.SetActive(false);
-                    storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-                    randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
                     break;
                 }
             case "Story":
                 {
                     menuState = HubMenuState.StoryDeliveryMode;
                     gameModeMenu.SetActive(false);
-                    storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-                    randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
                     storyDeliveryMenu.SetActive(true);
                     randomDeliveryMenu.SetActive(false);
                     customDeliveryMenu.SetActive(false);
@@ -406,8 +404,6 @@ public class HubManager : MonoBehaviour
                     menuState = HubMenuState.RandomDeliveryMode;
                     gameModeMenu.SetActive(false);
                     storyDeliveryMenu.SetActive(false);
-                    storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-                    randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
                     randomDeliveryMenu.SetActive(true);
                     customDeliveryMenu.SetActive(false);
                     break;
@@ -418,8 +414,6 @@ public class HubManager : MonoBehaviour
                     gameModeMenu.SetActive(false);
                     storyDeliveryMenu.SetActive(false);
                     randomDeliveryMenu.SetActive(false);
-                    storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-                    randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
                     customDeliveryMenu.SetActive(true);
                     break;
                 }
@@ -427,8 +421,6 @@ public class HubManager : MonoBehaviour
                 {
                     Debug.Log("Invalid State");
                     menuState = HubMenuState.GameMode;
-                    storyDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
-                    randomDeliveryMenu.GetComponentInChildren<Scrollbar>().value = 0;
                     gameModeMenu.SetActive(true);
                     storyDeliveryMenu.SetActive(false);
                     randomDeliveryMenu.SetActive(false);

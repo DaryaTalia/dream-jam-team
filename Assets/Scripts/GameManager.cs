@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
     CompletionState _completionStatus;
     bool storyInProgress;
 
+    public bool StoryInProgress
+    {
+        get => storyInProgress;
+        set
+        {
+            storyInProgress = value;
+        }
+    }
+
     public CompletionState CompletionStatus
     {
         get => _completionStatus;
@@ -31,7 +40,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject HubUICanvas;
     public GameObject GameplayUICanvas;
-
     #region Singleton
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
@@ -172,6 +180,8 @@ public class GameManager : MonoBehaviour
 
     private void CalmMode()
     {
+        AudioManager.instance.Play("Calm");
+        AudioManager.instance.Stop("Storm");
         AudioManager.instance.Stop("Ambient Storm");
         _gameStatus = GameState.CalmMode;
         hubManager.menuState = HubManager.HubMenuState.GameMode;
@@ -183,6 +193,10 @@ public class GameManager : MonoBehaviour
         }
 
         cargoController.Reset(this);
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position = new Vector3(-5, -1, 0);
+        //GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>().Reset();
+
         selectedDelivery = new Delivery();
         selectedDelivery.Name = hubManager.deliveryUndecided;
 
@@ -197,6 +211,8 @@ public class GameManager : MonoBehaviour
     private void StormMode()
     {
         AudioManager.instance.Play("Ambient Storm");
+        AudioManager.instance.Play("Storm");
+        AudioManager.instance.Stop("Calm");
         _gameStatus = GameState.StormMode;
 
         stormMode.journeyLength = selectedDelivery.MyDestination.Distance;
