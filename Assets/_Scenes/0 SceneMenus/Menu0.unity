@@ -446,6 +446,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 4201057867105930841, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4201057867105930841, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4201057867105930841, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4790707033916841968, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}
       propertyPath: m_text
@@ -487,6 +502,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_HorizontalAlignment
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781525895041916792, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781525895041916792, guid: 9e705298c96994d449dd4cdf339ad74b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6187264198141412187, guid: 9e705298c96994d449dd4cdf339ad74b,
         type: 3}

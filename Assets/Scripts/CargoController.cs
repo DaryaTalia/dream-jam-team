@@ -237,7 +237,7 @@ public class CargoController : MonoBehaviour
         _cargoTransform.position = _targetPosition;
 
         _distanceTraveled += (Speed / _speedDelta);
-        Debug.Log("Distance Traveled: " + _distanceTraveled);
+        //Debug.Log("Distance Traveled: " + _distanceTraveled);
     }
 
     public void UseResource(ItemStack item)

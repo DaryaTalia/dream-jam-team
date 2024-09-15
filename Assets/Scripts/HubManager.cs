@@ -68,6 +68,11 @@ public class HubManager : MonoBehaviour
         return true;
     }
 
+    public TextMeshProUGUI GetTextMeshProUGUI()
+    {
+        return goldText;
+    }
+
 
     public void ResetStoreInventory()
     {
@@ -158,7 +163,7 @@ public class HubManager : MonoBehaviour
     GameObject destinationsPanel;
     [SerializeField]
     GameObject newDestinationPrefab; // includes children DestinationName and BaseDistance
-    Destination selectedDestination;
+    public Destination SelectedDestination;
 
     [SerializeField]
     GameObject deliveryItemsPanel;
@@ -169,8 +174,8 @@ public class HubManager : MonoBehaviour
     GameObject goldRewardGO; // enable or disable as needed
     [SerializeField]
     TextMeshProUGUI customGoldRewardText;
-    float destinationGoldMultipler = .4f; // destination.distance * destinationGoldMultipler + baseGoldReward
-    int baseGoldReward; // 20
+    public float DestinationGoldMultipler = .4f; // destination.distance * destinationGoldMultipler + baseGoldReward
+    public int BaseGoldReward; // 20
     int customGoldReward;
 
     // GameObject silverRewardGO;
@@ -188,12 +193,12 @@ public class HubManager : MonoBehaviour
     // When the Select button is clicked on for custom deliveries.
     public void SelectCustomDelivery()
     {
-        if(selectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)
+        if(SelectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)
         {
             GameManager.Instance.SelectedDelivery = new Delivery
             {
                 Name = "Custom Delivery",
-                MyDestination = selectedDestination
+                MyDestination = SelectedDestination
             };
             // TODO: Update distance based on selected destination in CC
             startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
@@ -237,7 +242,7 @@ public class HubManager : MonoBehaviour
 
     public void ChooseCustomDelivery(string _name)
     {
-        selectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
+        SelectedDestination = GameManager.Instance.DeliveryDestinations.Find(d => d.Name == _name);
     }
 
     public void ChooseDeliveryItem(BaseItem _item)
@@ -273,9 +278,9 @@ public class HubManager : MonoBehaviour
 
     void CalculateCustomReward()
     {
-        if(menuState == HubMenuState.CustomDeliveryMode && selectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() >= 1)
+        if(menuState == HubMenuState.CustomDeliveryMode && SelectedDestination != null && GameManager.Instance.GetComponent<CargoController>().GetItemInventoryCount() >= 1)
         {
-            customGoldReward = baseGoldReward + (int) (selectedDestination.Distance * destinationGoldMultipler);
+            customGoldReward = BaseGoldReward + (int) (SelectedDestination.Distance * DestinationGoldMultipler);
 
             foreach(ItemStack item in GameManager.Instance.GetComponent<CargoController>().GetItemInventory().itemInventory)
             {

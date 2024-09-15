@@ -179,6 +179,9 @@ public class GameManager : MonoBehaviour
 
         GameplayUICanvas.SetActive(false);
         cargoController.CargoVehicle.SetActive(false);
+
+        GameManager.Instance.hubManager.GetTextMeshProUGUI().text = GameManager.Instance.Gold.ToString();
+
         HubUICanvas.SetActive(true);
     }
 
