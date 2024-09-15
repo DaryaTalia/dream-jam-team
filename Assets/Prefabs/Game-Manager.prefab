@@ -98,7 +98,7 @@ MonoBehaviour:
     distance: 200
   - name: City Zero
     distance: 220
-  _gold: 100
+  _gold: 300
 --- !u!114 &-1696464559278485000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59fadb69d6045a44a7e134cccc9c4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cargoVehiclePrefab: {fileID: 3830439674036797736, guid: 0650c246b5a66d84b8d68e9c666e49ad,
+  _cargoVehiclePrefab: {fileID: 1459883604755208818, guid: e68acd4737cce9844b2626a4714544a4,
     type: 3}
   _health: 100
   _defense: 0

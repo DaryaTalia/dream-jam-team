@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Invincibility
   m_EditorClassIdentifier: 
   itemName: Invincibility
+  itemDescription: '{Item Description Here}'
   itemType: 1
   iconTexture: {fileID: 0}
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: 48b601daec6f04646b6d255491d2f58b, type: 3}
   prefab: {fileID: 0}
   size: 1
   cost: 200
+  currency: 0
   deliveryReward: 10
