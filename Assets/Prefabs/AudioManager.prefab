@@ -48,17 +48,17 @@ MonoBehaviour:
   sounds:
   - name: Ambient Storm
     clip: {fileID: 8300000, guid: 789c8658a37382c47af222f18893533a, type: 3}
-    volume: 0.08
+    volume: 0.171
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 0
+    loop: 1
     mixerGroup: {fileID: 5901717963729871546, guid: 40b14eaecb166f04686b5bed5e98f9ff,
       type: 2}
     source: {fileID: 0}
   - name: Player Melee
     clip: {fileID: 8300000, guid: 2553fe6630a803341bd31d46216f6413, type: 3}
-    volume: 1
+    volume: 0.493
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Player Heal
     clip: {fileID: 8300000, guid: a76c3f3d872f5fe419d0d585ebc50fa7, type: 3}
-    volume: 1
+    volume: 0.586
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Player Charge Attack
     clip: {fileID: 8300000, guid: 932dcf735d02c1b4e85ea25ebd00e38e, type: 3}
-    volume: 1
+    volume: 0.621
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Enemy Melee
     clip: {fileID: 8300000, guid: a69bde4f329c4d64cbd2cea5048b9160, type: 3}
-    volume: 1
+    volume: 0.571
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -98,11 +98,31 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Enemy Die
     clip: {fileID: 8300000, guid: 9b2972019cc843c45893041a8f431cf4, type: 3}
-    volume: 1
+    volume: 0.607
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
     loop: 0
     mixerGroup: {fileID: 5901717963729871546, guid: 40b14eaecb166f04686b5bed5e98f9ff,
+      type: 2}
+    source: {fileID: 0}
+  - name: Calm
+    clip: {fileID: 8300000, guid: 52256fed59f3c7847b5e2bf2bada93f9, type: 3}
+    volume: 0.343
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 8248296080210143285, guid: 40b14eaecb166f04686b5bed5e98f9ff,
+      type: 2}
+    source: {fileID: 0}
+  - name: Storm
+    clip: {fileID: 8300000, guid: 7b51ed72735d3d446a2ee85021430fc5, type: 3}
+    volume: 0.357
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 8248296080210143285, guid: 40b14eaecb166f04686b5bed5e98f9ff,
       type: 2}
     source: {fileID: 0}
