@@ -31,6 +31,7 @@ public class EnemyManager : MonoBehaviour
     private bool immuneAggro; // Set Immobilizer Immune to Aggro
 
     [SerializeField] private Collider[] PlayerInRange;
+    [SerializeField] private Collider[] CargoInRange;
     [SerializeField] private float enemyRange;
     public float atkCooldownMax;
     public float atkCooldown;
@@ -58,9 +59,9 @@ public class EnemyManager : MonoBehaviour
     public void Init() // This should be called when the enemy gets reused
     {
         playerTarget = GameObject.FindGameObjectWithTag("Player");
-        //cargoTarget = GameObject.FindGameObjectWithTag("Cargo");
+        cargoTarget = GameObject.FindGameObjectWithTag("Cargo");
 
-        currentTarget = playerTarget;
+        currentTarget = cargoTarget;
 
         isDead = false;
         pauseMovement = false;
@@ -192,12 +193,7 @@ public class EnemyManager : MonoBehaviour
                 case EnemyClass.Speed: // Speed Enemy
                     animatorSpeed.SetBool("isAttacking", true);
 
-                    PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
-                    if (PlayerInRange.Length > 0)
-                    {
-                        //Debug.Log(PlayerInRange[0] + " Hit by attack");
-                        PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
-                    }
+                    EliteDealDmg();
 
                     canAttack = false;
 
@@ -269,6 +265,13 @@ public class EnemyManager : MonoBehaviour
         {
             //Debug.Log(PlayerInRange[0] + " Hit by attack");
             PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
+        }
+
+        CargoInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+        if (CargoInRange.Length > 0)
+        {
+            //Debug.Log(PlayerInRange[0] + " Hit by attack");
+            GameManager.Instance.cargoController.DamageCargo(damage);
         }
     }
 
