@@ -22,6 +22,10 @@ public class HubManager : MonoBehaviour
 
         goldText.text = GameManager.Instance.Gold.ToString();
         startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = deliveryUndecided;
+
+        deliveryStories = new List<GameObject>();
+
+        LoadStoryDeliveries();
     }
 
     private void Update()
@@ -161,10 +165,71 @@ public class HubManager : MonoBehaviour
     GameObject storyDeliveryContent;
     [SerializeField]
     GameObject storyDeliveryPrefab;
+    [SerializeField]
+    List<GameObject> deliveryStories;
+    [SerializeField]
+    GameObject storyItemPanel;
+    [SerializeField]
+    GameObject storyItemPrefab;
 
     public void LoadStoryDeliveries()
     {
+        deliveryStories.Clear();
+        GameObject currentDelivery;
+
         //TODO: load each story based on enum completion status
+        for(int story = 0; story <= ((int)GameManager.Instance.CompletionStatus); ++story)
+        {
+            currentDelivery = Instantiate(storyDeliveryPrefab, storyDeliveryContent.transform);
+            deliveryStories.Add(currentDelivery);
+
+            foreach(Transform transform in currentDelivery.GetComponentsInChildren<Transform>())
+            {
+                if (transform.gameObject.name == "ItemsToDeliverPanel")
+                {
+                    storyItemPanel = transform.gameObject;
+                    break;
+                }
+            } 
+
+            TextMeshProUGUI[] storyText = currentDelivery.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach(TextMeshProUGUI myText in storyText)
+            {
+                switch(myText.gameObject.name)
+                {
+                    case "StoryNameTxt":
+                        {
+                            myText.text = GameManager.Instance.StoryDeliveries[story].Name;
+                            break;
+                        }
+                    case "QuestDescriptionTxt":
+                        {
+                            myText.text = GameManager.Instance.StoryDeliveries[story].QuestDescription;
+                            break;
+                        }
+                    case "GoldCount":
+                        {
+                            int goldAmount = 0;
+
+                            GameObject storyObject;
+
+                            foreach(BaseItem item in GameManager.Instance.StoryDeliveries[story].DeliverItems)
+                            {
+                                goldAmount += item.deliveryReward;
+
+                                storyObject = Instantiate(storyItemPrefab, storyItemPanel.transform);
+                                storyObject.GetComponentInChildren<Image>().sprite = item.iconSprite;
+                            }
+                            myText.text = goldAmount.ToString();
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+        }
     }
 
 

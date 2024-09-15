@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
 
     private void CalmMode()
     {
-        AudioManager.instance.Stop("Ambient Storm");
+        //AudioManager.instance.Stop("Ambient Storm");
         _gameStatus = GameState.CalmMode;
         hubManager.menuState = HubManager.HubMenuState.GameMode;
 

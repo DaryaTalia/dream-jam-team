@@ -13,6 +13,8 @@ public class Delivery
     string questDescription;
     [SerializeField]
     int myDestinationIndex;
+    [SerializeField]
+    List<BaseItem> deliverItems;
 
     public string Name
     {
@@ -48,5 +50,10 @@ public class Delivery
         {
             myDestinationIndex = GameManager.Instance.DeliveryDestinations.IndexOf(value);
         }
+    }
+
+    public List<BaseItem> DeliverItems
+    {
+        get => deliverItems;
     }
 }
