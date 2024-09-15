@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cargoVehiclePrefab: {fileID: 1459883604755208818, guid: e68acd4737cce9844b2626a4714544a4,
     type: 3}
-  _health: 50
+  _health: 75
   _defense: 0
   itemInventory: {fileID: 3438994551316478085}
   resourceInventory: {fileID: 6424495153675591298}

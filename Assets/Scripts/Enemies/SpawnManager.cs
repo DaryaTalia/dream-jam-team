@@ -45,6 +45,13 @@ public class SpawnManager : MonoBehaviour
 
     }
 
+    public void Reset()
+    {
+        enemyPool = new ObjectPool<EnemyManager>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
+            OnDestroyPoolObject, true, defaultEnemyPoolSize, maxEnemyPoolSize);
+        spawnATimer = 5f;
+    }
+
     private int enemySpawnID()
     {
         int enemyID = Random.Range(0, 100);

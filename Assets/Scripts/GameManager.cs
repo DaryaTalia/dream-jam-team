@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
     CompletionState _completionStatus;
     bool storyInProgress;
 
+    public bool StoryInProgress
+    {
+        get => storyInProgress;
+        set
+        {
+            storyInProgress = value;
+        }
+    }
+
     public CompletionState CompletionStatus
     {
         get => _completionStatus;
@@ -183,6 +192,10 @@ public class GameManager : MonoBehaviour
         }
 
         cargoController.Reset(this);
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position = new Vector3(-5, -1, 0);
+        GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>().Reset();
+
         selectedDelivery = new Delivery();
         selectedDelivery.Name = hubManager.deliveryUndecided;
 

@@ -143,7 +143,20 @@ public class StormModeJourney : MonoBehaviour
                 // If the journey is still ongoing, continue updating the progress slider
                 journeySlider.fillAmount = GameManager.Instance.cargoController.DistanceTraveled / journeyLength;
             }
+
+            if(GameManager.Instance.cargoController.Health <= 0)
+            {
+                GameOver();
+            }
         }
+    }
+
+    void GameOver()
+    {
+        // End the Journey/Delivery
+        journeyActive = false;
+
+        GameManager.Instance.StartCalmMode();
     }
 
     void CheckpointEvent()
