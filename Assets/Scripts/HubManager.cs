@@ -209,7 +209,7 @@ public class HubManager : MonoBehaviour
         SelectedDestination = storyDelivery.MyDestination;
         foreach(BaseItem item in storyDelivery.DeliverItems)
         {
-            GameManager.Instance.cargoController.AddItemToInventory(item, 1);
+            Debug.Log(GameManager.Instance.cargoController.AddItemToInventory(item, 1));
         }
 
         if (SelectedDestination != null && GameManager.Instance.cargoController.GetItemInventoryCount() > 0)

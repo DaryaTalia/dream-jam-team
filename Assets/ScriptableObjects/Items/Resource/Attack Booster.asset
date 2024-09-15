@@ -17,7 +17,7 @@ MonoBehaviour:
   itemType: 1
   iconTexture: {fileID: 0}
   iconSprite: {fileID: 21300000, guid: 3254ca0140651a345834d87cf494018b, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 6885979530915775948, guid: ef1b9a99796548043ab98f82f60ff9d7, type: 3}
   size: 1
   cost: 25
   currency: 0

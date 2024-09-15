@@ -164,7 +164,6 @@ public class StormModeJourney : MonoBehaviour
         {
             if (itemStack.baseItem.itemName == _name && itemStack.quantity > 0)
             {
-                --itemStack.quantity;
                 GameObject myResource = resources.Find(r => r.gameObject.name == _name);        // Find the correct resource game object by text mesh name
 
                 if (itemStack.baseItem.prefab != null)
@@ -178,15 +177,16 @@ public class StormModeJourney : MonoBehaviour
 
                 if (myResource != null)
                 {
-                    myResource.GetComponentInChildren<TextMeshProUGUI>().text = itemStack.quantity.ToString();                 // Update the text of the game object
+                    GameManager.Instance.playerResources.RemoveItemFromInventory(itemStack.baseItem, 1);
 
                     if (itemStack.quantity < 1)
                     {
-                        Destroy(myResource);
                         resources.Remove(myResource);
+                        Destroy(myResource);
+                    } else
+                    {
+                        myResource.GetComponentInChildren<TextMeshProUGUI>().text = itemStack.quantity.ToString();                 // Update the text of the game object
                     }
-
-                    GameManager.Instance.playerResources.RemoveItemFromInventory(itemStack.baseItem, 1);
                 }
                 else
                 {
