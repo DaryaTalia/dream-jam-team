@@ -167,7 +167,14 @@ public class StormModeJourney : MonoBehaviour
                 --itemStack.quantity;
                 GameObject myResource = resources.Find(r => r.gameObject.name == _name);        // Find the correct resource game object by text mesh name
 
-                Instantiate(itemStack.baseItem.prefab);
+                if (itemStack.baseItem.prefab != null)
+                {
+                    Instantiate(itemStack.baseItem.prefab);
+                }
+                else
+                {
+                    Debug.LogWarning("This Resource does not have a Prefab attached: " + _name);
+                }
 
                 if (myResource != null)
                 {
