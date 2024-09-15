@@ -167,6 +167,8 @@ public class StormModeJourney : MonoBehaviour
                 --itemStack.quantity;
                 GameObject myResource = resources.Find(r => r.gameObject.name == _name);        // Find the correct resource game object by text mesh name
 
+                Instantiate(itemStack.baseItem.prefab);
+
                 if (myResource != null)
                 {
                     myResource.GetComponentInChildren<TextMeshProUGUI>().text = itemStack.quantity.ToString();                 // Update the text of the game object
