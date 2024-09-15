@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Health Potion
   m_EditorClassIdentifier: 
   itemName: Health Potion
+  itemDescription: '{Item Description Here}'
   itemType: 1
   iconTexture: {fileID: 0}
   iconSprite: {fileID: 0}
-  prefab: {fileID: 6885979530915775948, guid: ef1b9a99796548043ab98f82f60ff9d7, type: 3}
+  prefab: {fileID: 9023956906478678377, guid: 5d78910905a79fb4cab6c0505e5eb111, type: 3}
   size: 1
   cost: 30
+  currency: 0
   deliveryReward: 0
