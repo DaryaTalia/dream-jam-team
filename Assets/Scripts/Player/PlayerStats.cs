@@ -77,7 +77,13 @@ public class PlayerStats : MonoBehaviour
             invicibilityTimer = invicibilityTimerMax;
         }
     }
+    
+    public void AddHealth(int amount)
+    {
+        playerHealthCurrent += amount;
+    }
 
+    
     public IEnumerator TickDmg(int noTicks)
     {
         int maxTicks = noTicks;
