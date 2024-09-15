@@ -57,8 +57,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.24, y: 0.27, z: 1}
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Size: {x: 0.24, y: 0.67, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5773299113102800738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DBNO_move: 0
-  xBounding: 0
-  zBounding: 8
   moveSpeed: 5
   dashMultBase: 0
   dashMultMax: 3
