@@ -42,6 +42,20 @@ public class StormModeJourney : MonoBehaviour
 
     public void InitJourney()
     {
+        foreach (GameObject go in resources)
+        {
+            Destroy(go);
+        }
+        resources.Clear();
+
+        resourceStacks.Clear();
+
+        foreach(GameObject go in checkPointInstances)
+        {
+            Destroy(go);
+        }
+        checkPointInstances.Clear();
+
         nextCheckpoint = Checkpoints[0];
 
         journeyLength = Checkpoints[Checkpoints.Count - 1];

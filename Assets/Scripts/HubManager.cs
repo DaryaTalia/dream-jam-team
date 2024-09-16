@@ -24,8 +24,6 @@ public class HubManager : MonoBehaviour
         startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = deliveryUndecided;
 
         deliveryStories = new List<GameObject>();
-
-        LoadStoryDeliveries();
     }
 
     private void Update()
@@ -171,6 +169,10 @@ public class HubManager : MonoBehaviour
 
     public void LoadStoryDeliveries()
     {
+        foreach(GameObject go in deliveryStories)
+        {
+            Destroy(go);
+        }
         deliveryStories.Clear();
         GameObject currentDelivery;
 
@@ -274,6 +276,8 @@ public class HubManager : MonoBehaviour
             };
             // TODO: Update distance based on selected destination in CC
             startDeliveryBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Start Delivery";
+
+            GameManager.Instance.StoryInProgress = false;
         }
     }
 

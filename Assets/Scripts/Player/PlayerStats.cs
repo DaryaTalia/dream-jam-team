@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour
         Init();   
     }
 
-    void Init()
+    public void Init()
     {
         playerHealthCurrent = playerHealthMax;
         underEffect = false;

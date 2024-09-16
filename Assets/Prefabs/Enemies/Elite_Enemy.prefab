@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4019765708918799912}
   - component: {fileID: 4630439358854183303}
   - component: {fileID: -2929796667109423055}
+  - component: {fileID: 587223998902394751}
   m_Layer: 6
   m_Name: Elite_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +43,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3798214959239527259}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe3ae9b51565e04a9cb7e856864f7a7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -54,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.29, y: 0.61, z: 0.75}
-  m_Center: {x: 0, y: 0.22999999, z: 0}
+  m_Size: {x: 0.9, y: 1, z: 0.5}
+  m_Center: {x: -0.05, y: 0.6, z: 0}
 --- !u!114 &4019765708918799912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -1204534240, guid: b0fa2b43306905e42891f766fc905bcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -169,3 +170,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &587223998902394751
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798214959239527259}
+  serializedVersion: 4
+  m_Mass: 200
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
