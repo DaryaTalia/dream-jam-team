@@ -65,6 +65,26 @@ public class GameManager : MonoBehaviour
 
         hubManager.LoadCustomDeliveryOptions();
         // hubManager.LoadRandomDeliveries();
+
+        foreach(Sound sound in AudioManager.instance.sounds)
+        {
+            if(sound.mixerGroup.name == "SFX")
+            {
+                sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", .5f);
+            }
+            else
+            if (sound.mixerGroup.name == "Music")
+            {
+                if(PlayerPrefsExtended.GetBool("Music toggle"))
+                {
+                    sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", .5f);
+
+                } else
+                {
+                    sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", 0f);
+                }
+            }
+        }
     }
 
     [Header("Resources")]
