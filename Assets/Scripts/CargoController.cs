@@ -258,12 +258,17 @@ public class CargoController : MonoBehaviour
     public void DamageCargo(float value)
     {
         Health -= value;
-        GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
+        UpdateCargohealthSlider();
     }
 
     public void HealCargo(float value)
     {
         Health += value;
+        UpdateCargohealthSlider();
+    }
+
+    void UpdateCargohealthSlider()
+    {
         GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
     }
 
@@ -280,6 +285,10 @@ public class CargoController : MonoBehaviour
         _heightTarget = 0;
         _targetPosition = new Vector3(0, 0, 0);
         _distanceTraveled = 0;
+        if (GameManager.Instance.stormMode.cargoHealthSlider != null)
+        {
+            UpdateCargohealthSlider();
+        }
     }
 
 }

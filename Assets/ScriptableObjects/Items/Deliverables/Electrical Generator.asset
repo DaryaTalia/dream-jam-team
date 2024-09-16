@@ -21,4 +21,4 @@ MonoBehaviour:
   size: 2
   cost: 100
   currency: 0
-  deliveryReward: 10
+  deliveryReward: 50

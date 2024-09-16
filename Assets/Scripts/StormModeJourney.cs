@@ -17,6 +17,7 @@ public class StormModeJourney : MonoBehaviour
     public List<float> Checkpoints;
     public float nextCheckpoint;
     public float journeyLength;
+    int nextCheckpointIndex;
 
     public GameObject gameplayUI;
     public Image journeySlider;
@@ -42,21 +43,8 @@ public class StormModeJourney : MonoBehaviour
 
     public void InitJourney()
     {
-        foreach (GameObject go in resources)
-        {
-            Destroy(go);
-        }
-        resources.Clear();
-
-        resourceStacks.Clear();
-
-        foreach(GameObject go in checkPointInstances)
-        {
-            Destroy(go);
-        }
-        checkPointInstances.Clear();
-
-        nextCheckpoint = Checkpoints[0];
+        nextCheckpointIndex = 0;
+        nextCheckpoint = Checkpoints[nextCheckpointIndex]; 
 
         journeyLength = Checkpoints[Checkpoints.Count - 1];
 
@@ -124,30 +112,29 @@ public class StormModeJourney : MonoBehaviour
         if(journeyActive)
         {
             // Have we reached the next checkpoint?
-            if (Checkpoints.Count > 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
+            if (nextCheckpointIndex < checkPointInstances.Count - 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
             {
                 // Faker
                 //GameManager.Instance.cargoController.DamageCargo(23);
                 //cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
 
-                nextCheckpoint = Checkpoints[1];
-                checkPointInstances[0].GetComponent<Image>().color = Color.green;
-                checkPointInstances.RemoveAt(0);
-                Checkpoints.RemoveAt(0);
+                checkPointInstances[nextCheckpointIndex].GetComponent<Image>().color = Color.green;
+                ++nextCheckpointIndex;
+                nextCheckpoint = Checkpoints[nextCheckpointIndex];
+
                 Destroy(items[0]);
                 items.RemoveAt(0);
 
                 CheckpointEvent();
             }
             // Have we reached the last checkpoint?
-            else if (Checkpoints.Count == 1 && GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
+            else if (GameManager.Instance.cargoController.DistanceTraveled >= nextCheckpoint)
             {
+                checkPointInstances[nextCheckpointIndex].GetComponent<Image>().color = Color.green;
                 nextCheckpoint = -1;
-                checkPointInstances[0].GetComponent<Image>().color = Color.green;
-                checkPointInstances.RemoveAt(0);
-                Checkpoints.Clear();
+
                 Destroy(items[0]);
-                items.RemoveAt(0);
+                items.Clear();
 
                 CheckpointEvent();
             }
@@ -165,27 +152,48 @@ public class StormModeJourney : MonoBehaviour
         }
     }
 
-    void GameOver()
+    private void Reset()
     {
+        foreach (GameObject go in resources)
+        {
+            Destroy(go);
+        }
+        resources.Clear();
+
+        resourceStacks.Clear();
+
+        foreach (GameObject go in checkPointInstances)
+        {
+            Destroy(go);
+        }
+        checkPointInstances.Clear();
+
+        Checkpoints.Clear();
+
         // End the Journey/Delivery
         journeyActive = false;
 
         GameManager.Instance.StartCalmMode();
     }
 
+    void GameOver()
+    {
+        Reset();
+    }
+
     void CheckpointEvent()
     {
-        GameManager.Instance.Gold += GameManager.Instance.cargoController.GetItemInventory().itemInventory[0].baseItem.deliveryReward;
-        GameManager.Instance.cargoController.GetItemInventory().itemInventory.RemoveAt(0);
+        if (GameManager.Instance.cargoController.GetItemInventory().itemInventory.Count >= 1)
+        {
+            GameManager.Instance.Gold += GameManager.Instance.cargoController.GetItemInventory().itemInventory[0].baseItem.deliveryReward;
+            GameManager.Instance.cargoController.GetItemInventory().itemInventory.RemoveAt(0);
+        }
 
-        if(Checkpoints.Count < 1)
+        if(GameManager.Instance.cargoController.GetItemInventory().itemInventory.Count < 1)
         {
             GameManager.Instance.Gold += GameManager.Instance.hubManager.BaseGoldReward + (int)(GameManager.Instance.hubManager.SelectedDestination.Distance * GameManager.Instance.hubManager.DestinationGoldMultipler);
 
-            // End the Journey/Delivery
-            journeyActive = false;
-
-            GameManager.Instance.StartCalmMode();
+            Reset();
         }
     }
 

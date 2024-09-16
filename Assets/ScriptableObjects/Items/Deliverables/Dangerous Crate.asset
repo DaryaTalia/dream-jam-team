@@ -22,4 +22,4 @@ MonoBehaviour:
   size: 3
   cost: 0
   currency: 0
-  deliveryReward: 10
+  deliveryReward: 35

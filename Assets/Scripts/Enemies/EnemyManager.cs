@@ -46,6 +46,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject cargoTarget;
     [SerializeField] private GameObject playerTarget;
     [SerializeField] private LayerMask playerMask;
+    [SerializeField] private LayerMask cargoMask;
     public ObjectPool<EnemyManager> pool;
     #endregion
 
@@ -263,15 +264,36 @@ public class EnemyManager : MonoBehaviour
         PlayerInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
         if (PlayerInRange.Length > 0)
         {
-            //Debug.Log(PlayerInRange[0] + " Hit by attack");
-            PlayerInRange[0].GetComponent<PlayerStats>().TakeDamage(damage);
+            try
+            {
+                foreach(Collider ps in PlayerInRange)
+                {
+                    if (ps.GetComponent<PlayerStats>())
+                    {
+                        ps.GetComponent<PlayerStats>().TakeDamage(damage);
+                    }
+                }
+            }
+            catch(NullReferenceException e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
 
-        CargoInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, playerMask);
+        CargoInRange = Physics.OverlapSphere(this.transform.position + (dir * enemyRange / 2), enemyRange / 2, cargoMask);
         if (CargoInRange.Length > 0)
         {
-            //Debug.Log(PlayerInRange[0] + " Hit by attack");
-            GameManager.Instance.cargoController.DamageCargo(damage);
+            try
+            {
+                foreach (Collider ps in CargoInRange)
+                {
+                    GameManager.Instance.cargoController.DamageCargo(damage);
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
     }
 
