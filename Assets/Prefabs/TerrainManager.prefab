@@ -47,7 +47,7 @@ MonoBehaviour:
   objectToTrack: {fileID: 0}
   terrainPiecePrefab: {fileID: 5991276971983357030, guid: a03dbb373e9c6e348b7fbbe51570af23,
     type: 3}
-  terrainPoolCount: 3
+  terrainPoolCount: 4
   spawnSpacing: 100
   spawnThresholdFromCenter: 5
-  returnToPoolThreshold: 150
+  returnToPoolThreshold: 100

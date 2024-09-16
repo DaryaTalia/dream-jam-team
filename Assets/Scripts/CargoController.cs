@@ -225,15 +225,15 @@ public class CargoController : MonoBehaviour
 
     void Move()
     {
-        if(Mathf.Abs(_heightTarget) - Mathf.Abs(_cargoTransform.position.y) < _heightPadding)
+        if(Mathf.Abs(_heightTarget) - Mathf.Abs(_cargoTransform.position.z) < _heightPadding)
         {
             _heightTarget = Random.Range(_heightLowerLimit, _heightUpperLimit);
         }
 
         _targetPosition = new Vector3(
             _cargoTransform.position.x + (Speed / _speedDelta), 
-            Mathf.SmoothStep(_cargoTransform.position.y, _heightTarget, _heightSpeed * Time.deltaTime), 
-            0);
+            0,
+            Mathf.SmoothStep(_cargoTransform.position.z, _heightTarget, _heightSpeed * Time.deltaTime) );
         _cargoTransform.position = _targetPosition;
 
         _distanceTraveled += (Speed / _speedDelta);
@@ -258,12 +258,17 @@ public class CargoController : MonoBehaviour
     public void DamageCargo(float value)
     {
         Health -= value;
-        GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
+        UpdateCargohealthSlider();
     }
 
     public void HealCargo(float value)
     {
         Health += value;
+        UpdateCargohealthSlider();
+    }
+
+    void UpdateCargohealthSlider()
+    {
         GameManager.Instance.stormMode.cargoHealthSlider.fillAmount = GameManager.Instance.cargoController.Health / GameManager.Instance.cargoController.MaxHealth;
     }
 
@@ -280,6 +285,10 @@ public class CargoController : MonoBehaviour
         _heightTarget = 0;
         _targetPosition = new Vector3(0, 0, 0);
         _distanceTraveled = 0;
+        if (GameManager.Instance.stormMode.cargoHealthSlider != null)
+        {
+            UpdateCargohealthSlider();
+        }
     }
 
 }

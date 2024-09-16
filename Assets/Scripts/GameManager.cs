@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public CargoController cargoController;
     public StormModeJourney stormMode;
     public PlayerStats playerStats;
+    public SpawnManager enemySpawn;
 
     public GameObject HubUICanvas;
     public GameObject GameplayUICanvas;
@@ -186,22 +187,39 @@ public class GameManager : MonoBehaviour
         _gameStatus = GameState.CalmMode;
         hubManager.menuState = HubManager.HubMenuState.GameMode;
 
-        if(storyInProgress && _completionStatus != CompletionState.Story4)
+        if (storyInProgress && _completionStatus != CompletionState.Story4)
         {
-            _completionStatus++;
+            ++_completionStatus;
             storyInProgress = false;
         }
+
+        foreach(GameObject go in stormMode.resources)
+        {
+            Destroy(go);
+        }
+        
+        foreach(GameObject go in stormMode.checkPointInstances)
+        {
+            Destroy(go);
+        }
+
+        hubManager.LoadStoryDeliveries();
 
         cargoController.Reset(this);
 
         GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position = new Vector3(-5, -1, 0);
-        //GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>().Reset();
 
         selectedDelivery = new Delivery();
         selectedDelivery.Name = hubManager.deliveryUndecided;
 
         GameplayUICanvas.SetActive(false);
         cargoController.CargoVehicle.SetActive(false);
+        playerStats.gameObject.SetActive(false);
+
+        if (enemySpawn != null)
+        {
+            enemySpawn.Reset();
+        }
 
         GameManager.Instance.hubManager.GetTextMeshProUGUI().text = GameManager.Instance.Gold.ToString();
 
@@ -216,6 +234,7 @@ public class GameManager : MonoBehaviour
         _gameStatus = GameState.StormMode;
 
         stormMode.journeyLength = selectedDelivery.MyDestination.Distance;
+
         List<float> itemCheckpoints = new List<float>();
 
         float averageDistance = stormMode.journeyLength / cargoController.GetItemInventory().itemInventory.Count;
@@ -232,6 +251,18 @@ public class GameManager : MonoBehaviour
         stormMode.InitJourney();
 
         cargoController.CargoVehicle.SetActive(true);
+        if(enemySpawn == null)
+        {
+            enemySpawn = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>();
+        }
+        playerStats.gameObject.SetActive(true);
+        // Keep the player in front of the cargo vehicle (closer to the camera)
+        playerStats.gameObject.transform.position = new Vector3(
+            gameObject.transform.position.x, 
+            gameObject.transform.position.y, 
+            GameManager.Instance.cargoController.CargoVehicle.transform.position.z - 2);
+
+        playerStats.Init();
     }
 
     public void StartCalmMode()

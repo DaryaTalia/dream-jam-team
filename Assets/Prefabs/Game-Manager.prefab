@@ -58,6 +58,7 @@ MonoBehaviour:
   cargoController: {fileID: 100629500531229215}
   stormMode: {fileID: 589328514977221926}
   playerStats: {fileID: 0}
+  enemySpawn: {fileID: 0}
   HubUICanvas: {fileID: 6563280999650339593}
   GameplayUICanvas: {fileID: 3719094303546885218}
   playerResources: {fileID: 9145872237693247552}
@@ -229,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cargoVehiclePrefab: {fileID: 1459883604755208818, guid: e68acd4737cce9844b2626a4714544a4,
     type: 3}
-  _health: 75
+  _health: 50
   _defense: 0
   itemInventory: {fileID: 3438994551316478085}
   resourceInventory: {fileID: 6424495153675591298}
@@ -237,7 +238,7 @@ MonoBehaviour:
   _speedModifier: 1
   _heightUpperLimit: 5
   _heightLowerLimit: -5
-  _heightSpeed: 0.5
+  _heightSpeed: 0.75
   _heightTarget: 0
   _distanceTraveled: 0
 --- !u!114 &3438994551316478085
