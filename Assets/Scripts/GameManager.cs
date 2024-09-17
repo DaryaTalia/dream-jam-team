@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public StormModeJourney stormMode;
     public PlayerStats playerStats;
     public SpawnManager enemySpawn;
+    public TerrainManager terrainManager;
 
     public GameObject HubUICanvas;
     public GameObject GameplayUICanvas;
@@ -65,6 +66,26 @@ public class GameManager : MonoBehaviour
 
         hubManager.LoadCustomDeliveryOptions();
         // hubManager.LoadRandomDeliveries();
+
+        foreach(Sound sound in AudioManager.instance.sounds)
+        {
+            if(sound.mixerGroup.name == "SFX")
+            {
+                sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", .5f);
+            }
+            else
+            if (sound.mixerGroup.name == "Music")
+            {
+                if(PlayerPrefsExtended.GetBool("Music toggle"))
+                {
+                    sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", .5f);
+
+                } else
+                {
+                    sound.volume = PlayerPrefsExtended.GetFloat("Sound Volume", 0f);
+                }
+            }
+        }
     }
 
     [Header("Resources")]
@@ -222,6 +243,8 @@ public class GameManager : MonoBehaviour
         }
 
         GameManager.Instance.hubManager.GetTextMeshProUGUI().text = GameManager.Instance.Gold.ToString();
+
+        terrainManager.Reset();
 
         HubUICanvas.SetActive(true);
     }

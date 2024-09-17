@@ -47,6 +47,11 @@ public class SpawnManager : MonoBehaviour
 
     public void Reset()
     {
+        foreach(EnemyManager em in this.GetComponentsInChildren<EnemyManager>())
+        {
+            Destroy(em.gameObject);
+        }
+
         enemyPool = new ObjectPool<EnemyManager>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
             OnDestroyPoolObject, true, defaultEnemyPoolSize, maxEnemyPoolSize);
         spawnATimer = 5f;
@@ -88,6 +93,7 @@ public class SpawnManager : MonoBehaviour
     {
         Vector3 loc = getRange();
         var go = Instantiate(enemyArray[enemySpawnID()], loc, Quaternion.identity /*Quaternion.Euler(0, 180, 0)*/);
+        go.transform.SetParent(this.transform);
         EnemyManager enemy = go.GetComponent<EnemyManager>();
         enemy.pool = enemyPool;
         return enemy;
