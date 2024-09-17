@@ -30,6 +30,16 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        if(terrainPool != null)
+            terrainPool.Clear();
+
+        terrainPool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
+            OnDestroyPoolObject, true, 3, terrainPoolCount);
+        PlaceNewPiece(transform.position);
+    }
+
     void PlaceNewPiece(Vector3 position)
     {
         var piece = terrainPool.Get();

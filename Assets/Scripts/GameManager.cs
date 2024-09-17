@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public StormModeJourney stormMode;
     public PlayerStats playerStats;
     public SpawnManager enemySpawn;
+    public TerrainManager terrainManager;
 
     public GameObject HubUICanvas;
     public GameObject GameplayUICanvas;
@@ -242,6 +243,8 @@ public class GameManager : MonoBehaviour
         }
 
         GameManager.Instance.hubManager.GetTextMeshProUGUI().text = GameManager.Instance.Gold.ToString();
+
+        terrainManager.Reset();
 
         HubUICanvas.SetActive(true);
     }
