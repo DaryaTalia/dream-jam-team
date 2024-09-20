@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float playerHealthCurrent;
     [SerializeField] private GameObject healthMask;
 
+    private bool isInvincible = false;
     private bool DBNO = false;
     private float DBNOTimer = 0f;
     [SerializeField] private float DBNOTimerMax;
@@ -35,6 +36,7 @@ public class PlayerStats : MonoBehaviour
     {
         playerHealthCurrent = playerHealthMax;
         underEffect = false;
+        isInvincible = false;
     }
 
     // Update is called once per frame
@@ -62,14 +64,31 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void ToggleInvincibility()
+    {
+        if(isInvincible)
+        {
+            isInvincible = false;
+        }
+        else
+        {
+            isInvincible = true;
+        }
+    }
+
     public void TakeDamage(int dmg)
     {
-        if(invicibilityTimer <= 0)
+        // Check if player can be damaged based on vulnerability checks
+        if (invicibilityTimer <= 0 && !isInvincible)
         {
             playerHealthCurrent -= dmg;
             healthMask.GetComponentInChildren<Image>().fillAmount = playerHealthCurrent / playerHealthMax;
             //Debug.Log(healthMask.GetComponentInChildren<Image>().fillAmount + " currenthp: " + playerHealthCurrent + " maxhp: " + playerHealthMax);
+        }
 
+        // Iterate natural invincibility based on health
+        if (invicibilityTimer <= 0)
+        {
             if (playerHealthCurrent <= 0 && !DBNO)
             {
                 //Debug.Log("Player DBNO");
@@ -78,7 +97,6 @@ public class PlayerStats : MonoBehaviour
                 GetComponent<PlayerAttack>().DBNO_atk = true;
                 DBNOTimer = DBNOTimerMax;
             }
-
             invicibilityTimer = invicibilityTimerMax;
         }
     }
