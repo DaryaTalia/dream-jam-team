@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cargoVehiclePrefab: {fileID: 0}
-  _health: 100
+  _health: 75
   _defense: 0
   itemInventory: {fileID: 7090526332064121065}
   resourceInventory: {fileID: 5185061702773881101}

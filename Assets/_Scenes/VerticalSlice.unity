@@ -837,6 +837,11 @@ PrefabInstance:
       objectReference: {fileID: 915571575}
     - target: {fileID: 8699380653671729159, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
+      propertyPath: playerAttack
+      value: 
+      objectReference: {fileID: 1866700438}
+    - target: {fileID: 8699380653671729159, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
+        type: 3}
       propertyPath: terrainManager
       value: 
       objectReference: {fileID: 421997085}
@@ -1015,6 +1020,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6aef2ad765c94c46ad79eba74465284, type: 3}
+--- !u!114 &1866700438 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3094212946763944175, guid: 74b1cbe5c3abe7a44b1d3de40792d254,
+    type: 3}
+  m_PrefabInstance: {fileID: 584412145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7d2651676f2bd4998e472cebdce1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2041328422
 PrefabInstance:
   m_ObjectHideFlags: 0

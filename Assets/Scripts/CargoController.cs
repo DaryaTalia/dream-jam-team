@@ -20,8 +20,9 @@ public class CargoController : MonoBehaviour
     // Cargo Wellness Attributes
     [Header("Cargo Wellness")]
     [SerializeField]
+    [Range(0, _maxHealth)]
     float _health = _maxHealth;
-    const float _maxHealth = 50;
+    const float _maxHealth = 75;
     public float Health {
         get => _health;
         set
@@ -46,7 +47,7 @@ public class CargoController : MonoBehaviour
 
     [SerializeField]
     float _defense = 0;
-    const float _maxDefense = 100;
+    const float _maxDefense = 20;
     public float Defense
     {
         get => _defense;
@@ -257,7 +258,17 @@ public class CargoController : MonoBehaviour
 
     public void DamageCargo(float value)
     {
-        Health -= value;
+        // Clamp Defense Benefits so that a negative amount doesn't "heal" the cargo
+        float totalDamage = value;
+        if(totalDamage - Defense <= 0)
+        {
+            totalDamage = 0;
+        } else
+        {
+            totalDamage -= Defense;
+        }
+
+        Health -= totalDamage;
         UpdateCargohealthSlider();
     }
 

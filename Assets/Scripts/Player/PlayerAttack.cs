@@ -35,6 +35,10 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] LayerMask enemyMask;
 
+    // Attack damages
+    int basicAttackDamage = 2;
+    int bonusAttackDamage = 0;
+
     #endregion
 
     // Update is called once per frame
@@ -144,6 +148,11 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public void AdjustBonusAttackDamage(int adjustment)
+    {
+        bonusAttackDamage = adjustment;
+    }
+
     void BasicAttack()
     {
         AudioManager.instance.Play("Player Melee");
@@ -165,7 +174,7 @@ public class PlayerAttack : MonoBehaviour
                 //EnemiesInRange[i].transform.parent.gameObject.GetComponent<Enemy_Controller>().TakeDamageMethod(playerDamage);
 
                 //Debug.Log(EnemiesInRange[i]);
-                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(1, 10, dir);
+                EnemiesInRange[i].GetComponent<EnemyManager>().TakeDamage(basicAttackDamage + bonusAttackDamage, 10, dir);
             }
         }
 

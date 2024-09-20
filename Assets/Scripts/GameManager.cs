@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public CargoController cargoController;
     public StormModeJourney stormMode;
     public PlayerStats playerStats;
+    public PlayerAttack playerAttack;
     public SpawnManager enemySpawn;
     public TerrainManager terrainManager;
 
