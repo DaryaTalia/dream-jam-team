@@ -48,7 +48,7 @@ MonoBehaviour:
   sounds:
   - name: Ambient Storm
     clip: {fileID: 8300000, guid: 789c8658a37382c47af222f18893533a, type: 3}
-    volume: 0.171
+    volume: 0.081
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0

@@ -22,7 +22,7 @@ public class Sound {
 
 	public AudioMixerGroup mixerGroup;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public AudioSource source;
 
 }

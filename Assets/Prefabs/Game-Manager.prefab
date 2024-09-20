@@ -59,6 +59,7 @@ MonoBehaviour:
   stormMode: {fileID: 589328514977221926}
   playerStats: {fileID: 0}
   enemySpawn: {fileID: 0}
+  terrainManager: {fileID: 0}
   HubUICanvas: {fileID: 6563280999650339593}
   GameplayUICanvas: {fileID: 3719094303546885218}
   playerResources: {fileID: 9145872237693247552}
@@ -4070,7 +4071,7 @@ PrefabInstance:
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 187.33
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}

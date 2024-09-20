@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 	public AudioMixerGroup mixerGroup;
 
 	public Sound[] sounds;
+	//public AudioSource[] musicSources;
 
 	void Awake()
 	{
@@ -28,6 +29,8 @@ public class AudioManager : MonoBehaviour
 			s.source = gameObject.AddComponent<AudioSource>();
 			s.source.clip = s.clip;
 			s.source.loop = s.loop;
+			s.source.playOnAwake = false;
+			s.source.volume = s.volume;
 
 			s.source.outputAudioMixerGroup = mixerGroup;
 		}
@@ -51,9 +54,12 @@ public class AudioManager : MonoBehaviour
 	public void Stop(string sound)
 	{
 		Sound s = Array.Find(sounds, item => item.name == sound);
-		if (s == null)
+		if (s != null)
 		{
 			s.source.Stop();
+			s.source.volume = 0;
 		}
 	}
+
+
 }
