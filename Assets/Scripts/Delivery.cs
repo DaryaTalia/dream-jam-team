@@ -55,5 +55,6 @@ public class Delivery
     public List<BaseItem> DeliverItems
     {
         get => deliverItems;
+        set => deliverItems = value;
     }
 }

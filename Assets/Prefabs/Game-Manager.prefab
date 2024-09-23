@@ -58,6 +58,7 @@ MonoBehaviour:
   cargoController: {fileID: 100629500531229215}
   stormMode: {fileID: 589328514977221926}
   playerStats: {fileID: 0}
+  playerAttack: {fileID: 0}
   enemySpawn: {fileID: 0}
   terrainManager: {fileID: 0}
   HubUICanvas: {fileID: 6563280999650339593}
@@ -204,6 +205,16 @@ MonoBehaviour:
   deliveryStories: []
   storyItemPrefab: {fileID: 2278957975312802948, guid: 9aea1730769e8c741a4d1e89c6cced55,
     type: 3}
+  randomDeliveryPanel: {fileID: 8828857088685930957}
+  randomDeliveryPrefab: {fileID: 1892832906565483004, guid: 60ca8ffe8c7c0584cb896ed5d849e1cb,
+    type: 3}
+  randomDeliveries: []
+  lastRandomDelivery:
+    name: 
+    deliveryGiverName: 
+    questDescription: 
+    myDestinationIndex: 0
+    deliverItems: []
   destinationsPanel: {fileID: 6204377358113801403}
   newDestinationPrefab: {fileID: 1872260886879908331, guid: ae9ecf13178baee4684e43a60cd75cd7,
     type: 3}
@@ -4071,7 +4082,7 @@ PrefabInstance:
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 187.33
       objectReference: {fileID: 0}
     - target: {fileID: 3957187399217813293, guid: bd91098dbb67bd942938eca6dd0a2730,
         type: 3}
@@ -8609,6 +8620,12 @@ GameObject:
 --- !u!224 &7690882999896831247 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4104375593913909317, guid: bd91098dbb67bd942938eca6dd0a2730,
+    type: 3}
+  m_PrefabInstance: {fileID: 5930724542056330570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8828857088685930957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2938682538151185543, guid: bd91098dbb67bd942938eca6dd0a2730,
     type: 3}
   m_PrefabInstance: {fileID: 5930724542056330570}
   m_PrefabAsset: {fileID: 0}

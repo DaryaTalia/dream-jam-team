@@ -593,7 +593,7 @@ PrefabInstance:
     - target: {fileID: 626517309644721506, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
+      value: -0.0002746582
       objectReference: {fileID: 0}
     - target: {fileID: 754864028849307440, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
@@ -708,7 +708,7 @@ PrefabInstance:
     - target: {fileID: 3109001282697326854, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000015258789
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 3451139253296638564, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
@@ -718,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 3451139253296638564, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000008225441
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 4002587566922815745, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
@@ -845,6 +845,11 @@ PrefabInstance:
       propertyPath: terrainManager
       value: 
       objectReference: {fileID: 421997085}
+    - target: {fileID: 8699380653671729159, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
+        type: 3}
+      propertyPath: randomDeliveries.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9182601842346271090, guid: 2d234f72aa3796a4c87f97ba730a7f6a,
         type: 3}
       propertyPath: m_Value

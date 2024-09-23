@@ -226,6 +226,11 @@ public class GameManager : MonoBehaviour
         }
 
         hubManager.LoadStoryDeliveries();
+        hubManager.LoadRandomDeliveries();
+        hubManager.ResetCustomItems();
+
+        SelectedDelivery = null;
+        hubManager.SelectedDestination = null;
 
         cargoController.Reset(this);
 
@@ -301,6 +306,20 @@ public class GameManager : MonoBehaviour
     {
         if (GameStatus == GameState.CalmMode && selectedDelivery.Name != hubManager.deliveryUndecided)
         {
+
+            if(cargoController.GetItemInventoryCount() < 1)
+            {
+                Debug.Log("Not Enough Items Selected");
+                return;
+            }
+
+            if(hubManager.SelectedDestination == null)
+            {
+                Debug.Log("Correct Destination Not Selected");
+                return;
+            }
+
+            hubManager.CalculateCustomReward();
             StormMode();
         }
     }
